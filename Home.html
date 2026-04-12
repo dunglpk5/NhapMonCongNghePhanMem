@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GtuSchool - Trang chủ</title>
+  <link rel="stylesheet" href="home.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <a href="Home.html">
+            <div class="brand__logo">G</div>
+            <div class="brand__name">
+                <h1>GtuSchool</h1>
+                <p>Hệ thống quản lý học sinh</p>
+            </div>
+        </a>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-group__title">Tổng quan</div>
+        <ul class="menu">
+          <li><a href="#" class="active"><span>Trang chủ</span><span class="menu-badge">01</span></a></li>
+          <li><a href="#"><span>Báo cáo & thống kê</span><span class="menu-badge">54</span></a></li>
+          <li><a href="#"><span>Nhật ký hệ thống</span><span class="menu-badge">12</span></a></li>
+        </ul>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-group__title">Quản lý nghiệp vụ</div>
+        <ul class="menu">
+          <li><a href="StudentProfileManagement.html"><span>Hồ sơ học sinh</span><span class="menu-badge">HS</span></a></li>
+          <li><a href="ClassManagement.html"><span>Lớp học</span><span class="menu-badge">LH</span></a></li>
+          <li><a href="ScoreManagement.html"><span>Nhập điểm</span><span class="menu-badge">Đ</span></a></li>
+          <li><a href="ConductManagement.html"><span>Hạnh kiểm</span><span class="menu-badge">HK</span></a></li>
+          <li><a href="#"><span>Thời khóa biểu</span><span class="menu-badge">TKB</span></a></li>
+          <li><a href="#"><span>Phân công giảng dạy</span><span class="menu-badge">PC</span></a></li>
+        </ul>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-group__title">Hệ thống</div>
+        <ul class="menu">
+          <li><a href="AccountManagement.html"><span>Tài khoản & phân quyền</span><span class="menu-badge">RBAC</span></a></li>
+          <li><a href="#"><span>Sao lưu dữ liệu</span><span class="menu-badge">BK</span></a></li>
+          <li><a href="#"><span>Phục hồi dữ liệu</span><span class="menu-badge">RS</span></a></li>
+          <li><a href="#"><span>Cài đặt</span><span class="menu-badge">⚙</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <p>Thiết kế tối ưu cho hệ thống đa người dùng, web responsive, ngôn ngữ tiếng Việt và dễ thao tác.</p>
+        <button>Xuất báo cáo nhanh</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar__left">
+          <h2>Trang chủ hệ thống</h2>
+          <p>Theo dõi nhanh học sinh, lớp học, học lực, hạnh kiểm và các hoạt động gần đây của GtuSchool.</p>
+        </div>
+        <div class="topbar__right">
+          <div class="search">🔎 Tìm kiếm học sinh, lớp học, báo cáo...</div>
+          <div class="user-card">
+            <div class="avatar">AD</div>
+            <div>
+              <strong>Quản trị viên</strong>
+              <p style="color: var(--muted); font-size: 13px; margin-top: 2px;">Vai trò: Admin / Ban giám hiệu</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <h3>Dashboard</h3>
+          <div class="hero-actions">
+            <button class="btn btn--light">Report</button>
+            <button class="btn btn--ghost">Students</button>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div>
+            <small>Year</small>
+            <strong>2025 - 2026</strong>
+          </div>
+          <div class="meta">
+            <div>
+              <small>Sync</small>
+              <strong>08:30</strong>
+            </div>
+            <div>
+              <small>Status</small>
+              <strong>OK</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <article class="stat-card">
+          <div class="stat-card__label">Tổng số học sinh</div>
+          <div class="stat-card__value">1,248</div>
+          <div class="stat-card__change">▲ Tăng 3.2% so với tháng trước</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card__label">Tổng số lớp học</div>
+          <div class="stat-card__value">36</div>
+          <div class="stat-card__change">● 3 khối đang hoạt động</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card__label">Giáo viên phụ trách</div>
+          <div class="stat-card__value">82</div>
+          <div class="stat-card__change">▲ 5 phân công mới đã duyệt</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card__label">Bản ghi cần xử lý</div>
+          <div class="stat-card__value">14</div>
+          <div class="stat-card__change">● 6 yêu cầu cập nhật hồ sơ</div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel">
+          <div class="panel__header">
+            <div>
+              <h4>Thống kê học lực theo khối</h4>
+              <p>Hiển thị trực quan bằng cột để hỗ trợ Ban giám hiệu theo dõi nhanh.</p>
+            </div>
+            <div class="legend">
+              <span><i class="dot good"></i> Giỏi/Khá</span>
+              <span><i class="dot medium"></i> Trung bình</span>
+              <span><i class="dot low"></i> Yếu</span>
+            </div>
+          </div>
+
+          <div class="chart-bars">
+            <div class="bar-group">
+              <div class="bar-stack">
+                <div class="bar large"></div>
+                <div class="bar medium warn"></div>
+                <div class="bar small danger"></div>
+              </div>
+              <div class="bar-label">Khối 10</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-stack">
+                <div class="bar xlarge"></div>
+                <div class="bar medium warn"></div>
+                <div class="bar small danger"></div>
+              </div>
+              <div class="bar-label">10A</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-stack">
+                <div class="bar large"></div>
+                <div class="bar small warn"></div>
+                <div class="bar small danger"></div>
+              </div>
+              <div class="bar-label">Khối 11</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-stack">
+                <div class="bar xlarge"></div>
+                <div class="bar medium warn"></div>
+                <div class="bar small danger"></div>
+              </div>
+              <div class="bar-label">11A</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-stack">
+                <div class="bar medium"></div>
+                <div class="bar medium warn"></div>
+                <div class="bar small danger"></div>
+              </div>
+              <div class="bar-label">Khối 12</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-stack">
+                <div class="bar large"></div>
+                <div class="bar small warn"></div>
+                <div class="bar small danger"></div>
+              </div>
+              <div class="bar-label">12A</div>
+            </div>
+          </div>
+        </article>
+
+        <aside class="mini-cards">
+          <article class="mini-card">
+            <h5>Hạnh kiểm học kỳ gần nhất</h5>
+            <p>Tỷ lệ học sinh hạnh kiểm Tốt và Khá đang chiếm ưu thế, hỗ trợ theo dõi sát phần giáo dục toàn diện.</p>
+            <div class="pill-row">
+              <span class="pill">Tốt 68%</span>
+              <span class="pill">Khá 21%</span>
+              <span class="pill">TB 8%</span>
+              <span class="pill">Yếu 3%</span>
+            </div>
+          </article>
+
+          <article class="mini-card">
+            <h5>Truy cập nhanh</h5>
+            <p>Các thao tác thường dùng cho giáo vụ, giáo viên và quản trị viên được gom tại trang chủ để giảm số lần chuyển màn hình.</p>
+            <div class="pill-row">
+              <span class="pill">Thêm học sinh</span>
+              <span class="pill">Nhập điểm</span>
+              <span class="pill">Tạo lớp</span>
+              <span class="pill">Xuất học bạ</span>
+            </div>
+          </article>
+
+          <article class="mini-card">
+            <h5>Thông báo hệ thống</h5>
+            <p>Bản sao lưu gần nhất thành công. Có 2 tài khoản bị khóa tạm thời và 1 lịch học cần kiểm tra do trùng phòng.</p>
+            <div class="pill-row">
+              <span class="pill">Backup OK</span>
+              <span class="pill">2 tài khoản khóa</span>
+              <span class="pill">1 lịch trùng</span>
+            </div>
+          </article>
+        </aside>
+      </section>
+
+      <section class="table-panel">
+        <div class="table-panel__top">
+          <div>
+            <h4>Hoạt động gần đây</h4>
+            <p>Nhật ký tóm tắt các thao tác quan trọng để hỗ trợ theo dõi và kiểm tra.</p>
+          </div>
+          <button class="btn btn--ghost" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe;">Xem toàn bộ log</button>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Thời gian</th>
+              <th>Người thực hiện</th>
+              <th>Hành động</th>
+              <th>Đối tượng</th>
+              <th>Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>08:15 - 10/04</td>
+              <td>Nguyễn Thành Đạt</td>
+              <td>Cập nhật hồ sơ học sinh</td>
+              <td>HS1024 - Lớp 10A1</td>
+              <td><span class="status status--success">Thành công</span></td>
+            </tr>
+            <tr>
+              <td>08:02 - 10/04</td>
+              <td>Nguyễn Hoàng Quốc Duy</td>
+              <td>Nhập điểm học kỳ</td>
+              <td>Môn Toán - 11A2</td>
+              <td><span class="status status--info">Đã lưu</span></td>
+            </tr>
+            <tr>
+              <td>07:48 - 10/04</td>
+              <td>Trần Văn Dũng</td>
+              <td>Điều chỉnh thời khóa biểu</td>
+              <td>Phòng B203</td>
+              <td><span class="status status--warning">Chờ duyệt</span></td>
+            </tr>
+            <tr>
+              <td>07:30 - 10/04</td>
+              <td>Admin</td>
+              <td>Sao lưu dữ liệu hệ thống</td>
+              <td>Backup hàng ngày</td>
+              <td><span class="status status--success">Hoàn tất</span></td>
+            </tr>
+            <tr>
+              <td>07:12 - 10/04</td>
+              <td>Hệ thống</td>
+              <td>Phát hiện đăng nhập thất bại liên tiếp</td>
+              <td>Tài khoản gv.minh</td>
+              <td><span class="status status--danger">Khóa tạm</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GtuSchool - Hạnh kiểm</title>
+  <link rel="stylesheet" href="conduct-management.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <a href="Home.html" class="brand-link">
+          <div class="brand__logo">G</div>
+          <div class="brand__name">
+            <h1>GtuSchool</h1>
+            <p>Hệ thống quản lý học sinh</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-group__title">Tổng quan</div>
+        <ul class="menu">
+          <li><a href="Home.html"><span>Trang chủ</span><span class="menu-badge">01</span></a></li>
+          <li><a href="#"><span>Báo cáo & thống kê</span><span class="menu-badge">54</span></a></li>
+          <li><a href="#"><span>Nhật ký hệ thống</span><span class="menu-badge">12</span></a></li>
+        </ul>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-group__title">Quản lý nghiệp vụ</div>
+        <ul class="menu">
+          <li><a href="StudentProfileManagement.html"><span>Hồ sơ học sinh</span><span class="menu-badge">HS</span></a></li>
+          <li><a href="ClassManagement.html"><span>Lớp học</span><span class="menu-badge">LH</span></a></li>
+          <li><a href="ScoreManagement.html"><span>Nhập điểm</span><span class="menu-badge">Đ</span></a></li>
+          <li><a href="#" class="active"><span>Hạnh kiểm</span><span class="menu-badge">HK</span></a></li>
+          <li><a href="#"><span>Thời khóa biểu</span><span class="menu-badge">TKB</span></a></li>
+          <li><a href="#"><span>Phân công giảng dạy</span><span class="menu-badge">PC</span></a></li>
+        </ul>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-group__title">Hệ thống</div>
+        <ul class="menu">
+          <li><a href="AccountManagement.html"><span>Tài khoản & phân quyền</span><span class="menu-badge">RBAC</span></a></li>
+          <li><a href="#"><span>Sao lưu dữ liệu</span><span class="menu-badge">BK</span></a></li>
+          <li><a href="#"><span>Phục hồi dữ liệu</span><span class="menu-badge">RS</span></a></li>
+          <li><a href="#"><span>Cài đặt</span><span class="menu-badge">⚙</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <p>Quản lý đánh giá hạnh kiểm theo lớp và học kỳ.</p>
+        <button>Lưu đánh giá</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar__left">
+          <h2>Quản lý hạnh kiểm</h2>
+        </div>
+        <div class="topbar__right">
+          <div class="search">🔎 Tìm lớp, học sinh...</div>
+          <div class="user-card">
+            <div class="avatar">GV</div>
+            <div>
+              <strong>Giáo viên</strong>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <h3>Conduct</h3>
+          <div class="hero-actions">
+            <button class="btn btn--light">Lưu</button>
+            <button class="btn btn--ghost">Xuất</button>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div>
+            <small>Lớp</small>
+            <strong>10A1</strong>
+          </div>
+          <div class="meta">
+            <div>
+              <small>Học kỳ</small>
+              <strong class="meta-number">HK1</strong>
+            </div>
+            <div>
+              <small>Đã đánh giá</small>
+              <strong class="meta-number">30</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats stats--four">
+        <article class="stat-card">
+          <div class="stat-card__label">Tốt</div>
+          <div class="stat-card__value">18</div>
+          <div class="stat-card__change">Excellent</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card__label">Khá</div>
+          <div class="stat-card__value">09</div>
+          <div class="stat-card__change">Good</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card__label">Trung bình</div>
+          <div class="stat-card__value">03</div>
+          <div class="stat-card__change">Average</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card__label">Chưa nhập</div>
+          <div class="stat-card__value">05</div>
+          <div class="stat-card__change">Pending</div>
+        </article>
+      </section>
+
+      <section class="toolbar-panel">
+        <div class="toolbar-left">
+          <div class="filter-box">Lớp: 10A1</div>
+          <div class="filter-box">Học kỳ: HK1</div>
+          <div class="filter-box">Năm học: 2025 - 2026</div>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn--primary">Lưu</button>
+          <button class="btn btn--outline">Tổng hợp</button>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <article class="table-panel">
+          <div class="table-panel__top">
+            <h4>Danh sách đánh giá</h4>
+            <button class="btn btn--ghost-alt">Bulk</button>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Mã HS</th>
+                <th>Họ tên</th>
+                <th>Lớp</th>
+                <th>Học kỳ</th>
+                <th>Hạnh kiểm</th>
+                <th>Ghi chú</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>HS001</td>
+                <td>Nguyễn Văn An</td>
+                <td>10A1</td>
+                <td>HK1</td>
+                <td>
+                  <select class="conduct-select">
+                    <option>Tốt</option>
+                    <option>Khá</option>
+                    <option>Trung bình</option>
+                    <option>Yếu</option>
+                  </select>
+                </td>
+                <td><input class="note-input" type="text" value="Ổn định" /></td>
+                <td><span class="status status--success">Đã nhập</span></td>
+              </tr>
+              <tr>
+                <td>HS002</td>
+                <td>Trần Thị Bình</td>
+                <td>10A1</td>
+                <td>HK1</td>
+                <td>
+                  <select class="conduct-select">
+                    <option>Khá</option>
+                    <option>Tốt</option>
+                    <option>Trung bình</option>
+                    <option>Yếu</option>
+                  </select>
+                </td>
+                <td><input class="note-input" type="text" value="Tích cực" /></td>
+                <td><span class="status status--success">Đã nhập</span></td>
+              </tr>
+              <tr>
+                <td>HS003</td>
+                <td>Lê Hoàng Minh</td>
+                <td>10A1</td>
+                <td>HK1</td>
+                <td>
+                  <select class="conduct-select">
+                    <option>Trung bình</option>
+                    <option>Tốt</option>
+                    <option>Khá</option>
+                    <option>Yếu</option>
+                  </select>
+                </td>
+                <td><input class="note-input" type="text" value="Cần cải thiện" /></td>
+                <td><span class="status status--info">Mới</span></td>
+              </tr>
+              <tr>
+                <td>HS004</td>
+                <td>Phạm Gia Hân</td>
+                <td>10A1</td>
+                <td>HK1</td>
+                <td>
+                  <select class="conduct-select">
+                    <option>Yếu</option>
+                    <option>Tốt</option>
+                    <option>Khá</option>
+                    <option>Trung bình</option>
+                  </select>
+                </td>
+                <td><input class="note-input" type="text" value="Đi học muộn" /></td>
+                <td><span class="status status--warning">Cần xem lại</span></td>
+              </tr>
+              <tr>
+                <td>HS005</td>
+                <td>Đỗ Quốc Duy</td>
+                <td>10A1</td>
+                <td>HK1</td>
+                <td>
+                  <select class="conduct-select">
+                    <option>-- Chọn --</option>
+                    <option>Tốt</option>
+                    <option>Khá</option>
+                    <option>Trung bình</option>
+                    <option>Yếu</option>
+                  </select>
+                </td>
+                <td><input class="note-input" type="text" placeholder="Ghi chú" /></td>
+                <td><span class="status status--warning">Chưa nhập</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pagination">
+            <button class="page-btn">&lt;</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">&gt;</button>
+          </div>
+        </article>
+
+        <aside class="side-stack">
+          <article class="panel form-panel">
+            <div class="panel__header panel__header--column">
+              <h4>Bộ lọc</h4>
+            </div>
+
+            <form class="conduct-form">
+              <div class="form-group">
+                <label>Lớp</label>
+                <select>
+                  <option>10A1</option>
+                  <option>10A2</option>
+                  <option>11A1</option>
+                  <option>12A1</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Học kỳ</label>
+                  <select>
+                    <option>HK1</option>
+                    <option>HK2</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Năm học</label>
+                  <select>
+                    <option>2025 - 2026</option>
+                    <option>2024 - 2025</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Mức đánh giá</label>
+                <select>
+                  <option>Tất cả</option>
+                  <option>Tốt</option>
+                  <option>Khá</option>
+                  <option>Trung bình</option>
+                  <option>Yếu</option>
+                </select>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn--primary">Áp dụng</button>
+                <button type="button" class="btn btn--outline">Làm mới</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="panel">
+            <div class="panel__header panel__header--column">
+              <h4>Recent</h4>
+            </div>
+
+            <div class="activity-list">
+              <div class="activity-item">
+                <strong>Lưu đánh giá 10A1</strong>
+                <span>08:42 - 12/04/2026</span>
+              </div>
+              <div class="activity-item">
+                <strong>Cập nhật HS003</strong>
+                <span>08:15 - 12/04/2026</span>
+              </div>
+              <div class="activity-item">
+                <strong>Tổng hợp HK1</strong>
+                <span>07:58 - 12/04/2026</span>
+              </div>
+              <div class="activity-item">
+                <strong>Xuất danh sách</strong>
+                <span>07:20 - 12/04/2026</span>
+              </div>
+            </div>
+          </article>
+        </aside>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
