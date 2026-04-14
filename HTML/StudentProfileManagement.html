@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GtuSchool - Quản lý lớp học</title>
-  <link rel="stylesheet" href="class-management.css" />
+  <title>GtuSchool - Hồ sơ học sinh</title>
+  <link rel="stylesheet" href="../CSS/student-profile.css" />
 </head>
 <body>
   <div class="app">
@@ -31,8 +31,8 @@
       <div class="menu-group">
         <div class="menu-group__title">Quản lý nghiệp vụ</div>
         <ul class="menu">
-          <li><a href="StudentProfileManagement.html"><span>Hồ sơ học sinh</span><span class="menu-badge">HS</span></a></li>
-          <li><a href="ClassManagement.html" class="active"><span>Lớp học</span><span class="menu-badge">LH</span></a></li>
+          <li><a href="StudentProfileManagement.html" class="active"><span>Hồ sơ học sinh</span><span class="menu-badge">HS</span></a></li>
+          <li><a href="ClassManagement.html"><span>Lớp học</span><span class="menu-badge">LH</span></a></li>
           <li><a href="ScoreManagement.html"><span>Nhập điểm</span><span class="menu-badge">Đ</span></a></li>
           <li><a href="ConductManagement.html"><span>Hạnh kiểm</span><span class="menu-badge">HK</span></a></li>
           <li><a href="TimetableManagement.html"><span>Thời khóa biểu</span><span class="menu-badge">TKB</span></a></li>
@@ -51,18 +51,18 @@
       </div>
 
       <div class="sidebar-footer">
-        <p>Quản lý lớp, khối, năm học và giáo viên chủ nhiệm.</p>
-        <button>+ Tạo lớp</button>
+        <p>Quản lý hồ sơ và thông tin học sinh.</p>
+        <button>+ Thêm học sinh</button>
       </div>
     </aside>
 
     <main class="main">
       <header class="topbar">
         <div class="topbar__left">
-          <h2>Quản lý lớp học</h2>
+          <h2>Hồ sơ học sinh</h2>
         </div>
         <div class="topbar__right">
-          <div class="search">🔎 Tìm kiếm lớp...</div>
+          <div class="search">🔎 Tìm kiếm học sinh...</div>
           <div class="user-card">
             <div class="avatar">AD</div>
             <div>
@@ -74,30 +74,30 @@
 
       <section class="hero">
         <div>
-          <h3>Classes</h3>
+          <h3>Students</h3>
           <div class="hero-actions">
             <button class="btn btn--light">+ Thêm</button>
-            <button class="btn btn--ghost">Export</button>
+            <button class="btn btn--ghost">Import</button>
           </div>
         </div>
 
         <div class="hero-side">
           <div>
-            <small>Tổng lớp</small>
-            <strong>36</strong>
+            <small>Tổng học sinh</small>
+            <strong>1,248</strong>
           </div>
           <div class="meta">
             <div>
               <small>Khối 10</small>
-              <strong class="meta-number">12</strong>
+              <strong class="meta-number">420</strong>
             </div>
             <div>
               <small>Khối 11</small>
-              <strong class="meta-number">12</strong>
+              <strong class="meta-number">408</strong>
             </div>
             <div>
               <small>Khối 12</small>
-              <strong class="meta-number">12</strong>
+              <strong class="meta-number">420</strong>
             </div>
           </div>
         </div>
@@ -105,65 +105,65 @@
 
       <section class="stats stats--three">
         <article class="stat-card">
-          <div class="stat-card__label">Đang hoạt động</div>
-          <div class="stat-card__value">36</div>
+          <div class="stat-card__label">Đang học</div>
+          <div class="stat-card__value">1,220</div>
           <div class="stat-card__change">Active</div>
         </article>
 
         <article class="stat-card">
-          <div class="stat-card__label">Chưa có GVCN</div>
-          <div class="stat-card__value">03</div>
-          <div class="stat-card__change">Pending</div>
+          <div class="stat-card__label">Mới thêm</div>
+          <div class="stat-card__value">18</div>
+          <div class="stat-card__change">This month</div>
         </article>
 
         <article class="stat-card">
-          <div class="stat-card__label">Sĩ số trung bình</div>
-          <div class="stat-card__value">34</div>
-          <div class="stat-card__change">Students / class</div>
+          <div class="stat-card__label">Cần cập nhật</div>
+          <div class="stat-card__value">10</div>
+          <div class="stat-card__change">Pending</div>
         </article>
       </section>
 
       <section class="toolbar-panel">
         <div class="toolbar-left">
+          <div class="filter-box">Lớp: Tất cả</div>
           <div class="filter-box">Khối: Tất cả</div>
-          <div class="filter-box">Năm học: 2025 - 2026</div>
-          <div class="filter-box">GVCN: Tất cả</div>
+          <div class="filter-box">Trạng thái: Tất cả</div>
         </div>
         <div class="toolbar-right">
           <button class="btn btn--primary">Thêm mới</button>
-          <button class="btn btn--outline">Phân công GVCN</button>
+          <button class="btn btn--outline">Xuất file</button>
         </div>
       </section>
 
       <section class="content-grid">
         <article class="table-panel">
           <div class="table-panel__top">
-            <h4>Danh sách lớp học</h4>
+            <h4>Danh sách học sinh</h4>
             <button class="btn btn--ghost-alt">Bulk</button>
           </div>
 
           <table>
             <thead>
               <tr>
-                <th>Mã lớp</th>
-                <th>Tên lớp</th>
-                <th>Khối</th>
-                <th>Năm học</th>
-                <th>GVCN</th>
-                <th>Sĩ số</th>
+                <th>Mã HS</th>
+                <th>Họ tên</th>
+                <th>Lớp</th>
+                <th>Giới tính</th>
+                <th>Ngày sinh</th>
+                <th>SĐT PH</th>
                 <th>Trạng thái</th>
                 <th>Thao tác</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>L001</td>
+                <td>HS001</td>
+                <td>Nguyễn Văn An</td>
                 <td>10A1</td>
-                <td>10</td>
-                <td>2025 - 2026</td>
-                <td>Nguyễn Văn Minh</td>
-                <td>35</td>
-                <td><span class="status status--success">Hoạt động</span></td>
+                <td>Nam</td>
+                <td>12/03/2009</td>
+                <td>0912345678</td>
+                <td><span class="status status--success">Đang học</span></td>
                 <td>
                   <div class="action-group">
                     <button class="table-btn">Xem</button>
@@ -172,27 +172,12 @@
                 </td>
               </tr>
               <tr>
-                <td>L002</td>
+                <td>HS002</td>
+                <td>Trần Thị Bình</td>
                 <td>10A2</td>
-                <td>10</td>
-                <td>2025 - 2026</td>
-                <td>Trần Thị Lan</td>
-                <td>34</td>
-                <td><span class="status status--success">Hoạt động</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>L011</td>
-                <td>11A1</td>
-                <td>11</td>
-                <td>2025 - 2026</td>
-                <td>Phạm Quốc Huy</td>
-                <td>36</td>
+                <td>Nữ</td>
+                <td>05/07/2009</td>
+                <td>0987654321</td>
                 <td><span class="status status--info">Mới</span></td>
                 <td>
                   <div class="action-group">
@@ -202,28 +187,43 @@
                 </td>
               </tr>
               <tr>
-                <td>L021</td>
-                <td>12A1</td>
-                <td>12</td>
-                <td>2025 - 2026</td>
-                <td>Chưa phân công</td>
-                <td>33</td>
-                <td><span class="status status--warning">Chờ GVCN</span></td>
+                <td>HS003</td>
+                <td>Lê Hoàng Minh</td>
+                <td>11A1</td>
+                <td>Nam</td>
+                <td>21/11/2008</td>
+                <td>0909000111</td>
+                <td><span class="status status--success">Đang học</span></td>
                 <td>
                   <div class="action-group">
-                    <button class="table-btn">Phân công</button>
+                    <button class="table-btn">Xem</button>
                     <button class="table-btn">Sửa</button>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td>L022</td>
-                <td>12A2</td>
-                <td>12</td>
-                <td>2025 - 2026</td>
-                <td>Lê Minh Đức</td>
-                <td>32</td>
-                <td><span class="status status--success">Hoạt động</span></td>
+                <td>HS004</td>
+                <td>Phạm Gia Hân</td>
+                <td>12A3</td>
+                <td>Nữ</td>
+                <td>30/08/2007</td>
+                <td>0933222111</td>
+                <td><span class="status status--warning">Cập nhật</span></td>
+                <td>
+                  <div class="action-group">
+                    <button class="table-btn">Xem</button>
+                    <button class="table-btn">Sửa</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>HS005</td>
+                <td>Đỗ Quốc Duy</td>
+                <td>12A1</td>
+                <td>Nam</td>
+                <td>18/01/2007</td>
+                <td>0977333555</td>
+                <td><span class="status status--success">Đang học</span></td>
                 <td>
                   <div class="action-group">
                     <button class="table-btn">Xem</button>
@@ -246,55 +246,76 @@
         <aside class="side-stack">
           <article class="panel form-panel">
             <div class="panel__header panel__header--column">
-              <h4>Lớp học</h4>
+              <h4>Học sinh</h4>
             </div>
 
-            <form class="class-form">
+            <form class="student-form">
               <div class="form-group">
-                <label>Tên lớp</label>
-                <input type="text" placeholder="Nhập tên lớp" />
+                <label>Họ và tên</label>
+                <input type="text" placeholder="Nhập họ tên" />
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label>Khối</label>
-                  <select>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                  </select>
+                  <label>Ngày sinh</label>
+                  <input type="date" />
                 </div>
                 <div class="form-group">
-                  <label>Năm học</label>
+                  <label>Giới tính</label>
                   <select>
-                    <option>2025 - 2026</option>
-                    <option>2024 - 2025</option>
+                    <option>Nam</option>
+                    <option>Nữ</option>
                   </select>
                 </div>
               </div>
 
               <div class="form-group">
-                <label>Giáo viên chủ nhiệm</label>
-                <select>
-                  <option>Chọn giáo viên</option>
-                  <option>Nguyễn Văn Minh</option>
-                  <option>Trần Thị Lan</option>
-                  <option>Phạm Quốc Huy</option>
-                  <option>Lê Minh Đức</option>
-                </select>
+                <label>Địa chỉ</label>
+                <input type="text" placeholder="Nhập địa chỉ" />
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label>Sĩ số</label>
-                  <input type="number" placeholder="0" />
+                  <label>Dân tộc</label>
+                  <input type="text" placeholder="Kinh" />
+                </div>
+                <div class="form-group">
+                  <label>Tôn giáo</label>
+                  <input type="text" placeholder="Không" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Họ tên cha</label>
+                <input type="text" placeholder="Nhập họ tên cha" />
+              </div>
+
+              <div class="form-group">
+                <label>Họ tên mẹ</label>
+                <input type="text" placeholder="Nhập họ tên mẹ" />
+              </div>
+
+              <div class="form-group">
+                <label>Số điện thoại liên hệ</label>
+                <input type="text" placeholder="Nhập số điện thoại" />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Lớp</label>
+                  <select>
+                    <option>10A1</option>
+                    <option>10A2</option>
+                    <option>11A1</option>
+                    <option>12A1</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Trạng thái</label>
                   <select>
-                    <option>Hoạt động</option>
+                    <option>Đang học</option>
                     <option>Mới</option>
-                    <option>Chờ GVCN</option>
+                    <option>Cập nhật</option>
                   </select>
                 </div>
               </div>
@@ -313,19 +334,19 @@
 
             <div class="activity-list">
               <div class="activity-item">
-                <strong>Tạo lớp 10A3</strong>
+                <strong>Thêm mới HS006</strong>
                 <span>08:42 - 12/04/2026</span>
               </div>
               <div class="activity-item">
-                <strong>Phân công GVCN cho 12A1</strong>
+                <strong>Cập nhật địa chỉ HS004</strong>
                 <span>08:15 - 12/04/2026</span>
               </div>
               <div class="activity-item">
-                <strong>Cập nhật sĩ số 11A2</strong>
+                <strong>Chuyển lớp HS021</strong>
                 <span>07:58 - 12/04/2026</span>
               </div>
               <div class="activity-item">
-                <strong>Xóa lớp trống 10C1</strong>
+                <strong>Import danh sách mới</strong>
                 <span>07:20 - 12/04/2026</span>
               </div>
             </div>

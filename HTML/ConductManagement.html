@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GtuSchool - Phân công giảng dạy</title>
-  <link rel="stylesheet" href="teaching-assignment.css" />
+  <title>GtuSchool - Hạnh kiểm</title>
+  <link rel="stylesheet" href="../CSS/conduct-management.css" />
 </head>
 <body>
   <div class="app">
@@ -34,9 +34,9 @@
           <li><a href="StudentProfileManagement.html"><span>Hồ sơ học sinh</span><span class="menu-badge">HS</span></a></li>
           <li><a href="ClassManagement.html"><span>Lớp học</span><span class="menu-badge">LH</span></a></li>
           <li><a href="ScoreManagement.html"><span>Nhập điểm</span><span class="menu-badge">Đ</span></a></li>
-          <li><a href="ConductManagement.html"><span>Hạnh kiểm</span><span class="menu-badge">HK</span></a></li>
+          <li><a href="ConductManagement.html" class="active"><span>Hạnh kiểm</span><span class="menu-badge">HK</span></a></li>
           <li><a href="TimetableManagement.html"><span>Thời khóa biểu</span><span class="menu-badge">TKB</span></a></li>
-          <li><a href="TeachingAssignmentManagement.html" class="active"><span>Phân công giảng dạy</span><span class="menu-badge">PC</span></a></li>
+          <li><a href="TeachingAssignmentManagement.html"><span>Phân công giảng dạy</span><span class="menu-badge">PC</span></a></li>
         </ul>
       </div>
 
@@ -51,22 +51,22 @@
       </div>
 
       <div class="sidebar-footer">
-        <p>Quản lý giáo viên, môn học, lớp và học kỳ.</p>
-        <button>+ Phân công mới</button>
+        <p>Quản lý đánh giá hạnh kiểm theo lớp và học kỳ.</p>
+        <button>Lưu đánh giá</button>
       </div>
     </aside>
 
     <main class="main">
       <header class="topbar">
         <div class="topbar__left">
-          <h2>Phân công giảng dạy</h2>
+          <h2>Quản lý hạnh kiểm</h2>
         </div>
         <div class="topbar__right">
-          <div class="search">🔎 Tìm giáo viên, lớp, môn học...</div>
+          <div class="search">🔎 Tìm lớp, học sinh...</div>
           <div class="user-card">
             <div class="avatar">GV</div>
             <div>
-              <strong>Giáo vụ</strong>
+              <strong>Giáo viên</strong>
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@
 
       <section class="hero">
         <div>
-          <h3>Assignments</h3>
+          <h3>Conduct</h3>
           <div class="hero-actions">
             <button class="btn btn--light">Lưu</button>
             <button class="btn btn--ghost">Xuất</button>
@@ -83,8 +83,8 @@
 
         <div class="hero-side">
           <div>
-            <small>Năm học</small>
-            <strong>2025 - 2026</strong>
+            <small>Lớp</small>
+            <strong>10A1</strong>
           </div>
           <div class="meta">
             <div>
@@ -92,8 +92,8 @@
               <strong class="meta-number">HK1</strong>
             </div>
             <div>
-              <small>Đã duyệt</small>
-              <strong class="meta-number">42</strong>
+              <small>Đã đánh giá</small>
+              <strong class="meta-number">30</strong>
             </div>
           </div>
         </div>
@@ -101,137 +101,142 @@
 
       <section class="stats stats--four">
         <article class="stat-card">
-          <div class="stat-card__label">Tổng phân công</div>
-          <div class="stat-card__value">48</div>
-          <div class="stat-card__change">Total</div>
+          <div class="stat-card__label">Tốt</div>
+          <div class="stat-card__value">18</div>
+          <div class="stat-card__change">Excellent</div>
         </article>
 
         <article class="stat-card">
-          <div class="stat-card__label">Đã duyệt</div>
-          <div class="stat-card__value">42</div>
-          <div class="stat-card__change">Approved</div>
+          <div class="stat-card__label">Khá</div>
+          <div class="stat-card__value">09</div>
+          <div class="stat-card__change">Good</div>
         </article>
 
         <article class="stat-card">
-          <div class="stat-card__label">Chờ duyệt</div>
+          <div class="stat-card__label">Trung bình</div>
+          <div class="stat-card__value">03</div>
+          <div class="stat-card__change">Average</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card__label">Chưa nhập</div>
           <div class="stat-card__value">05</div>
           <div class="stat-card__change">Pending</div>
-        </article>
-
-        <article class="stat-card">
-          <div class="stat-card__label">Xung đột</div>
-          <div class="stat-card__value">01</div>
-          <div class="stat-card__change">Conflict</div>
         </article>
       </section>
 
       <section class="toolbar-panel">
         <div class="toolbar-left">
-          <div class="filter-box">Giáo viên: Tất cả</div>
-          <div class="filter-box">Môn: Tất cả</div>
+          <div class="filter-box">Lớp: 10A1</div>
           <div class="filter-box">Học kỳ: HK1</div>
+          <div class="filter-box">Năm học: 2025 - 2026</div>
         </div>
         <div class="toolbar-right">
-          <button class="btn btn--primary">Thêm mới</button>
-          <button class="btn btn--outline">Duyệt</button>
+          <button class="btn btn--primary">Lưu</button>
+          <button class="btn btn--outline">Tổng hợp</button>
         </div>
       </section>
 
       <section class="content-grid">
         <article class="table-panel">
           <div class="table-panel__top">
-            <h4>Danh sách phân công</h4>
+            <h4>Danh sách đánh giá</h4>
             <button class="btn btn--ghost-alt">Bulk</button>
           </div>
 
           <table>
             <thead>
               <tr>
-                <th>Mã</th>
-                <th>Giáo viên</th>
-                <th>Môn học</th>
+                <th>Mã HS</th>
+                <th>Họ tên</th>
                 <th>Lớp</th>
                 <th>Học kỳ</th>
-                <th>Năm học</th>
+                <th>Hạnh kiểm</th>
+                <th>Ghi chú</th>
                 <th>Trạng thái</th>
-                <th>Thao tác</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>PC001</td>
-                <td>Nguyễn Văn Minh</td>
-                <td>Toán</td>
+                <td>HS001</td>
+                <td>Nguyễn Văn An</td>
                 <td>10A1</td>
                 <td>HK1</td>
-                <td>2025 - 2026</td>
-                <td><span class="status status--success">Đã duyệt</span></td>
                 <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
+                  <select class="conduct-select">
+                    <option>Tốt</option>
+                    <option>Khá</option>
+                    <option>Trung bình</option>
+                    <option>Yếu</option>
+                  </select>
                 </td>
+                <td><input class="note-input" type="text" value="Ổn định" /></td>
+                <td><span class="status status--success">Đã nhập</span></td>
               </tr>
               <tr>
-                <td>PC002</td>
-                <td>Trần Thị Lan</td>
-                <td>Ngữ văn</td>
+                <td>HS002</td>
+                <td>Trần Thị Bình</td>
                 <td>10A1</td>
                 <td>HK1</td>
-                <td>2025 - 2026</td>
-                <td><span class="status status--success">Đã duyệt</span></td>
                 <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
+                  <select class="conduct-select">
+                    <option>Khá</option>
+                    <option>Tốt</option>
+                    <option>Trung bình</option>
+                    <option>Yếu</option>
+                  </select>
                 </td>
+                <td><input class="note-input" type="text" value="Tích cực" /></td>
+                <td><span class="status status--success">Đã nhập</span></td>
               </tr>
               <tr>
-                <td>PC003</td>
-                <td>Lê Minh Đức</td>
-                <td>Tin học</td>
-                <td>10A2</td>
+                <td>HS003</td>
+                <td>Lê Hoàng Minh</td>
+                <td>10A1</td>
                 <td>HK1</td>
-                <td>2025 - 2026</td>
-                <td><span class="status status--info">Chờ duyệt</span></td>
                 <td>
-                  <div class="action-group">
-                    <button class="table-btn">Duyệt</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
+                  <select class="conduct-select">
+                    <option>Trung bình</option>
+                    <option>Tốt</option>
+                    <option>Khá</option>
+                    <option>Yếu</option>
+                  </select>
                 </td>
+                <td><input class="note-input" type="text" value="Cần cải thiện" /></td>
+                <td><span class="status status--info">Mới</span></td>
               </tr>
               <tr>
-                <td>PC004</td>
-                <td>Phạm Quốc Huy</td>
-                <td>Vật lý</td>
-                <td>11A1</td>
+                <td>HS004</td>
+                <td>Phạm Gia Hân</td>
+                <td>10A1</td>
                 <td>HK1</td>
-                <td>2025 - 2026</td>
-                <td><span class="status status--warning">Xung đột</span></td>
                 <td>
-                  <div class="action-group">
-                    <button class="table-btn">Kiểm tra</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
+                  <select class="conduct-select">
+                    <option>Yếu</option>
+                    <option>Tốt</option>
+                    <option>Khá</option>
+                    <option>Trung bình</option>
+                  </select>
                 </td>
+                <td><input class="note-input" type="text" value="Đi học muộn" /></td>
+                <td><span class="status status--warning">Cần xem lại</span></td>
               </tr>
               <tr>
-                <td>PC005</td>
-                <td>Nguyễn Thị Hoa</td>
-                <td>Tiếng Anh</td>
-                <td>12A1</td>
+                <td>HS005</td>
+                <td>Đỗ Quốc Duy</td>
+                <td>10A1</td>
                 <td>HK1</td>
-                <td>2025 - 2026</td>
-                <td><span class="status status--success">Đã duyệt</span></td>
                 <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
+                  <select class="conduct-select">
+                    <option>-- Chọn --</option>
+                    <option>Tốt</option>
+                    <option>Khá</option>
+                    <option>Trung bình</option>
+                    <option>Yếu</option>
+                  </select>
                 </td>
+                <td><input class="note-input" type="text" placeholder="Ghi chú" /></td>
+                <td><span class="status status--warning">Chưa nhập</span></td>
               </tr>
             </tbody>
           </table>
@@ -248,30 +253,10 @@
         <aside class="side-stack">
           <article class="panel form-panel">
             <div class="panel__header panel__header--column">
-              <h4>Phân công</h4>
+              <h4>Bộ lọc</h4>
             </div>
 
-            <form class="assignment-form">
-              <div class="form-group">
-                <label>Giáo viên</label>
-                <select>
-                  <option>Nguyễn Văn Minh</option>
-                  <option>Trần Thị Lan</option>
-                  <option>Phạm Quốc Huy</option>
-                  <option>Nguyễn Thị Hoa</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label>Môn học</label>
-                <select>
-                  <option>Toán</option>
-                  <option>Ngữ văn</option>
-                  <option>Tiếng Anh</option>
-                  <option>Vật lý</option>
-                </select>
-              </div>
-
+            <form class="conduct-form">
               <div class="form-group">
                 <label>Lớp</label>
                 <select>
@@ -300,16 +285,18 @@
               </div>
 
               <div class="form-group">
-                <label>Trạng thái</label>
+                <label>Mức đánh giá</label>
                 <select>
-                  <option>Chờ duyệt</option>
-                  <option>Đã duyệt</option>
-                  <option>Xung đột</option>
+                  <option>Tất cả</option>
+                  <option>Tốt</option>
+                  <option>Khá</option>
+                  <option>Trung bình</option>
+                  <option>Yếu</option>
                 </select>
               </div>
 
               <div class="form-actions">
-                <button type="button" class="btn btn--primary">Lưu</button>
+                <button type="button" class="btn btn--primary">Áp dụng</button>
                 <button type="button" class="btn btn--outline">Làm mới</button>
               </div>
             </form>
@@ -322,19 +309,19 @@
 
             <div class="activity-list">
               <div class="activity-item">
-                <strong>Duyệt PC003</strong>
+                <strong>Lưu đánh giá 10A1</strong>
                 <span>08:42 - 12/04/2026</span>
               </div>
               <div class="activity-item">
-                <strong>Tạo mới PC006</strong>
+                <strong>Cập nhật HS003</strong>
                 <span>08:15 - 12/04/2026</span>
               </div>
               <div class="activity-item">
-                <strong>Phát hiện trùng GV Vật lý</strong>
+                <strong>Tổng hợp HK1</strong>
                 <span>07:58 - 12/04/2026</span>
               </div>
               <div class="activity-item">
-                <strong>Xuất danh sách phân công</strong>
+                <strong>Xuất danh sách</strong>
                 <span>07:20 - 12/04/2026</span>
               </div>
             </div>
