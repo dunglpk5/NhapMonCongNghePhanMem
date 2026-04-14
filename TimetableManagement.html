@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GtuSchool - Hạnh kiểm</title>
-  <link rel="stylesheet" href="conduct-management.css" />
+  <title>GtuSchool - Thời khóa biểu</title>
+  <link rel="stylesheet" href="timetable-management.css" />
 </head>
 <body>
   <div class="app">
@@ -34,8 +34,8 @@
           <li><a href="StudentProfileManagement.html"><span>Hồ sơ học sinh</span><span class="menu-badge">HS</span></a></li>
           <li><a href="ClassManagement.html"><span>Lớp học</span><span class="menu-badge">LH</span></a></li>
           <li><a href="ScoreManagement.html"><span>Nhập điểm</span><span class="menu-badge">Đ</span></a></li>
-          <li><a href="ConductManagement.html" class="active"><span>Hạnh kiểm</span><span class="menu-badge">HK</span></a></li>
-          <li><a href="TimetableManagement.html"><span>Thời khóa biểu</span><span class="menu-badge">TKB</span></a></li>
+          <li><a href="ConductManagement.html"><span>Hạnh kiểm</span><span class="menu-badge">HK</span></a></li>
+          <li><a href="TimetableManagement.html" class="active"><span>Thời khóa biểu</span><span class="menu-badge">TKB</span></a></li>
           <li><a href="TeachingAssignmentManagement.html"><span>Phân công giảng dạy</span><span class="menu-badge">PC</span></a></li>
         </ul>
       </div>
@@ -51,22 +51,22 @@
       </div>
 
       <div class="sidebar-footer">
-        <p>Quản lý đánh giá hạnh kiểm theo lớp và học kỳ.</p>
-        <button>Lưu đánh giá</button>
+        <p>Quản lý thời khóa biểu theo lớp, học kỳ và phòng học.</p>
+        <button>Lưu thời khóa biểu</button>
       </div>
     </aside>
 
     <main class="main">
       <header class="topbar">
         <div class="topbar__left">
-          <h2>Quản lý hạnh kiểm</h2>
+          <h2>Thời khóa biểu</h2>
         </div>
         <div class="topbar__right">
-          <div class="search">🔎 Tìm lớp, học sinh...</div>
+          <div class="search">🔎 Tìm lớp, môn, giáo viên...</div>
           <div class="user-card">
             <div class="avatar">GV</div>
             <div>
-              <strong>Giáo viên</strong>
+              <strong>Giáo vụ</strong>
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@
 
       <section class="hero">
         <div>
-          <h3>Conduct</h3>
+          <h3>Timetable</h3>
           <div class="hero-actions">
             <button class="btn btn--light">Lưu</button>
             <button class="btn btn--ghost">Xuất</button>
@@ -92,8 +92,8 @@
               <strong class="meta-number">HK1</strong>
             </div>
             <div>
-              <small>Đã đánh giá</small>
-              <strong class="meta-number">30</strong>
+              <small>Tuần</small>
+              <strong class="meta-number">01</strong>
             </div>
           </div>
         </div>
@@ -101,27 +101,27 @@
 
       <section class="stats stats--four">
         <article class="stat-card">
-          <div class="stat-card__label">Tốt</div>
-          <div class="stat-card__value">18</div>
-          <div class="stat-card__change">Excellent</div>
+          <div class="stat-card__label">Tổng tiết</div>
+          <div class="stat-card__value">30</div>
+          <div class="stat-card__change">This week</div>
         </article>
 
         <article class="stat-card">
-          <div class="stat-card__label">Khá</div>
-          <div class="stat-card__value">09</div>
-          <div class="stat-card__change">Good</div>
+          <div class="stat-card__label">Đã xếp</div>
+          <div class="stat-card__value">28</div>
+          <div class="stat-card__change">Completed</div>
         </article>
 
         <article class="stat-card">
-          <div class="stat-card__label">Trung bình</div>
-          <div class="stat-card__value">03</div>
-          <div class="stat-card__change">Average</div>
+          <div class="stat-card__label">Trùng lịch</div>
+          <div class="stat-card__value">01</div>
+          <div class="stat-card__change">Conflict</div>
         </article>
 
         <article class="stat-card">
-          <div class="stat-card__label">Chưa nhập</div>
-          <div class="stat-card__value">05</div>
-          <div class="stat-card__change">Pending</div>
+          <div class="stat-card__label">Phòng học</div>
+          <div class="stat-card__value">B203</div>
+          <div class="stat-card__change">Default</div>
         </article>
       </section>
 
@@ -133,121 +133,77 @@
         </div>
         <div class="toolbar-right">
           <button class="btn btn--primary">Lưu</button>
-          <button class="btn btn--outline">Tổng hợp</button>
+          <button class="btn btn--outline">Kiểm tra trùng</button>
         </div>
       </section>
 
       <section class="content-grid">
         <article class="table-panel">
           <div class="table-panel__top">
-            <h4>Danh sách đánh giá</h4>
-            <button class="btn btn--ghost-alt">Bulk</button>
+            <h4>Bảng thời khóa biểu</h4>
+            <button class="btn btn--ghost-alt">In</button>
           </div>
 
-          <table>
+          <table class="timetable-table">
             <thead>
               <tr>
-                <th>Mã HS</th>
-                <th>Họ tên</th>
-                <th>Lớp</th>
-                <th>Học kỳ</th>
-                <th>Hạnh kiểm</th>
-                <th>Ghi chú</th>
-                <th>Trạng thái</th>
+                <th>Tiết</th>
+                <th>Thứ 2</th>
+                <th>Thứ 3</th>
+                <th>Thứ 4</th>
+                <th>Thứ 5</th>
+                <th>Thứ 6</th>
+                <th>Thứ 7</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>HS001</td>
-                <td>Nguyễn Văn An</td>
-                <td>10A1</td>
-                <td>HK1</td>
-                <td>
-                  <select class="conduct-select">
-                    <option>Tốt</option>
-                    <option>Khá</option>
-                    <option>Trung bình</option>
-                    <option>Yếu</option>
-                  </select>
-                </td>
-                <td><input class="note-input" type="text" value="Ổn định" /></td>
-                <td><span class="status status--success">Đã nhập</span></td>
+                <td>1</td>
+                <td><div class="cell-card">Toán<br><span>GV Minh - B203</span></div></td>
+                <td><div class="cell-card">Văn<br><span>GV Lan - B204</span></div></td>
+                <td><div class="cell-card">Anh<br><span>GV Hoa - A102</span></div></td>
+                <td><div class="cell-card">Lý<br><span>GV Huy - P301</span></div></td>
+                <td><div class="cell-card">Tin<br><span>GV Đức - Lab1</span></div></td>
+                <td><div class="cell-card empty">--</div></td>
               </tr>
               <tr>
-                <td>HS002</td>
-                <td>Trần Thị Bình</td>
-                <td>10A1</td>
-                <td>HK1</td>
-                <td>
-                  <select class="conduct-select">
-                    <option>Khá</option>
-                    <option>Tốt</option>
-                    <option>Trung bình</option>
-                    <option>Yếu</option>
-                  </select>
-                </td>
-                <td><input class="note-input" type="text" value="Tích cực" /></td>
-                <td><span class="status status--success">Đã nhập</span></td>
+                <td>2</td>
+                <td><div class="cell-card">Toán<br><span>GV Minh - B203</span></div></td>
+                <td><div class="cell-card">Sinh<br><span>GV Thảo - B201</span></div></td>
+                <td><div class="cell-card">Địa<br><span>GV Nam - C101</span></div></td>
+                <td><div class="cell-card">Hóa<br><span>GV Phúc - Lab2</span></div></td>
+                <td><div class="cell-card">Sử<br><span>GV Vy - A203</span></div></td>
+                <td><div class="cell-card empty">--</div></td>
               </tr>
               <tr>
-                <td>HS003</td>
-                <td>Lê Hoàng Minh</td>
-                <td>10A1</td>
-                <td>HK1</td>
-                <td>
-                  <select class="conduct-select">
-                    <option>Trung bình</option>
-                    <option>Tốt</option>
-                    <option>Khá</option>
-                    <option>Yếu</option>
-                  </select>
-                </td>
-                <td><input class="note-input" type="text" value="Cần cải thiện" /></td>
-                <td><span class="status status--info">Mới</span></td>
+                <td>3</td>
+                <td><div class="cell-card">Văn<br><span>GV Lan - B204</span></div></td>
+                <td><div class="cell-card">Anh<br><span>GV Hoa - A102</span></div></td>
+                <td><div class="cell-card">GDCD<br><span>GV Quân - C202</span></div></td>
+                <td><div class="cell-card warning">Trùng lịch<br><span>Kiểm tra lại</span></div></td>
+                <td><div class="cell-card">Toán<br><span>GV Minh - B203</span></div></td>
+                <td><div class="cell-card empty">--</div></td>
               </tr>
               <tr>
-                <td>HS004</td>
-                <td>Phạm Gia Hân</td>
-                <td>10A1</td>
-                <td>HK1</td>
-                <td>
-                  <select class="conduct-select">
-                    <option>Yếu</option>
-                    <option>Tốt</option>
-                    <option>Khá</option>
-                    <option>Trung bình</option>
-                  </select>
-                </td>
-                <td><input class="note-input" type="text" value="Đi học muộn" /></td>
-                <td><span class="status status--warning">Cần xem lại</span></td>
+                <td>4</td>
+                <td><div class="cell-card">Thể dục<br><span>Sân trường</span></div></td>
+                <td><div class="cell-card">Lý<br><span>GV Huy - P301</span></div></td>
+                <td><div class="cell-card">Toán<br><span>GV Minh - B203</span></div></td>
+                <td><div class="cell-card">Anh<br><span>GV Hoa - A102</span></div></td>
+                <td><div class="cell-card">Hóa<br><span>GV Phúc - Lab2</span></div></td>
+                <td><div class="cell-card empty">--</div></td>
               </tr>
               <tr>
-                <td>HS005</td>
-                <td>Đỗ Quốc Duy</td>
-                <td>10A1</td>
-                <td>HK1</td>
-                <td>
-                  <select class="conduct-select">
-                    <option>-- Chọn --</option>
-                    <option>Tốt</option>
-                    <option>Khá</option>
-                    <option>Trung bình</option>
-                    <option>Yếu</option>
-                  </select>
-                </td>
-                <td><input class="note-input" type="text" placeholder="Ghi chú" /></td>
-                <td><span class="status status--warning">Chưa nhập</span></td>
+                <td>5</td>
+                <td><div class="cell-card">Sử<br><span>GV Vy - A203</span></div></td>
+                <td><div class="cell-card">Tin<br><span>GV Đức - Lab1</span></div></td>
+                <td><div class="cell-card">Văn<br><span>GV Lan - B204</span></div></td>
+                <td><div class="cell-card">Sinh<br><span>GV Thảo - B201</span></div></td>
+                <td><div class="cell-card">Địa<br><span>GV Nam - C101</span></div></td>
+                <td><div class="cell-card empty">--</div></td>
               </tr>
             </tbody>
           </table>
-
-          <div class="pagination">
-            <button class="page-btn">&lt;</button>
-            <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
-            <button class="page-btn">&gt;</button>
-          </div>
         </article>
 
         <aside class="side-stack">
@@ -256,7 +212,7 @@
               <h4>Bộ lọc</h4>
             </div>
 
-            <form class="conduct-form">
+            <form class="timetable-form">
               <div class="form-group">
                 <label>Lớp</label>
                 <select>
@@ -285,13 +241,12 @@
               </div>
 
               <div class="form-group">
-                <label>Mức đánh giá</label>
+                <label>Phòng học</label>
                 <select>
-                  <option>Tất cả</option>
-                  <option>Tốt</option>
-                  <option>Khá</option>
-                  <option>Trung bình</option>
-                  <option>Yếu</option>
+                  <option>B203</option>
+                  <option>B204</option>
+                  <option>A102</option>
+                  <option>P301</option>
                 </select>
               </div>
 
@@ -309,19 +264,19 @@
 
             <div class="activity-list">
               <div class="activity-item">
-                <strong>Lưu đánh giá 10A1</strong>
+                <strong>Lưu TKB 10A1</strong>
                 <span>08:42 - 12/04/2026</span>
               </div>
               <div class="activity-item">
-                <strong>Cập nhật HS003</strong>
+                <strong>Đổi phòng tiết 2</strong>
                 <span>08:15 - 12/04/2026</span>
               </div>
               <div class="activity-item">
-                <strong>Tổng hợp HK1</strong>
+                <strong>Phát hiện trùng giáo viên</strong>
                 <span>07:58 - 12/04/2026</span>
               </div>
               <div class="activity-item">
-                <strong>Xuất danh sách</strong>
+                <strong>Xuất thời khóa biểu</strong>
                 <span>07:20 - 12/04/2026</span>
               </div>
             </div>
