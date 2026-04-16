@@ -1,0 +1,300 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GtuSchool - Quản lý tài khoản</title>
+  <link rel="stylesheet" href="account-management.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <a href="Home.html">
+            <div class="brand__logo">G</div>
+            <div class="brand__name">
+                <h1>GtuSchool</h1>
+                <p>Hệ thống quản lý học sinh</p>
+            </div>
+        </a>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-group__title">Tổng quan</div>
+        <ul class="menu">
+          <li><a href="Home.html"><span>Trang chủ</span><span class="menu-badge">01</span></a></li>
+          <li><a href="#"><span>Báo cáo & thống kê</span><span class="menu-badge">54</span></a></li>
+          <li><a href="#"><span>Nhật ký hệ thống</span><span class="menu-badge">12</span></a></li>
+        </ul>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-group__title">Quản lý nghiệp vụ</div>
+        <ul class="menu">
+          <li><a href="StudentProfileManagement.html"><span>Hồ sơ học sinh</span><span class="menu-badge">HS</span></a></li>
+          <li><a href="ClassManagement.html"><span>Lớp học</span><span class="menu-badge">LH</span></a></li>
+          <li><a href="ScoreManagement.html"><span>Nhập điểm</span><span class="menu-badge">Đ</span></a></li>
+          <li><a href="ConductManagement.html"><span>Hạnh kiểm</span><span class="menu-badge">HK</span></a></li>
+          <li><a href="TimetableManagement.html"><span>Thời khóa biểu</span><span class="menu-badge">TKB</span></a></li>
+          <li><a href="TeachingAssignmentManagement.html"><span>Phân công giảng dạy</span><span class="menu-badge">PC</span></a></li>
+        </ul>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-group__title">Hệ thống</div>
+        <ul class="menu">
+          <li><a href="#" class="active"><span>Tài khoản & phân quyền</span><span class="menu-badge">RBAC</span></a></li>
+          <li><a href="#"><span>Sao lưu dữ liệu</span><span class="menu-badge">BK</span></a></li>
+          <li><a href="#"><span>Phục hồi dữ liệu</span><span class="menu-badge">RS</span></a></li>
+          <li><a href="#"><span>Cài đặt</span><span class="menu-badge">⚙</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <p>Quản lý tài khoản, trạng thái hoạt động và vai trò truy cập cho toàn hệ thống.</p>
+        <button>Thêm tài khoản mới</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar__left">
+          <h2>Quản lý tài khoản</h2>
+        </div>
+        <div class="topbar__right">
+          <div class="search">🔎 Tìm kiếm...</div>
+          <div class="user-card">
+            <div class="avatar">AD</div>
+            <div>
+              <strong>Admin</strong>
+            </div>
+          </div>
+        </div>
+      </header> // test - duy 
+
+      <section class="hero hero--account">
+        <div>
+          <h3>Accounts</h3>
+          <div class="hero-actions">
+            <button class="btn btn--light">+ Thêm</button>
+            <button class="btn btn--ghost">Export</button>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div>
+            <small>Tổng</small>
+            <strong>128</strong>
+          </div>
+          <div class="meta">
+            <div>
+              <small>Active</small>
+              <strong class="meta-number">119</strong>
+            </div>
+            <div>
+              <small>Locked</small>
+              <strong class="meta-number">09</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats stats--three">
+        <article class="stat-card">
+          <div class="stat-card__label">Tài khoản quản trị</div>
+          <div class="stat-card__value">08</div>
+          <div class="stat-card__change">Toàn quyền hệ thống</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card__label">Giáo viên & giáo vụ</div>
+          <div class="stat-card__value">74</div>
+          <div class="stat-card__change">Đang được phân quyền</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card__label">Yêu cầu đặt lại mật khẩu</div>
+          <div class="stat-card__value">11</div>
+          <div class="stat-card__change">Cần xử lý trong ngày</div>
+        </article>
+      </section>
+
+      <section class="toolbar-panel">
+        <div class="toolbar-left">
+          <div class="filter-box">Vai trò: Tất cả</div>
+          <div class="filter-box">Trạng thái: Tất cả</div>
+          <div class="filter-box">Sắp xếp: Mới nhất</div>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn--primary">Thêm mới</button>
+          <button class="btn btn--outline">Đặt lại mật khẩu</button>
+        </div>
+      </section>
+
+      <section class="content-grid content-grid--account">
+        <article class="table-panel">
+          <div class="table-panel__top">
+            <h4>Danh sách tài khoản</h4>
+            <button class="btn btn--ghost-alt">Bulk</button>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Mã</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Vai trò</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TK001</td>
+                <td>Từ Đức Anh</td>
+                <td>ducanh@gtschool.vn</td>
+                <td><span class="role-badge role-admin">Admin</span></td>
+                <td><span class="status status--success">Hoạt động</span></td>
+                <td>
+                  <div class="action-group">
+                    <button class="table-btn">Sửa</button>
+                    <button class="table-btn">Khóa</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>TK014</td>
+                <td>Nguyễn Thành Đạt</td>
+                <td>dat.nt@gtschool.vn</td>
+                <td><span class="role-badge role-office">Giáo vụ</span></td>
+                <td><span class="status status--success">Hoạt động</span></td>
+                <td>
+                  <div class="action-group">
+                    <button class="table-btn">Sửa</button>
+                    <button class="table-btn">Reset MK</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>TK026</td>
+                <td>Nguyễn Hoàng Quốc Duy</td>
+                <td>duy.nhq@gtschool.vn</td>
+                <td><span class="role-badge role-teacher">Giáo viên</span></td>
+                <td><span class="status status--warning">Chờ kích hoạt</span></td>
+                <td>
+                  <div class="action-group">
+                    <button class="table-btn">Duyệt</button>
+                    <button class="table-btn">Sửa</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>TK041</td>
+                <td>Trần Văn Dũng</td>
+                <td>dung.tv@gtschool.vn</td>
+                <td><span class="role-badge role-teacher">Giáo viên</span></td>
+                <td><span class="status status--danger">Bị khóa</span></td>
+                <td>
+                  <div class="action-group">
+                    <button class="table-btn">Mở khóa</button>
+                    <button class="table-btn">Chi tiết</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>TK052</td>
+                <td>Đặng Quang Minh</td>
+                <td>minh.dq@gtschool.vn</td>
+                <td><span class="role-badge role-bgh">BGH</span></td>
+                <td><span class="status status--info">Đã phân quyền</span></td>
+                <td>
+                  <div class="action-group">
+                    <button class="table-btn">Sửa</button>
+                    <button class="table-btn">Quyền</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pagination">
+            <button class="page-btn">&lt;</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">&gt;</button>
+          </div>
+        </article>
+
+        <aside class="side-stack">
+          <article class="panel form-panel">
+            <div class="panel__header panel__header--column">
+              <h4>Tài khoản</h4>
+            </div>
+
+            <form class="account-form">
+              <div class="form-group">
+                <label>Họ và tên</label>
+                <input type="text" placeholder="Nhập họ tên người dùng" />
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="Nhập email đăng nhập" />
+              </div>
+              <div class="form-group">
+                <label>Vai trò</label>
+                <select>
+                  <option>Chọn vai trò</option>
+                  <option>Admin</option>
+                  <option>Giáo viên</option>
+                  <option>Nhân viên văn phòng</option>
+                  <option>Ban giám hiệu</option>
+                  <option>Học sinh</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Trạng thái</label>
+                <select>
+                  <option>Hoạt động</option>
+                  <option>Chờ kích hoạt</option>
+                  <option>Bị khóa</option>
+                </select>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn btn--primary">Lưu tài khoản</button>
+                <button type="button" class="btn btn--outline">Làm mới</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="panel">
+            <div class="panel__header panel__header--column">
+              <h4>Activity</h4>
+            </div>
+
+            <div class="activity-list">
+              <div class="activity-item">
+                <strong>Admin vừa mở khóa tài khoản gv.minh</strong>
+                <span>08:42 - 10/04/2026</span>
+              </div>
+              <div class="activity-item">
+                <strong>Yêu cầu đặt lại mật khẩu cho tk026</strong>
+                <span>08:15 - 10/04/2026</span>
+              </div>
+              <div class="activity-item">
+                <strong>Phân quyền BGH cho tài khoản tk052</strong>
+                <span>07:58 - 10/04/2026</span>
+              </div>
+              <div class="activity-item">
+                <strong>Tạo mới tài khoản giáo vụ</strong>
+                <span>07:20 - 10/04/2026</span>
+              </div>
+            </div>
+          </article>
+        </aside>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
