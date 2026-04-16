@@ -192,6 +192,25 @@ select {
   color: var(--muted);
   box-shadow: var(--shadow);
 }
+.search i{
+    font-size: 18px;
+    font-weight: bold;
+    margin: auto;
+    line-height: 38px;
+}
+.search input{
+    border: none;
+    outline: none;
+    width: 200px;
+    margin: auto;
+    font-size: 18px;
+}
+
+.search input:hover{
+    border: none;
+    outline: none;
+    width: 200px;
+}
 
 .user-card {
   background: var(--surface);
