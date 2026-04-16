@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GtuSchool - Quản lý lớp học</title>
   <link rel="stylesheet" href="../CSS/class-management.css" />
+  <link rel="stylesheet" href="../fonts/fontawesome-free-7.2.0/css/all.min.css">
+
 </head>
 <body>
   <div class="app">
@@ -43,7 +45,7 @@
       <div class="menu-group">
         <div class="menu-group__title">Hệ thống</div>
         <ul class="menu">
-          <li><a href="AccountManagement.html" class="active"><span>Tài khoản & phân quyền</span></a></li>
+          <li><a href="AccountManagement.html"><span>Tài khoản & phân quyền</span></a></li>
           <li><a href="#"><span>Sao lưu dữ liệu</span></a></li>
           <li><a href="#"><span>Phục hồi dữ liệu</span></a></li>
           <li><a href="#"><span>Cài đặt</span></a></li>
@@ -62,7 +64,10 @@
           <h2>Quản lý lớp học</h2>
         </div>
         <div class="topbar__right">
-          <div class="search">🔎 Tìm kiếm lớp...</div>
+          <div class="search">
+            <i class="fa-regular fa-magnifying-glass"></i>
+            <input type="text" placeholder="Tìm kiếm">
+          </div>
           <div class="user-card">
             <div class="avatar">AD</div>
             <div>
@@ -281,19 +286,9 @@
                 </select>
               </div>
 
-              <div class="form-row">
-                <div class="form-group">
-                  <label>Sĩ số</label>
-                  <input type="number" placeholder="0" />
-                </div>
-                <div class="form-group">
-                  <label>Trạng thái</label>
-                  <select>
-                    <option>Hoạt động</option>
-                    <option>Mới</option>
-                    <option>Chờ GVCN</option>
-                  </select>
-                </div>
+              <div class="form-group">
+                <label>Sĩ số</label>
+                <input type="number" placeholder="0" />
               </div>
 
               <div class="form-actions">
