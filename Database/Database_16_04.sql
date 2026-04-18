@@ -492,7 +492,7 @@ INSERT INTO system_config (config_key, config_value, description) VALUES
 (N'max_failed_login_attempts', N'5', N'Số lần đăng nhập sai tối đa'),
 (N'backup_time', N'02:00', N'Thời gian sao lưu tự động hàng ngày'),
 (N'system_name', N'Hệ thống quản lý trường học', N'Tên hệ thống'),
-(N'school_name', N'Trường THPT Mẫu giáo', N'Tên trường');
+(N'school_name', N'Trường THPT GTUSchool', N'Tên trường');
 GO
 
 -- Password: Admin@123 (đã hash bằng bcrypt, cần thay đổi theo thuật toán thực tế)

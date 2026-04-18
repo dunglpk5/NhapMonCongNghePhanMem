@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GtuSchool - Hồ sơ học sinh</title>
   <link rel="stylesheet" href="../CSS/student-profile.css" />
 </head>
+
 <body>
   <div class="app">
     <aside class="sidebar">
@@ -23,7 +25,7 @@
         <div class="menu-group__title">Tổng quan</div>
         <ul class="menu">
           <li><a href="Home.html"><span>Trang chủ</span></a></li>
-          <li><a href="#"><span>Báo cáo & thống kê</span></a></li>
+          <li><a href="#"><span>Báo cáo &amp; thống kê</span></a></li>
           <li><a href="#"><span>Nhật ký hệ thống</span></a></li>
         </ul>
       </div>
@@ -31,7 +33,7 @@
       <div class="menu-group">
         <div class="menu-group__title">Quản lý nghiệp vụ</div>
         <ul class="menu">
-          <li><a href="StudentProfileManagement.html"><span>Hồ sơ học sinh</span></a></li>
+          <li><a href="StudentProfileManagement.html" class="active"><span>Hồ sơ học sinh</span></a></li>
           <li><a href="ClassManagement.html"><span>Lớp học</span></a></li>
           <li><a href="ScoreManagement.html"><span>Điểm</span></a></li>
           <li><a href="ConductManagement.html"><span>Hạnh kiểm</span></a></li>
@@ -43,7 +45,7 @@
       <div class="menu-group">
         <div class="menu-group__title">Hệ thống</div>
         <ul class="menu">
-          <li><a href="AccountManagement.html" class="active"><span>Tài khoản & phân quyền</span></a></li>
+          <li><a href="AccountManagement.html"><span>Tài khoản &amp; phân quyền</span></a></li>
           <li><a href="#"><span>Sao lưu dữ liệu</span></a></li>
           <li><a href="#"><span>Phục hồi dữ liệu</span></a></li>
           <li><a href="#"><span>Cài đặt</span></a></li>
@@ -52,7 +54,7 @@
 
       <div class="sidebar-footer">
         <p>Quản lý hồ sơ và thông tin học sinh.</p>
-        <button>+ Thêm học sinh</button>
+        <button onclick="openAddModal()">+ Thêm học sinh</button>
       </div>
     </aside>
 
@@ -62,12 +64,12 @@
           <h2>Hồ sơ học sinh</h2>
         </div>
         <div class="topbar__right">
-          <div class="search">🔎 Tìm kiếm học sinh...</div>
+          <div class="search">
+            <input id="searchInput" type="text" placeholder="🔎 Tìm kiếm theo tên, mã HS..." oninput="onSearchInput(this.value)" style="border:none;background:transparent;outline:none;width:220px;font-size:14px;" />
+          </div>
           <div class="user-card">
             <div class="avatar">AD</div>
-            <div>
-              <strong>Admin</strong>
-            </div>
+            <div><strong>Admin</strong></div>
           </div>
         </div>
       </header>
@@ -79,53 +81,46 @@
         <div class="hero-side">
           <div>
             <small>Tổng học sinh</small>
-            <strong>1,248</strong>
+            <strong id="totalStudents">--</strong>
           </div>
           <div class="meta">
-            <div>
-              <small>Khối 10</small>
-              <strong class="meta-number">420</strong>
-            </div>
-            <div>
-              <small>Khối 11</small>
-              <strong class="meta-number">408</strong>
-            </div>
-            <div>
-              <small>Khối 12</small>
-              <strong class="meta-number">420</strong>
-            </div>
+            <div><small>Khối 10</small><strong class="meta-number" id="grade10Count">--</strong></div>
+            <div><small>Khối 11</small><strong class="meta-number" id="grade11Count">--</strong></div>
+            <div><small>Khối 12</small><strong class="meta-number" id="grade12Count">--</strong></div>
           </div>
         </div>
       </section>
 
       <section class="stats stats--three">
         <article class="stat-card">
-          <div class="stat-card__label">Đang học</div>
-          <div class="stat-card__value">1,220</div>
-          <div class="stat-card__change">Active</div>
+          <div class="stat-card__label">Tổng học sinh</div>
+          <div class="stat-card__value" id="statTotal">--</div>
+          <div class="stat-card__change">Đã đăng ký</div>
         </article>
-
         <article class="stat-card">
-          <div class="stat-card__label">Mới thêm</div>
-          <div class="stat-card__value">18</div>
-          <div class="stat-card__change">This month</div>
+          <div class="stat-card__label">Trang hiện tại</div>
+          <div class="stat-card__value" id="statPage">1</div>
+          <div class="stat-card__change">/ <span id="statTotalPages">--</span> trang</div>
         </article>
-
         <article class="stat-card">
-          <div class="stat-card__label">Cần cập nhật</div>
-          <div class="stat-card__value">10</div>
-          <div class="stat-card__change">Pending</div>
+          <div class="stat-card__label">Mỗi trang</div>
+          <div class="stat-card__value">20</div>
+          <div class="stat-card__change">Bản ghi</div>
         </article>
       </section>
 
       <section class="toolbar-panel">
         <div class="toolbar-left">
-          <div class="filter-box">Lớp: Tất cả</div>
-          <div class="filter-box">Khối: Tất cả</div>
-          <div class="filter-box">Trạng thái: Tất cả</div>
+          <select id="filterGender" onchange="loadStudents(0)" style="padding:6px 10px;border-radius:6px;border:1px solid #ddd;">
+            <option value="">Giới tính: Tất cả</option>
+            <option value="true">Nam</option>
+            <option value="false">Nữ</option>
+          </select>
+          <input id="filterEthnicity" type="text" placeholder="Dân tộc..." onchange="loadStudents(0)" style="padding:6px 10px;border-radius:6px;border:1px solid #ddd;width:120px;" />
         </div>
         <div class="toolbar-right">
-          <button class="btn btn--primary">Thêm mới</button>
+          <button class="btn btn--primary" onclick="openAddModal()">+ Thêm mới</button>
+          <button class="btn btn--outline" onclick="clearFilter()">Xóa bộ lọc</button>
         </div>
       </section>
 
@@ -133,220 +128,370 @@
         <article class="table-panel">
           <div class="table-panel__top">
             <h4>Danh sách học sinh</h4>
+            <span id="loadingIndicator" style="color:#888;font-size:13px;display:none;">⏳ Đang tải...</span>
           </div>
 
-          <table>
+          <table id="studentTable">
             <thead>
               <tr>
                 <th>Mã HS</th>
                 <th>Họ tên</th>
-                <th>Lớp</th>
                 <th>Giới tính</th>
                 <th>Ngày sinh</th>
                 <th>SĐT PH</th>
-                <th>Trạng thái</th>
+                <th>Địa chỉ</th>
                 <th>Thao tác</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>HS001</td>
-                <td>Nguyễn Văn An</td>
-                <td>10A1</td>
-                <td>Nam</td>
-                <td>12/03/2009</td>
-                <td>0912345678</td>
-                <td><span class="status status--success">Đang học</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>HS002</td>
-                <td>Trần Thị Bình</td>
-                <td>10A2</td>
-                <td>Nữ</td>
-                <td>05/07/2009</td>
-                <td>0987654321</td>
-                <td><span class="status status--info">Mới</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>HS003</td>
-                <td>Lê Hoàng Minh</td>
-                <td>11A1</td>
-                <td>Nam</td>
-                <td>21/11/2008</td>
-                <td>0909000111</td>
-                <td><span class="status status--success">Đang học</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>HS004</td>
-                <td>Phạm Gia Hân</td>
-                <td>12A3</td>
-                <td>Nữ</td>
-                <td>30/08/2007</td>
-                <td>0933222111</td>
-                <td><span class="status status--warning">Cập nhật</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>HS005</td>
-                <td>Đỗ Quốc Duy</td>
-                <td>12A1</td>
-                <td>Nam</td>
-                <td>18/01/2007</td>
-                <td>0977333555</td>
-                <td><span class="status status--success">Đang học</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
-                </td>
-              </tr>
+            <tbody id="studentTableBody">
+              <tr><td colspan="7" style="text-align:center;color:#888;">Đang tải dữ liệu...</td></tr>
             </tbody>
           </table>
 
-          <div class="pagination">
-            <button class="page-btn">&lt;</button>
-            <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
-            <button class="page-btn">&gt;</button>
-          </div>
+          <div class="pagination" id="paginationContainer"></div>
         </article>
 
         <aside class="side-stack">
+          <!-- Form thêm/sửa học sinh -->
           <article class="panel form-panel">
             <div class="panel__header panel__header--column">
-              <h4>Học sinh</h4>
+              <h4 id="formTitle">Thêm học sinh</h4>
             </div>
 
-            <form class="student-form">
+            <div id="formMessage" style="display:none;padding:8px 12px;border-radius:6px;margin-bottom:10px;font-size:13px;"></div>
+
+            <form class="student-form" id="studentForm" onsubmit="submitStudentForm(event)">
+              <input type="hidden" id="editStudentId" />
+
               <div class="form-group">
-                <label>Họ và tên</label>
-                <input type="text" placeholder="Nhập họ tên" />
+                <label>Họ và tên <span style="color:red">*</span></label>
+                <input type="text" id="txtHoTen" placeholder="Nhập họ tên" required />
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label>Ngày sinh</label>
-                  <input type="date" />
+                  <label>Ngày sinh <span style="color:red">*</span></label>
+                  <input type="date" id="dtpNgaySinh" required />
                 </div>
                 <div class="form-group">
-                  <label>Giới tính</label>
-                  <select>
-                    <option>Nam</option>
-                    <option>Nữ</option>
+                  <label>Giới tính <span style="color:red">*</span></label>
+                  <select id="cboGioiTinh">
+                    <option value="true">Nam</option>
+                    <option value="false">Nữ</option>
                   </select>
                 </div>
               </div>
 
               <div class="form-group">
-                <label>Địa chỉ</label>
-                <input type="text" placeholder="Nhập địa chỉ" />
+                <label>Địa chỉ <span style="color:red">*</span></label>
+                <input type="text" id="txtDiaChi" placeholder="Nhập địa chỉ" required />
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label>Dân tộc</label>
-                  <input type="text" placeholder="Kinh" />
+                  <label>Dân tộc <span style="color:red">*</span></label>
+                  <input type="text" id="txtDanToc" placeholder="Kinh" required />
                 </div>
                 <div class="form-group">
-                  <label>Tôn giáo</label>
-                  <input type="text" placeholder="Không" />
+                  <label>Tôn giáo <span style="color:red">*</span></label>
+                  <input type="text" id="txtTonGiao" placeholder="Không" required />
                 </div>
               </div>
 
               <div class="form-group">
-                <label>Họ tên cha</label>
-                <input type="text" placeholder="Nhập họ tên cha" />
+                <label>Họ tên cha <span style="color:red">*</span></label>
+                <input type="text" id="txtHoTenCha" placeholder="Nhập họ tên cha" required />
               </div>
 
               <div class="form-group">
-                <label>Họ tên mẹ</label>
-                <input type="text" placeholder="Nhập họ tên mẹ" />
+                <label>Họ tên mẹ <span style="color:red">*</span></label>
+                <input type="text" id="txtHoTenMe" placeholder="Nhập họ tên mẹ" required />
               </div>
 
               <div class="form-group">
-                <label>Số điện thoại liên hệ</label>
-                <input type="text" placeholder="Nhập số điện thoại" />
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label>Lớp</label>
-                  <select>
-                    <option>10A1</option>
-                    <option>10A2</option>
-                    <option>11A1</option>
-                    <option>12A1</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Trạng thái</label>
-                  <select>
-                    <option>Đang học</option>
-                    <option>Mới</option>
-                    <option>Cập nhật</option>
-                  </select>
-                </div>
+                <label>Số điện thoại liên hệ <span style="color:red">*</span></label>
+                <input type="text" id="txtSDT" placeholder="Nhập số điện thoại" required />
               </div>
 
               <div class="form-actions">
-                <button type="button" class="btn btn--primary">Lưu</button>
-                <button type="button" class="btn btn--outline">Làm mới</button>
+                <button type="submit" class="btn btn--primary" id="btnLuu">Lưu</button>
+                <button type="button" class="btn btn--outline" onclick="resetForm()">Làm mới</button>
               </div>
             </form>
           </article>
 
+          <!-- Recent activity -->
           <article class="panel">
             <div class="panel__header panel__header--column">
-              <h4>Recent</h4>
+              <h4>Hoạt động gần đây</h4>
             </div>
-
-            <div class="activity-list">
-              <div class="activity-item">
-                <strong>Thêm mới HS006</strong>
-                <span>08:42 - 12/04/2026</span>
-              </div>
-              <div class="activity-item">
-                <strong>Cập nhật địa chỉ HS004</strong>
-                <span>08:15 - 12/04/2026</span>
-              </div>
-              <div class="activity-item">
-                <strong>Chuyển lớp HS021</strong>
-                <span>07:58 - 12/04/2026</span>
-              </div>
-              <div class="activity-item">
-                <strong>Import danh sách mới</strong>
-                <span>07:20 - 12/04/2026</span>
-              </div>
+            <div class="activity-list" id="activityList">
+              <div class="activity-item"><strong>Đang tải...</strong></div>
             </div>
           </article>
         </aside>
       </section>
     </main>
   </div>
+
+  <script>
+    const API_BASE = 'http://localhost:8080/api';
+    let currentPage = 0;
+    let searchTimeout = null;
+    const recentActivities = [];
+
+    // =============================================
+    // KHỞI ĐỘNG: Load danh sách khi trang load
+    // =============================================
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStudents(0);
+    });
+
+    // =============================================
+    // TẢI DANH SÁCH HỌC SINH (FR-14, FR-15)
+    // =============================================
+    async function loadStudents(page = 0) {
+      currentPage = page;
+      showLoading(true);
+
+      const keyword = document.getElementById('searchInput').value.trim();
+      const gender = document.getElementById('filterGender').value;
+      const ethnicity = document.getElementById('filterEthnicity').value.trim();
+
+      let url;
+      if (keyword) {
+        // FR-13: Tìm kiếm theo từ khóa
+        url = `${API_BASE}/students/search?keyword=${encodeURIComponent(keyword)}&page=${page}&size=20`;
+      } else {
+        // FR-15: Lọc theo bộ lọc
+        const params = new URLSearchParams({ page, size: 20 });
+        if (gender !== '') params.append('gender', gender);
+        if (ethnicity) params.append('ethnicity', ethnicity);
+        url = `${API_BASE}/students?${params}`;
+      }
+
+      try {
+        const res = await fetch(url);
+        const json = await res.json();
+
+        if (json.success) {
+          renderStudentTable(json.data.content);
+          renderPagination(json.data.page, json.data.totalPages, json.data.totalElements);
+          document.getElementById('statTotal').textContent = json.data.totalElements.toLocaleString();
+          document.getElementById('statPage').textContent = json.data.page + 1;
+          document.getElementById('statTotalPages').textContent = json.data.totalPages;
+          document.getElementById('totalStudents').textContent = json.data.totalElements.toLocaleString();
+        } else {
+          showTableError(json.message);
+        }
+      } catch (err) {
+        showTableError('Không kết nối được server! Kiểm tra backend đang chạy tại :8080');
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // =============================================
+    // RENDER BẢNG DANH SÁCH
+    // =============================================
+    function renderStudentTable(students) {
+      const tbody = document.getElementById('studentTableBody');
+      if (!students || students.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;padding:30px;">Không tìm thấy học sinh nào.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = students.map(s => `
+        <tr>
+          <td><strong>${s.studentId}</strong></td>
+          <td>${s.fullName}</td>
+          <td>${s.gender}</td>
+          <td>${s.dateOfBirth ? formatDate(s.dateOfBirth) : '--'}</td>
+          <td>${s.phone || '--'}</td>
+          <td>${s.address ? s.address.substring(0, 30) + (s.address.length > 30 ? '...' : '') : '--'}</td>
+          <td>
+            <div class="action-group">
+              <button class="table-btn" onclick="viewStudent('${s.studentId}')">Xem</button>
+              <button class="table-btn" onclick="editStudent('${s.studentId}')">Sửa</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // =============================================
+    // PHÂN TRANG
+    // =============================================
+    function renderPagination(page, totalPages, totalElements) {
+      const container = document.getElementById('paginationContainer');
+      if (totalPages <= 1) { container.innerHTML = ''; return; }
+
+      let html = `<button class="page-btn" onclick="loadStudents(${page - 1})" ${page === 0 ? 'disabled' : ''}>&lt;</button>`;
+      for (let i = 0; i < totalPages; i++) {
+        if (i === page) html += `<button class="page-btn active">${i + 1}</button>`;
+        else if (i === 0 || i === totalPages - 1 || Math.abs(i - page) <= 1) {
+          html += `<button class="page-btn" onclick="loadStudents(${i})">${i + 1}</button>`;
+        } else if (Math.abs(i - page) === 2) html += `<span style="padding:0 4px">...</span>`;
+      }
+      html += `<button class="page-btn" onclick="loadStudents(${page + 1})" ${page >= totalPages - 1 ? 'disabled' : ''}>&gt;</button>`;
+      container.innerHTML = html;
+    }
+
+    // =============================================
+    // TÌM KIẾM (FR-13) - debounce 500ms
+    // =============================================
+    function onSearchInput(value) {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => loadStudents(0), 500);
+    }
+
+    // =============================================
+    // XEM CHI TIẾT HỌC SINH
+    // =============================================
+    async function viewStudent(id) {
+      try {
+        const res = await fetch(`${API_BASE}/students/${id}`);
+        const json = await res.json();
+        if (json.success) {
+          const s = json.data;
+          alert(`=== Thông tin học sinh ===\nMã HS: ${s.studentId}\nHọ tên: ${s.fullName}\nNgày sinh: ${formatDate(s.dateOfBirth)}\nGiới tính: ${s.gender}\nĐịa chỉ: ${s.address}\nDân tộc: ${s.ethnicity}\nTôn giáo: ${s.religion}\nHọ tên cha: ${s.fatherName}\nHọ tên mẹ: ${s.motherName}\nSĐT: ${s.phone}`);
+        }
+      } catch (e) {
+        alert('Lỗi kết nối server!');
+      }
+    }
+
+    // =============================================
+    // SỬA HỌC SINH (FR-12) - Load thông tin vào form
+    // =============================================
+    async function editStudent(id) {
+      try {
+        const res = await fetch(`${API_BASE}/students/${id}`);
+        const json = await res.json();
+        if (json.success) {
+          const s = json.data;
+          document.getElementById('formTitle').textContent = 'Cập nhật học sinh';
+          document.getElementById('editStudentId').value = s.studentId;
+          document.getElementById('txtHoTen').value = s.fullName;
+          document.getElementById('dtpNgaySinh').value = s.dateOfBirth;
+          document.getElementById('cboGioiTinh').value = s.gender === 'Nam' ? 'true' : 'false';
+          document.getElementById('txtDiaChi').value = s.address || '';
+          document.getElementById('txtDanToc').value = s.ethnicity || '';
+          document.getElementById('txtTonGiao').value = s.religion || '';
+          document.getElementById('txtHoTenCha').value = s.fatherName || '';
+          document.getElementById('txtHoTenMe').value = s.motherName || '';
+          document.getElementById('txtSDT').value = s.phone || '';
+          document.getElementById('btnLuu').textContent = 'Cập nhật';
+          document.querySelector('.form-panel').scrollIntoView({ behavior: 'smooth' });
+        }
+      } catch (e) {
+        alert('Lỗi kết nối server!');
+      }
+    }
+
+    // =============================================
+    // SUBMIT FORM (Thêm mới FR-10 hoặc Cập nhật FR-12)
+    // =============================================
+    async function submitStudentForm(event) {
+      event.preventDefault();
+      const editId = document.getElementById('editStudentId').value;
+      const isEdit = editId !== '';
+
+      const body = {
+        fullName: document.getElementById('txtHoTen').value.trim(),
+        dateOfBirth: document.getElementById('dtpNgaySinh').value,
+        gender: document.getElementById('cboGioiTinh').value === 'true',
+        address: document.getElementById('txtDiaChi').value.trim(),
+        ethnicity: document.getElementById('txtDanToc').value.trim(),
+        religion: document.getElementById('txtTonGiao').value.trim(),
+        fatherName: document.getElementById('txtHoTenCha').value.trim(),
+        motherName: document.getElementById('txtHoTenMe').value.trim(),
+        phone: document.getElementById('txtSDT').value.trim()
+      };
+
+      const url = isEdit ? `${API_BASE}/students/${editId}` : `${API_BASE}/students`;
+      const method = isEdit ? 'PUT' : 'POST';
+
+      try {
+        document.getElementById('btnLuu').disabled = true;
+        document.getElementById('btnLuu').textContent = 'Đang lưu...';
+
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          showFormMessage(json.message + (json.data?.studentId ? ` (Mã: ${json.data.studentId})` : ''), 'success');
+          addActivity(`${isEdit ? 'Cập nhật' : 'Thêm mới'} ${json.data?.studentId || editId}`);
+          resetForm();
+          loadStudents(currentPage);
+        } else {
+          showFormMessage(json.message || 'Có lỗi xảy ra!', 'error');
+        }
+      } catch (e) {
+        showFormMessage('Không kết nối được server!', 'error');
+      } finally {
+        document.getElementById('btnLuu').disabled = false;
+        document.getElementById('btnLuu').textContent = document.getElementById('editStudentId').value ? 'Cập nhật' : 'Lưu';
+      }
+    }
+
+    // =============================================
+    // HELPERS
+    // =============================================
+    function openAddModal() { resetForm(); document.querySelector('.form-panel').scrollIntoView({ behavior: 'smooth' }); }
+
+    function resetForm() {
+      document.getElementById('studentForm').reset();
+      document.getElementById('editStudentId').value = '';
+      document.getElementById('formTitle').textContent = 'Thêm học sinh';
+      document.getElementById('btnLuu').textContent = 'Lưu';
+      document.getElementById('formMessage').style.display = 'none';
+    }
+
+    function clearFilter() {
+      document.getElementById('filterGender').value = '';
+      document.getElementById('filterEthnicity').value = '';
+      document.getElementById('searchInput').value = '';
+      loadStudents(0);
+    }
+
+    function showLoading(show) {
+      document.getElementById('loadingIndicator').style.display = show ? 'inline' : 'none';
+    }
+
+    function showTableError(msg) {
+      document.getElementById('studentTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center;color:#e74c3c;padding:30px;">${msg}</td></tr>`;
+    }
+
+    function showFormMessage(msg, type) {
+      const el = document.getElementById('formMessage');
+      el.textContent = msg;
+      el.style.display = 'block';
+      el.style.background = type === 'success' ? '#d4edda' : '#f8d7da';
+      el.style.color = type === 'success' ? '#155724' : '#721c24';
+      setTimeout(() => { el.style.display = 'none'; }, 4000);
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '--';
+      const [y, m, d] = dateStr.split('-');
+      return `${d}/${m}/${y}`;
+    }
+
+    function addActivity(text) {
+      const now = new Date();
+      const time = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} - ${now.toLocaleDateString('vi-VN')}`;
+      recentActivities.unshift({ text, time });
+      if (recentActivities.length > 5) recentActivities.pop();
+      document.getElementById('activityList').innerHTML = recentActivities.map(a =>
+        `<div class="activity-item"><strong>${a.text}</strong><span>${a.time}</span></div>`
+      ).join('');
+    }
+  </script>
 </body>
+
 </html>

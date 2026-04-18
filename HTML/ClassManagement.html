@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GtuSchool - Quản lý lớp học</title>
   <link rel="stylesheet" href="../CSS/class-management.css" />
 </head>
+
 <body>
   <div class="app">
     <aside class="sidebar">
@@ -23,7 +25,7 @@
         <div class="menu-group__title">Tổng quan</div>
         <ul class="menu">
           <li><a href="Home.html"><span>Trang chủ</span></a></li>
-          <li><a href="#"><span>Báo cáo & thống kê</span></a></li>
+          <li><a href="#"><span>Báo cáo &amp; thống kê</span></a></li>
           <li><a href="#"><span>Nhật ký hệ thống</span></a></li>
         </ul>
       </div>
@@ -32,7 +34,7 @@
         <div class="menu-group__title">Quản lý nghiệp vụ</div>
         <ul class="menu">
           <li><a href="StudentProfileManagement.html"><span>Hồ sơ học sinh</span></a></li>
-          <li><a href="ClassManagement.html"><span>Lớp học</span></a></li>
+          <li><a href="ClassManagement.html" class="active"><span>Lớp học</span></a></li>
           <li><a href="ScoreManagement.html"><span>Điểm</span></a></li>
           <li><a href="ConductManagement.html"><span>Hạnh kiểm</span></a></li>
           <li><a href="TimetableManagement.html"><span>Thời khóa biểu</span></a></li>
@@ -43,7 +45,7 @@
       <div class="menu-group">
         <div class="menu-group__title">Hệ thống</div>
         <ul class="menu">
-          <li><a href="AccountManagement.html" class="active"><span>Tài khoản & phân quyền</span></a></li>
+          <li><a href="AccountManagement.html"><span>Tài khoản &amp; phân quyền</span></a></li>
           <li><a href="#"><span>Sao lưu dữ liệu</span></a></li>
           <li><a href="#"><span>Phục hồi dữ liệu</span></a></li>
           <li><a href="#"><span>Cài đặt</span></a></li>
@@ -52,7 +54,7 @@
 
       <div class="sidebar-footer">
         <p>Quản lý lớp, khối, năm học và giáo viên chủ nhiệm.</p>
-        <button>+ Tạo lớp</button>
+        <button onclick="openAddForm()">+ Tạo lớp</button>
       </div>
     </aside>
 
@@ -62,12 +64,13 @@
           <h2>Quản lý lớp học</h2>
         </div>
         <div class="topbar__right">
-          <div class="search">🔎 Tìm kiếm lớp...</div>
+          <div class="search">
+            <input id="searchInput" type="text" placeholder="🔎 Tìm kiếm tên lớp..." oninput="onSearchInput(this.value)"
+              style="border:none;background:transparent;outline:none;width:200px;font-size:14px;" />
+          </div>
           <div class="user-card">
             <div class="avatar">AD</div>
-            <div>
-              <strong>Admin</strong>
-            </div>
+            <div><strong>Admin</strong></div>
           </div>
         </div>
       </header>
@@ -75,61 +78,55 @@
       <section class="hero">
         <div>
           <h3>Classes</h3>
-          <div class="hero-actions">
-          </div>
         </div>
-
         <div class="hero-side">
           <div>
             <small>Tổng lớp</small>
-            <strong>36</strong>
+            <strong id="totalClasses">--</strong>
           </div>
           <div class="meta">
-            <div>
-              <small>Khối 10</small>
-              <strong class="meta-number">12</strong>
-            </div>
-            <div>
-              <small>Khối 11</small>
-              <strong class="meta-number">12</strong>
-            </div>
-            <div>
-              <small>Khối 12</small>
-              <strong class="meta-number">12</strong>
-            </div>
+            <div><small>Khối 10</small><strong class="meta-number" id="grade10Count">--</strong></div>
+            <div><small>Khối 11</small><strong class="meta-number" id="grade11Count">--</strong></div>
+            <div><small>Khối 12</small><strong class="meta-number" id="grade12Count">--</strong></div>
           </div>
         </div>
       </section>
 
       <section class="stats stats--three">
         <article class="stat-card">
-          <div class="stat-card__label">Đang hoạt động</div>
-          <div class="stat-card__value">36</div>
+          <div class="stat-card__label">Tổng lớp</div>
+          <div class="stat-card__value" id="statTotal">--</div>
           <div class="stat-card__change">Active</div>
         </article>
-
         <article class="stat-card">
           <div class="stat-card__label">Chưa có GVCN</div>
-          <div class="stat-card__value">03</div>
+          <div class="stat-card__value" id="statNoTeacher">--</div>
           <div class="stat-card__change">Pending</div>
         </article>
-
         <article class="stat-card">
-          <div class="stat-card__label">Sĩ số trung bình</div>
-          <div class="stat-card__value">34</div>
-          <div class="stat-card__change">Students / class</div>
+          <div class="stat-card__label">Trang hiện tại</div>
+          <div class="stat-card__value" id="statPage">1</div>
+          <div class="stat-card__change">/ <span id="statTotalPages">--</span> trang</div>
         </article>
       </section>
 
       <section class="toolbar-panel">
         <div class="toolbar-left">
-          <div class="filter-box">Khối: Tất cả</div>
-          <div class="filter-box">Năm học: 2025 - 2026</div>
-          <div class="filter-box">GVCN: Tất cả</div>
+          <select id="filterGrade" onchange="loadClasses(0)"
+            style="padding:6px 10px;border-radius:6px;border:1px solid #ddd;">
+            <option value="">Khối: Tất cả</option>
+            <option value="10">Khối 10</option>
+            <option value="11">Khối 11</option>
+            <option value="12">Khối 12</option>
+          </select>
+          <select id="filterYear" onchange="loadClasses(0)"
+            style="padding:6px 10px;border-radius:6px;border:1px solid #ddd;">
+            <option value="">Năm học: Tất cả</option>
+          </select>
         </div>
         <div class="toolbar-right">
-          <button class="btn btn--primary">Thêm mới</button>
-          <button class="btn btn--outline">Phân công GVCN</button>
+          <button class="btn btn--primary" onclick="openAddForm()">+ Thêm mới</button>
+          <button class="btn btn--outline" onclick="clearFilter()">Xóa bộ lọc</button>
         </div>
       </section>
 
@@ -137,9 +134,10 @@
         <article class="table-panel">
           <div class="table-panel__top">
             <h4>Danh sách lớp học</h4>
+            <span id="loadingIndicator" style="color:#888;font-size:13px;display:none;">⏳ Đang tải...</span>
           </div>
 
-          <table>
+          <table id="classTable">
             <thead>
               <tr>
                 <th>Mã lớp</th>
@@ -148,178 +146,447 @@
                 <th>Năm học</th>
                 <th>GVCN</th>
                 <th>Sĩ số</th>
-                <th>Trạng thái</th>
                 <th>Thao tác</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="classTableBody">
               <tr>
-                <td>L001</td>
-                <td>10A1</td>
-                <td>10</td>
-                <td>2025 - 2026</td>
-                <td>Nguyễn Văn Minh</td>
-                <td>35</td>
-                <td><span class="status status--success">Hoạt động</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>L002</td>
-                <td>10A2</td>
-                <td>10</td>
-                <td>2025 - 2026</td>
-                <td>Trần Thị Lan</td>
-                <td>34</td>
-                <td><span class="status status--success">Hoạt động</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>L011</td>
-                <td>11A1</td>
-                <td>11</td>
-                <td>2025 - 2026</td>
-                <td>Phạm Quốc Huy</td>
-                <td>36</td>
-                <td><span class="status status--info">Mới</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>L021</td>
-                <td>12A1</td>
-                <td>12</td>
-                <td>2025 - 2026</td>
-                <td>Chưa phân công</td>
-                <td>33</td>
-                <td><span class="status status--warning">Chờ GVCN</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Phân công</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>L022</td>
-                <td>12A2</td>
-                <td>12</td>
-                <td>2025 - 2026</td>
-                <td>Lê Minh Đức</td>
-                <td>32</td>
-                <td><span class="status status--success">Hoạt động</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
-                  </div>
-                </td>
+                <td colspan="7" style="text-align:center;color:#888;">Đang tải dữ liệu...</td>
               </tr>
             </tbody>
           </table>
 
-          <div class="pagination">
-            <button class="page-btn">&lt;</button>
-            <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
-            <button class="page-btn">&gt;</button>
-          </div>
+          <div class="pagination" id="paginationContainer"></div>
         </article>
 
         <aside class="side-stack">
+          <!-- Form thêm/sửa lớp -->
           <article class="panel form-panel">
             <div class="panel__header panel__header--column">
-              <h4>Lớp học</h4>
+              <h4 id="formTitle">Tạo lớp học</h4>
             </div>
 
-            <form class="class-form">
+            <div id="formMessage"
+              style="display:none;padding:8px 12px;border-radius:6px;margin-bottom:10px;font-size:13px;"></div>
+
+            <form class="class-form" id="classForm" onsubmit="submitClassForm(event)">
+              <input type="hidden" id="editClassId" />
+
               <div class="form-group">
-                <label>Tên lớp</label>
-                <input type="text" placeholder="Nhập tên lớp" />
+                <label>Tên lớp <span style="color:red">*</span></label>
+                <input type="text" id="txtTenLop" placeholder="VD: 10A1, 11B2..." required />
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label>Khối</label>
-                  <select>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
+                  <label>Khối <span style="color:red">*</span></label>
+                  <select id="cboKhoi" required>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>Năm học</label>
-                  <select>
-                    <option>2025 - 2026</option>
-                    <option>2024 - 2025</option>
+                  <label>Năm học <span style="color:red">*</span></label>
+                  <select id="cboNamHoc" required>
+                    <option value="">-- Chọn năm học --</option>
                   </select>
                 </div>
               </div>
 
               <div class="form-group">
                 <label>Giáo viên chủ nhiệm</label>
-                <select>
-                  <option>Chọn giáo viên</option>
-                  <option>Nguyễn Văn Minh</option>
-                  <option>Trần Thị Lan</option>
-                  <option>Phạm Quốc Huy</option>
-                  <option>Lê Minh Đức</option>
+                <select id="cboGVCN">
+                  <option value="">-- Chọn giáo viên --</option>
                 </select>
               </div>
 
-              <div class="form-group">
-                <label>Sĩ số</label>
-                <input type="number" placeholder="0" />
-              </div>
-
               <div class="form-actions">
-                <button type="button" class="btn btn--primary">Lưu</button>
-                <button type="button" class="btn btn--outline">Làm mới</button>
+                <button type="submit" class="btn btn--primary" id="btnLuu">Lưu</button>
+                <button type="button" class="btn btn--outline" onclick="resetForm()">Làm mới</button>
               </div>
             </form>
           </article>
 
+          <!-- Form phân công GVCN riêng -->
+          <article class="panel" id="assignPanel" style="display:none;">
+            <div class="panel__header panel__header--column">
+              <h4>Phân công GVCN</h4>
+            </div>
+            <div style="padding:10px;">
+              <p id="assignClassName" style="font-weight:600;margin-bottom:10px;"></p>
+              <div id="formAssignMessage"
+                style="display:none;padding:8px 12px;border-radius:6px;margin-bottom:10px;font-size:13px;"></div>
+              <label>Giáo viên chủ nhiệm</label>
+              <select id="cboGVCNAssign"
+                style="width:100%;padding:8px;margin:8px 0;border-radius:6px;border:1px solid #ddd;">
+                <option value="">-- Chọn giáo viên --</option>
+              </select>
+              <div style="display:flex;gap:8px;margin-top:10px;">
+                <button class="btn btn--primary" onclick="submitAssignTeacher()">Phân công</button>
+                <button class="btn btn--outline" onclick="closeAssignPanel()">Hủy</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Recent activity -->
           <article class="panel">
             <div class="panel__header panel__header--column">
-              <h4>Recent</h4>
+              <h4>Hoạt động gần đây</h4>
             </div>
-
-            <div class="activity-list">
-              <div class="activity-item">
-                <strong>Tạo lớp 10A3</strong>
-                <span>08:42 - 12/04/2026</span>
-              </div>
-              <div class="activity-item">
-                <strong>Phân công GVCN cho 12A1</strong>
-                <span>08:15 - 12/04/2026</span>
-              </div>
-              <div class="activity-item">
-                <strong>Cập nhật sĩ số 11A2</strong>
-                <span>07:58 - 12/04/2026</span>
-              </div>
-              <div class="activity-item">
-                <strong>Xóa lớp trống 10C1</strong>
-                <span>07:20 - 12/04/2026</span>
-              </div>
+            <div class="activity-list" id="activityList">
+              <div class="activity-item"><strong>Đang tải...</strong></div>
             </div>
           </article>
         </aside>
       </section>
     </main>
   </div>
+
+  <script>
+    const API_BASE = 'http://localhost:8080/api';
+    let currentPage = 0;
+    let searchTimeout = null;
+    let assignClassId = null;
+    const recentActivities = [];
+
+    // =============================================
+    // KHỞI ĐỘNG
+    // =============================================
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadAcademicYears();
+      await loadTeachers();
+      loadClasses(0);
+    });
+
+    // =============================================
+    // TẢI NĂM HỌC vào dropdown
+    // =============================================
+    async function loadAcademicYears() {
+      // Tạm thời hard-code, sau sẽ gọi /api/academic-years
+      const years = [
+        { yearId: 1, yearName: '2024-2025' },
+        { yearId: 2, yearName: '2025-2026' }
+      ];
+      const filterSel = document.getElementById('filterYear');
+      const formSel = document.getElementById('cboNamHoc');
+      years.forEach(y => {
+        filterSel.innerHTML += `<option value="${y.yearId}">${y.yearName}</option>`;
+        formSel.innerHTML += `<option value="${y.yearId}">${y.yearName}</option>`;
+      });
+    }
+
+    // =============================================
+    // TẢI DANH SÁCH GIÁO VIÊN vào dropdown
+    // =============================================
+    async function loadTeachers() {
+      try {
+        const res = await fetch(`${API_BASE}/users?role=teacher`);
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.success && json.data) {
+          const teachers = json.data.content || json.data;
+          const opts = teachers.map(t => `<option value="${t.userId}">${t.fullName}</option>`).join('');
+          document.getElementById('cboGVCN').innerHTML += opts;
+          document.getElementById('cboGVCNAssign').innerHTML += opts;
+        }
+      } catch (e) {
+        console.warn('Không tải được danh sách giáo viên');
+      }
+    }
+
+    // =============================================
+    // TẢI DANH SÁCH LỚP (FR-21)
+    // =============================================
+    async function loadClasses(page = 0) {
+      currentPage = page;
+      showLoading(true);
+
+      const className = document.getElementById('searchInput').value.trim();
+      const gradeLevel = document.getElementById('filterGrade').value;
+      const yearId = document.getElementById('filterYear').value;
+
+      const params = new URLSearchParams({ page, size: 20 });
+      if (className) params.append('className', className);
+      if (gradeLevel) params.append('gradeLevel', gradeLevel);
+      if (yearId) params.append('yearId', yearId);
+
+      try {
+        const res = await fetch(`${API_BASE}/classes?${params}`);
+        const json = await res.json();
+
+        if (json.success) {
+          renderClassTable(json.data.content);
+          renderPagination(json.data.page, json.data.totalPages);
+          updateStats(json.data.content, json.data.totalElements);
+          document.getElementById('statPage').textContent = json.data.page + 1;
+          document.getElementById('statTotalPages').textContent = json.data.totalPages;
+          document.getElementById('totalClasses').textContent = json.data.totalElements;
+          document.getElementById('statTotal').textContent = json.data.totalElements;
+        } else {
+          showTableError(json.message);
+        }
+      } catch (err) {
+        showTableError('Không kết nối được server! Kiểm tra backend đang chạy tại :8080');
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // =============================================
+    // RENDER BẢNG LỚP HỌC
+    // =============================================
+    function renderClassTable(classes) {
+      const tbody = document.getElementById('classTableBody');
+      if (!classes || classes.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;padding:30px;">Không tìm thấy lớp học nào.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = classes.map(c => {
+        const hasTeacher = c.homeroomTeacherName && c.homeroomTeacherName !== 'Chưa phân công';
+        const statusBadge = hasTeacher
+          ? `<span class="status status--success">Hoạt động</span>`
+          : `<span class="status status--warning">Chờ GVCN</span>`;
+        const actions = hasTeacher
+          ? `<button class="table-btn" onclick="editClass(${c.classId})">Sửa</button>
+             <button class="table-btn" onclick="deleteClass(${c.classId}, '${c.className}')">Xóa</button>`
+          : `<button class="table-btn" onclick="openAssignPanel(${c.classId}, '${c.className}')">Phân công</button>
+             <button class="table-btn" onclick="editClass(${c.classId})">Sửa</button>`;
+
+        return `
+          <tr>
+            <td><strong>${c.classId}</strong></td>
+            <td>${c.className}</td>
+            <td>${c.gradeLevel}</td>
+            <td>${c.yearName || '--'}</td>
+            <td>${c.homeroomTeacherName || 'Chưa phân công'}</td>
+            <td>${c.studentCount}</td>
+            <td><div class="action-group">${actions}</div></td>
+          </tr>`;
+      }).join('');
+    }
+
+    // =============================================
+    // SUBMIT FORM TẠO LỚP (FR-16) / CẬP NHẬT (FR-17)
+    // =============================================
+    async function submitClassForm(event) {
+      event.preventDefault();
+      const editId = document.getElementById('editClassId').value;
+      const isEdit = editId !== '';
+
+      const teacherId = document.getElementById('cboGVCN').value;
+      const body = {
+        className: document.getElementById('txtTenLop').value.trim(),
+        gradeLevel: parseInt(document.getElementById('cboKhoi').value),
+        yearId: parseInt(document.getElementById('cboNamHoc').value),
+      };
+      if (teacherId) body.homeroomTeacherId = parseInt(teacherId);
+
+      const url = isEdit ? `${API_BASE}/classes/${editId}` : `${API_BASE}/classes`;
+      const method = isEdit ? 'PUT' : 'POST';
+
+      try {
+        document.getElementById('btnLuu').disabled = true;
+        document.getElementById('btnLuu').textContent = 'Đang lưu...';
+
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          showFormMessage(json.message, 'success');
+          addActivity(`${isEdit ? 'Cập nhật' : 'Tạo'} lớp ${json.data?.className || body.className}`);
+          resetForm();
+          loadClasses(currentPage);
+        } else {
+          showFormMessage(json.message || 'Có lỗi xảy ra!', 'error');
+        }
+      } catch (e) {
+        showFormMessage('Không kết nối được server!', 'error');
+      } finally {
+        document.getElementById('btnLuu').disabled = false;
+        document.getElementById('btnLuu').textContent = 'Lưu';
+      }
+    }
+
+    // =============================================
+    // SỬA LỚP (FR-17) - Load vào form
+    // =============================================
+    async function editClass(id) {
+      try {
+        const res = await fetch(`${API_BASE}/classes/${id}`);
+        const json = await res.json();
+        if (json.success) {
+          const c = json.data;
+          document.getElementById('formTitle').textContent = 'Cập nhật lớp';
+          document.getElementById('editClassId').value = c.classId;
+          document.getElementById('txtTenLop').value = c.className;
+          document.getElementById('cboKhoi').value = c.gradeLevel;
+          if (c.yearId) document.getElementById('cboNamHoc').value = c.yearId;
+          if (c.homeroomTeacherId) document.getElementById('cboGVCN').value = c.homeroomTeacherId;
+          document.getElementById('btnLuu').textContent = 'Cập nhật';
+          document.querySelector('.form-panel').scrollIntoView({ behavior: 'smooth' });
+        }
+      } catch (e) {
+        alert('Lỗi kết nối server!');
+      }
+    }
+
+    // =============================================
+    // XÓA LỚP (FR-18) - Chỉ khi sĩ số = 0
+    // =============================================
+    async function deleteClass(id, name) {
+      if (!confirm(`Bạn có chắc muốn xóa lớp "${name}" không?\nLưu ý: Chỉ xóa được khi lớp không có học sinh.`)) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/classes/${id}`, { method: 'DELETE' });
+        const json = await res.json();
+        if (json.success) {
+          alert(json.message);
+          addActivity(`Xóa lớp ${name}`);
+          loadClasses(currentPage);
+        } else {
+          alert('❌ ' + json.message);
+        }
+      } catch (e) {
+        alert('Lỗi kết nối server!');
+      }
+    }
+
+    // =============================================
+    // PHÂN CÔNG GVCN (FR-19, FR-20)
+    // =============================================
+    function openAssignPanel(classId, className) {
+      assignClassId = classId;
+      document.getElementById('assignClassName').textContent = `Lớp: ${className}`;
+      document.getElementById('assignPanel').style.display = 'block';
+      document.getElementById('cboGVCNAssign').value = '';
+      document.getElementById('assignPanel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeAssignPanel() {
+      assignClassId = null;
+      document.getElementById('assignPanel').style.display = 'none';
+    }
+
+    async function submitAssignTeacher() {
+      const teacherId = document.getElementById('cboGVCNAssign').value;
+      if (!teacherId) { alert('Vui lòng chọn giáo viên!'); return; }
+
+      try {
+        const res = await fetch(`${API_BASE}/classes/${assignClassId}/homeroom-teacher`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ teacherId: parseInt(teacherId) })
+        });
+        const json = await res.json();
+
+        const msgEl = document.getElementById('formAssignMessage');
+        msgEl.style.display = 'block';
+        if (json.success) {
+          msgEl.textContent = json.message;
+          msgEl.style.background = '#d4edda';
+          msgEl.style.color = '#155724';
+          addActivity(`Phân công GVCN cho lớp ${json.data?.className || ''}`);
+          setTimeout(() => { closeAssignPanel(); loadClasses(currentPage); }, 1500);
+        } else {
+          msgEl.textContent = json.message;
+          msgEl.style.background = '#f8d7da';
+          msgEl.style.color = '#721c24';
+        }
+      } catch (e) {
+        alert('Lỗi kết nối server!');
+      }
+    }
+
+    // =============================================
+    // PHÂN TRANG
+    // =============================================
+    function renderPagination(page, totalPages) {
+      const container = document.getElementById('paginationContainer');
+      if (totalPages <= 1) { container.innerHTML = ''; return; }
+
+      let html = `<button class="page-btn" onclick="loadClasses(${page - 1})" ${page === 0 ? 'disabled' : ''}>&lt;</button>`;
+      for (let i = 0; i < totalPages; i++) {
+        if (i === page) html += `<button class="page-btn active">${i + 1}</button>`;
+        else if (i === 0 || i === totalPages - 1 || Math.abs(i - page) <= 1)
+          html += `<button class="page-btn" onclick="loadClasses(${i})">${i + 1}</button>`;
+        else if (Math.abs(i - page) === 2) html += `<span style="padding:0 4px">...</span>`;
+      }
+      html += `<button class="page-btn" onclick="loadClasses(${page + 1})" ${page >= totalPages - 1 ? 'disabled' : ''}>&gt;</button>`;
+      container.innerHTML = html;
+    }
+
+    // =============================================
+    // TÌM KIẾM - debounce
+    // =============================================
+    function onSearchInput() {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => loadClasses(0), 500);
+    }
+
+    // =============================================
+    // HELPERS
+    // =============================================
+    function updateStats(classes, total) {
+      const noTeacher = classes.filter(c => !c.homeroomTeacherName || c.homeroomTeacherName === 'Chưa phân công').length;
+      document.getElementById('statNoTeacher').textContent = noTeacher;
+      const g10 = classes.filter(c => c.gradeLevel === 10).length;
+      const g11 = classes.filter(c => c.gradeLevel === 11).length;
+      const g12 = classes.filter(c => c.gradeLevel === 12).length;
+      document.getElementById('grade10Count').textContent = g10;
+      document.getElementById('grade11Count').textContent = g11;
+      document.getElementById('grade12Count').textContent = g12;
+    }
+
+    function openAddForm() { resetForm(); document.querySelector('.form-panel').scrollIntoView({ behavior: 'smooth' }); }
+
+    function resetForm() {
+      document.getElementById('classForm').reset();
+      document.getElementById('editClassId').value = '';
+      document.getElementById('formTitle').textContent = 'Tạo lớp học';
+      document.getElementById('btnLuu').textContent = 'Lưu';
+      document.getElementById('formMessage').style.display = 'none';
+    }
+
+    function clearFilter() {
+      document.getElementById('filterGrade').value = '';
+      document.getElementById('filterYear').value = '';
+      document.getElementById('searchInput').value = '';
+      loadClasses(0);
+    }
+
+    function showLoading(show) {
+      document.getElementById('loadingIndicator').style.display = show ? 'inline' : 'none';
+    }
+
+    function showTableError(msg) {
+      document.getElementById('classTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center;color:#e74c3c;padding:30px;">${msg}</td></tr>`;
+    }
+
+    function showFormMessage(msg, type) {
+      const el = document.getElementById('formMessage');
+      el.textContent = msg;
+      el.style.display = 'block';
+      el.style.background = type === 'success' ? '#d4edda' : '#f8d7da';
+      el.style.color = type === 'success' ? '#155724' : '#721c24';
+      setTimeout(() => { el.style.display = 'none'; }, 4000);
+    }
+
+    function addActivity(text) {
+      const now = new Date();
+      const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} - ${now.toLocaleDateString('vi-VN')}`;
+      recentActivities.unshift({ text, time });
+      if (recentActivities.length > 5) recentActivities.pop();
+      document.getElementById('activityList').innerHTML = recentActivities.map(a =>
+        `<div class="activity-item"><strong>${a.text}</strong><span>${a.time}</span></div>`
+      ).join('');
+    }
+  </script>
 </body>
+
 </html>
