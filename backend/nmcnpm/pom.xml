@@ -11,6 +11,11 @@
 	<groupId>com.example</groupId>
 	<artifactId>nmcnpm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>demo</module>
+		<module>class</module>
+	</modules>
 	<name>nmcnpm</name>
 	<description/>
 	<url/>
