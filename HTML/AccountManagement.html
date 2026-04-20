@@ -54,7 +54,7 @@
 
       <div class="sidebar-footer">
         <p>Quản lý tài khoản, trạng thái hoạt động và vai trò truy cập cho toàn hệ thống.</p>
-        <button>Thêm tài khoản mới</button>
+        <button type="button" class="open-add-account-btn">Thêm tài khoản mới</button>
       </div>
     </aside>
 
@@ -81,8 +81,6 @@
         <div>
           <h3>Accounts</h3>
           <div class="hero-actions">
-            <button class="btn btn--light">+ Thêm</button>
-            <button class="btn btn--ghost">Export</button>
           </div>
         </div>
 
@@ -131,8 +129,7 @@
           <div class="filter-box">Sắp xếp: Mới nhất</div>
         </div>
         <div class="toolbar-right">
-          <button class="btn btn--primary">Thêm mới</button>
-          <button class="btn btn--outline">Đặt lại mật khẩu</button>
+          <button class="btn btn--primary open-add-account-btn" type="button">Thêm mới</button>
         </div>
       </section>
 
@@ -162,7 +159,15 @@
                 <td><span class="status status--success">Hoạt động</span></td>
                 <td>
                   <div class="action-group">
-                    <button class="table-btn">Sửa</button>
+                    <button
+                      class="table-btn edit-account-btn"
+                      type="button"
+                      data-account-id="TK001"
+                      data-account-name="Từ Đức Anh"
+                      data-account-email="ducanh@gtschool.vn"
+                    >
+                      Sửa
+                    </button>
                     <button class="table-btn">Khóa</button>
                   </div>
                 </td>
@@ -175,8 +180,16 @@
                 <td><span class="status status--success">Hoạt động</span></td>
                 <td>
                   <div class="action-group">
-                    <button class="table-btn">Sửa</button>
-                    <button class="table-btn">Reset MK</button>
+                    <button
+                      class="table-btn edit-account-btn"
+                      type="button"
+                      data-account-id="TK014"
+                      data-account-name="Nguyễn Thành Đạt"
+                      data-account-email="dat.nt@gtschool.vn"
+                    >
+                      Sửa
+                    </button>
+                    <button class="table-btn">Khóa</button>
                   </div>
                 </td>
               </tr>
@@ -185,11 +198,19 @@
                 <td>Nguyễn Hoàng Quốc Duy</td>
                 <td>duy.nhq@gtschool.vn</td>
                 <td><span class="role-badge role-teacher">Giáo viên</span></td>
-                <td><span class="status status--warning">Chờ kích hoạt</span></td>
+                <td><span class="status status--success">Hoạt động</span></td>
                 <td>
                   <div class="action-group">
-                    <button class="table-btn">Duyệt</button>
-                    <button class="table-btn">Sửa</button>
+                    <button
+                      class="table-btn edit-account-btn"
+                      type="button"
+                      data-account-id="TK026"
+                      data-account-name="Nguyễn Hoàng Quốc Duy"
+                      data-account-email="duy.nhq@gtschool.vn"
+                    >
+                      Sửa
+                    </button>
+                    <button class="table-btn">Khóa</button>
                   </div>
                 </td>
               </tr>
@@ -211,11 +232,19 @@
                 <td>Đặng Quang Minh</td>
                 <td>minh.dq@gtschool.vn</td>
                 <td><span class="role-badge role-bgh">BGH</span></td>
-                <td><span class="status status--info">Đã phân quyền</span></td>
+                <td><span class="status status--success">Hoạt Động</span></td>
                 <td>
                   <div class="action-group">
-                    <button class="table-btn">Sửa</button>
-                    <button class="table-btn">Quyền</button>
+                    <button
+                      class="table-btn edit-account-btn"
+                      type="button"
+                      data-account-id="TK052"
+                      data-account-name="Đặng Quang Minh"
+                      data-account-email="minh.dq@gtschool.vn"
+                    >
+                      Sửa
+                    </button>
+                    <button class="table-btn">Khóa</button>
                   </div>
                 </td>
               </tr>
@@ -266,7 +295,7 @@
                 </select>
               </div>
               <div class="form-actions">
-                <button type="button" class="btn btn--primary">Lưu tài khoản</button>
+                <button type="button" class="btn btn--primary">Lọc tài khoản</button>
                 <button type="button" class="btn btn--outline">Làm mới</button>
               </div>
             </form>
@@ -300,5 +329,82 @@
       </section>
     </main>
   </div>
+
+  <div class="modal-overlay" id="editAccountModal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="editAccountTitle">
+      <div class="modal-card__header">
+        <div>
+          <span class="modal-card__eyebrow">Chỉnh sửa tài khoản</span>
+          <h3 id="editAccountTitle">Cập nhật thông tin đăng nhập</h3>
+          <p class="modal-card__meta" id="editAccountMeta">Tài khoản được chọn</p>
+        </div>
+        <button class="modal-close-btn" type="button" aria-label="Đóng form chỉnh sửa">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form class="modal-form">
+        <div class="form-group">
+          <label for="editAccountName">Tên người dùng</label>
+          <input id="editAccountName" type="text" placeholder="Nhập tên cần chỉnh sửa" />
+        </div>
+        <div class="form-group">
+          <label for="editAccountPassword">Mật khẩu mới</label>
+          <input id="editAccountPassword" type="password" placeholder="Nhập mật khẩu mới" />
+        </div>
+        <div class="form-actions form-actions--end">
+          <button class="btn btn--outline modal-cancel-btn" type="button">Hủy</button>
+          <button class="btn btn--primary" type="submit">Lưu thay đổi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addAccountModal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="addAccountTitle">
+      <div class="modal-card__header">
+        <div>
+          <span class="modal-card__eyebrow">Tạo tài khoản mới</span>
+          <h3 id="addAccountTitle">Thêm tài khoản vào hệ thống</h3>
+          <p class="modal-card__meta">Nhập thông tin cơ bản để khởi tạo tài khoản mới</p>
+        </div>
+        <button class="modal-close-btn add-modal-close-btn" type="button" aria-label="Đóng form thêm tài khoản">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form class="modal-form" id="addAccountForm">
+        <div class="form-group">
+          <label for="addAccountName">Họ và tên</label>
+          <input id="addAccountName" type="text" placeholder="Nhập họ và tên" />
+        </div>
+        <div class="form-group">
+          <label for="addAccountEmail">Email</label>
+          <input id="addAccountEmail" type="email" placeholder="Nhập email đăng nhập" />
+        </div>
+        <div class="form-group">
+          <label for="addAccountPassword">Mật khẩu</label>
+          <input id="addAccountPassword" type="password" placeholder="Nhập mật khẩu khởi tạo" />
+        </div>
+        <div class="form-group">
+          <label for="addAccountRole">Vai trò</label>
+          <select id="addAccountRole">
+            <option>Chọn vai trò</option>
+            <option>Admin</option>
+            <option>Giáo viên</option>
+            <option>Giáo vụ</option>
+            <option>BGH</option>
+            <option>Học sinh</option>
+          </select>
+        </div>
+        <div class="form-actions form-actions--end">
+          <button class="btn btn--outline add-modal-cancel-btn" type="button">Hủy</button>
+          <button class="btn btn--primary" type="submit">Tạo tài khoản</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../JS/account-management.js"></script>
 </body>
 </html>

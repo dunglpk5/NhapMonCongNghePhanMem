@@ -1,12 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GtuSchool - Quản lý lớp học</title>
   <link rel="stylesheet" href="../CSS/class-management.css" />
-  <link rel="stylesheet" href="../fonts/fontawesome-free-7.2.0/css/all.min.css">
-
+  <link rel="stylesheet" href="../fonts/fontawesome-free-7.2.0/css/all.min.css" />
 </head>
 <body>
   <div class="app">
@@ -54,7 +53,7 @@
 
       <div class="sidebar-footer">
         <p>Quản lý lớp, khối, năm học và giáo viên chủ nhiệm.</p>
-        <button>+ Tạo lớp</button>
+        <button type="button" class="open-add-class-btn">+ Tạo lớp</button>
       </div>
     </aside>
 
@@ -66,7 +65,7 @@
         <div class="topbar__right">
           <div class="search">
             <i class="fa-regular fa-magnifying-glass"></i>
-            <input type="text" placeholder="Tìm kiếm">
+            <input type="text" placeholder="Tìm kiếm" />
           </div>
           <div class="user-card">
             <div class="avatar">AD</div>
@@ -80,8 +79,7 @@
       <section class="hero">
         <div>
           <h3>Classes</h3>
-          <div class="hero-actions">
-          </div>
+          <div class="hero-actions"></div>
         </div>
 
         <div class="hero-side">
@@ -110,19 +108,19 @@
         <article class="stat-card">
           <div class="stat-card__label">Đang hoạt động</div>
           <div class="stat-card__value">36</div>
-          <div class="stat-card__change">Active</div>
+          <div class="stat-card__change">Toàn bộ lớp hiện hành</div>
         </article>
 
         <article class="stat-card">
           <div class="stat-card__label">Chưa có GVCN</div>
           <div class="stat-card__value">03</div>
-          <div class="stat-card__change">Pending</div>
+          <div class="stat-card__change">Cần phân công sớm</div>
         </article>
 
         <article class="stat-card">
           <div class="stat-card__label">Sĩ số trung bình</div>
           <div class="stat-card__value">34</div>
-          <div class="stat-card__change">Students / class</div>
+          <div class="stat-card__change">Học sinh / lớp</div>
         </article>
       </section>
 
@@ -133,8 +131,7 @@
           <div class="filter-box">GVCN: Tất cả</div>
         </div>
         <div class="toolbar-right">
-          <button class="btn btn--primary">Thêm mới</button>
-          <button class="btn btn--outline">Phân công GVCN</button>
+          <button class="btn btn--primary open-add-class-btn" type="button">Thêm mới</button>
         </div>
       </section>
 
@@ -168,8 +165,7 @@
                 <td><span class="status status--success">Hoạt động</span></td>
                 <td>
                   <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
+                    <button class="table-btn edit-class-btn" type="button" data-class-id="L001" data-class-name="10A1" data-grade="10" data-homeroom-teacher="Nguyễn Văn Minh" data-class-size="35">Sửa</button>
                   </div>
                 </td>
               </tr>
@@ -183,8 +179,7 @@
                 <td><span class="status status--success">Hoạt động</span></td>
                 <td>
                   <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
+                    <button class="table-btn edit-class-btn" type="button" data-class-id="L002" data-class-name="10A2" data-grade="10" data-homeroom-teacher="Trần Thị Lan" data-class-size="34">Sửa</button>
                   </div>
                 </td>
               </tr>
@@ -195,11 +190,10 @@
                 <td>2025 - 2026</td>
                 <td>Phạm Quốc Huy</td>
                 <td>36</td>
-                <td><span class="status status--info">Mới</span></td>
+                <td><span class="status status--success">Hoạt động</span></td>
                 <td>
                   <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
+                    <button class="table-btn edit-class-btn" type="button" data-class-id="L011" data-class-name="11A1" data-grade="11" data-homeroom-teacher="Phạm Quốc Huy" data-class-size="36">Sửa</button>
                   </div>
                 </td>
               </tr>
@@ -213,8 +207,8 @@
                 <td><span class="status status--warning">Chờ GVCN</span></td>
                 <td>
                   <div class="action-group">
-                    <button class="table-btn">Phân công</button>
-                    <button class="table-btn">Sửa</button>
+                    <button class="table-btn assign-homeroom-btn" type="button" data-class-id="L021" data-class-name="12A1" data-grade="12" data-school-year="2025 - 2026">Phân công</button>
+                    <button class="table-btn edit-class-btn" type="button" data-class-id="L021" data-class-name="12A1" data-grade="12" data-homeroom-teacher="" data-class-size="33">Sửa</button>
                   </div>
                 </td>
               </tr>
@@ -228,8 +222,7 @@
                 <td><span class="status status--success">Hoạt động</span></td>
                 <td>
                   <div class="action-group">
-                    <button class="table-btn">Xem</button>
-                    <button class="table-btn">Sửa</button>
+                    <button class="table-btn edit-class-btn" type="button" data-class-id="L022" data-class-name="12A2" data-grade="12" data-homeroom-teacher="Lê Minh Đức" data-class-size="32">Sửa</button>
                   </div>
                 </td>
               </tr>
@@ -270,7 +263,6 @@
                   <label>Năm học</label>
                   <select>
                     <option>2025 - 2026</option>
-                    <option>2024 - 2025</option>
                   </select>
                 </div>
               </div>
@@ -326,5 +318,158 @@
       </section>
     </main>
   </div>
+
+  <div class="modal-overlay" id="addClassModal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="addClassTitle">
+      <div class="modal-card__header">
+        <div>
+          <span class="modal-card__eyebrow">Tạo lớp mới</span>
+          <h3 id="addClassTitle">Thêm lớp học</h3>
+          <p class="modal-card__meta">Nhập thông tin cơ bản để khởi tạo lớp mới trong hệ thống</p>
+        </div>
+        <button class="modal-close-btn" type="button" aria-label="Đóng form thêm lớp">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form class="modal-form" id="addClassForm">
+        <div class="form-group">
+          <label for="addClassName">Tên lớp</label>
+          <input id="addClassName" type="text" placeholder="Ví dụ: 10A3" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="addClassGrade">Khối</label>
+            <select id="addClassGrade">
+              <option>Chọn khối</option>
+              <option>10</option>
+              <option>11</option>
+              <option>12</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="addClassYear">Năm học</label>
+            <select id="addClassYear">
+              <option>2025 - 2026</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="addClassTeacher">Giáo viên chủ nhiệm</label>
+          <select id="addClassTeacher">
+            <option>Chọn giáo viên</option>
+            <option>Nguyễn Văn Minh</option>
+            <option>Trần Thị Lan</option>
+            <option>Phạm Quốc Huy</option>
+            <option>Lê Minh Đức</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="addClassSize">Sĩ số dự kiến</label>
+          <input id="addClassSize" type="number" min="0" placeholder="Nhập sĩ số dự kiến" />
+        </div>
+
+        <div class="form-group">
+          <label for="addClassStatus">Trạng thái</label>
+          <select id="addClassStatus">
+            <option>Hoạt động</option>
+            <option>Chờ GVCN</option>
+          </select>
+        </div>
+
+        <div class="form-actions form-actions--end">
+          <button class="btn btn--outline modal-cancel-btn" type="button">Hủy</button>
+          <button class="btn btn--primary" type="submit">Tạo lớp</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="assignTeacherModal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="assignTeacherTitle">
+      <div class="modal-card__header">
+        <div>
+          <span class="modal-card__eyebrow">Phân công giáo viên</span>
+          <h3 id="assignTeacherTitle">Phân công giáo viên chủ nhiệm</h3>
+          <p class="modal-card__meta" id="assignTeacherMeta">Lớp được chọn</p>
+        </div>
+        <button class="modal-close-btn" type="button" aria-label="Đóng form phân công">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form class="modal-form" id="assignTeacherForm">
+        <div class="form-group">
+          <label for="assignTeacherName">Giáo viên chủ nhiệm</label>
+          <select id="assignTeacherName">
+            <option>Chọn giáo viên</option>
+            <option>Nguyễn Văn Minh</option>
+            <option>Trần Thị Lan</option>
+            <option>Phạm Quốc Huy</option>
+            <option>Lê Minh Đức</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="assignTeacherDate">Ngày áp dụng</label>
+            <input id="assignTeacherDate" type="date" value="2026-04-20" />
+          </div>
+          <div class="form-group">
+            <label for="assignTeacherYear">Năm học</label>
+            <input id="assignTeacherYear" type="text" value="2025 - 2026" readonly />
+          </div>
+        </div>
+
+        <div class="form-actions form-actions--end">
+          <button class="btn btn--outline modal-cancel-btn" type="button">Hủy</button>
+          <button class="btn btn--primary" type="submit">Xác nhận phân công</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="editClassModal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="editClassTitle">
+      <div class="modal-card__header">
+        <div>
+          <span class="modal-card__eyebrow">Sửa thông tin lớp</span>
+          <h3 id="editClassTitle">Cập nhật lớp học</h3>
+          <p class="modal-card__meta" id="editClassMeta">Lớp được chọn</p>
+        </div>
+        <button class="modal-close-btn" type="button" aria-label="Đóng form sửa lớp">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form class="modal-form" id="editClassForm">
+        <div class="form-group">
+          <label for="editClassTeacher">Giáo viên chủ nhiệm</label>
+          <select id="editClassTeacher">
+            <option>Chọn giáo viên</option>
+            <option>Nguyễn Văn Minh</option>
+            <option>Trần Thị Lan</option>
+            <option>Phạm Quốc Huy</option>
+            <option>Lê Minh Đức</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="editClassSize">Sĩ số</label>
+          <input id="editClassSize" type="number" min="0" placeholder="Nhập sĩ số cần chỉnh sửa" />
+        </div>
+
+        <div class="form-actions form-actions--end">
+          <button class="btn btn--outline modal-cancel-btn" type="button">Hủy</button>
+          <button class="btn btn--primary" type="submit">Lưu thay đổi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../JS/class-management.js"></script>
 </body>
 </html>
