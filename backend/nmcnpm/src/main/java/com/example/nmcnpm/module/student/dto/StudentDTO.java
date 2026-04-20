@@ -1,72 +1,61 @@
-package com.gtu.school.module.student.dto;
+package com.example.nmcnpm.module.student.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 /**
- * DTO cho thao tác thêm / cập nhật hồ sơ học sinh.
- * Tương ứng với input của btnLuu_click trong tài liệu thiết kế.
+ * DTO nhận dữ liệu từ frontend khi thêm / cập nhật hồ sơ học sinh.
+ * Tương ứng với input của btnLuu_click trong tài liệu thiết kế FR-10.
+ *
+ * KHÔNG dùng annotations javax.validation ở đây —
+ * validation được xử lý bởi Validation Module (IValidationService).
  */
 public class StudentDTO {
 
-    // ── Thông tin cá nhân ──────────────────────────────────────────────────
+    // ── Thông tin cá nhân ─────────────────────────────────────────────────
+    private String    hoTen;         // txtHoTen        — bắt buộc
+    private LocalDate ngaySinh;      // dtpNgaySinh     — bắt buộc
+    private String    gioiTinh;      // "Nam" | "Nữ"    — bắt buộc
+    private String    diaChi;        // txtDiaChi       — bắt buộc
+    private String    danToc;        // txtDanToc       — bắt buộc
+    private String    tonGiao;       // txtTonGiao      — bắt buộc
 
-    @NotBlank
-    private String hoTen;
+    // ── Thông tin phụ huynh ───────────────────────────────────────────────
+    private String hoTenCha;         // txtHoTenCha     — bắt buộc
+    private String hoTenMe;          // txtHoTenMe      — bắt buộc
+    private String soDienThoai;      // txtSDT          — bắt buộc
 
-    private LocalDate ngaySinh;
+    // ── Phân lớp (không bắt buộc khi tạo mới) ────────────────────────────
+    private Integer classId;         // FK → classes.class_id
 
-    private String gioiTinh;   // "Nam" | "Nữ" | "Khác"
+    // ── Getters / Setters ─────────────────────────────────────────────────
 
-    private String diaChi;
+    public String    getHoTen()                          { return hoTen; }
+    public void      setHoTen(String hoTen)              { this.hoTen = hoTen; }
 
-    private String danToc;
+    public LocalDate getNgaySinh()                       { return ngaySinh; }
+    public void      setNgaySinh(LocalDate ngaySinh)     { this.ngaySinh = ngaySinh; }
 
-    private String tonGiao;
+    public String    getGioiTinh()                       { return gioiTinh; }
+    public void      setGioiTinh(String gioiTinh)        { this.gioiTinh = gioiTinh; }
 
-    // ── Thông tin liên lạc ─────────────────────────────────────────────────
+    public String    getDiaChi()                         { return diaChi; }
+    public void      setDiaChi(String diaChi)            { this.diaChi = diaChi; }
 
-    private String soDienThoai;
+    public String    getDanToc()                         { return danToc; }
+    public void      setDanToc(String danToc)            { this.danToc = danToc; }
 
-    // ── Thông tin phụ huynh ────────────────────────────────────────────────
+    public String    getTonGiao()                        { return tonGiao; }
+    public void      setTonGiao(String tonGiao)          { this.tonGiao = tonGiao; }
 
-    private String hoTenCha;
+    public String    getHoTenCha()                       { return hoTenCha; }
+    public void      setHoTenCha(String hoTenCha)        { this.hoTenCha = hoTenCha; }
 
-    private String hoTenMe;
+    public String    getHoTenMe()                        { return hoTenMe; }
+    public void      setHoTenMe(String hoTenMe)          { this.hoTenMe = hoTenMe; }
 
-    // ── Phân lớp ───────────────────────────────────────────────────────────
+    public String    getSoDienThoai()                    { return soDienThoai; }
+    public void      setSoDienThoai(String soDienThoai)  { this.soDienThoai = soDienThoai; }
 
-    private Integer classId;   // FK → Classes.class_id
-
-    // ── Getters / Setters ──────────────────────────────────────────────────
-
-    public String getHoTen()                  { return hoTen; }
-    public void   setHoTen(String hoTen)      { this.hoTen = hoTen; }
-
-    public LocalDate getNgaySinh()                    { return ngaySinh; }
-    public void      setNgaySinh(LocalDate ngaySinh)  { this.ngaySinh = ngaySinh; }
-
-    public String getGioiTinh()                     { return gioiTinh; }
-    public void   setGioiTinh(String gioiTinh)      { this.gioiTinh = gioiTinh; }
-
-    public String getDiaChi()                   { return diaChi; }
-    public void   setDiaChi(String diaChi)      { this.diaChi = diaChi; }
-
-    public String getDanToc()                   { return danToc; }
-    public void   setDanToc(String danToc)      { this.danToc = danToc; }
-
-    public String getTonGiao()                  { return tonGiao; }
-    public void   setTonGiao(String tonGiao)    { this.tonGiao = tonGiao; }
-
-    public String getSoDienThoai()                      { return soDienThoai; }
-    public void   setSoDienThoai(String soDienThoai)    { this.soDienThoai = soDienThoai; }
-
-    public String getHoTenCha()                     { return hoTenCha; }
-    public void   setHoTenCha(String hoTenCha)      { this.hoTenCha = hoTenCha; }
-
-    public String getHoTenMe()                  { return hoTenMe; }
-    public void   setHoTenMe(String hoTenMe)    { this.hoTenMe = hoTenMe; }
-
-    public Integer getClassId()                     { return classId; }
-    public void    setClassId(Integer classId)      { this.classId = classId; }
+    public Integer   getClassId()                        { return classId; }
+    public void      setClassId(Integer classId)         { this.classId = classId; }
 }
