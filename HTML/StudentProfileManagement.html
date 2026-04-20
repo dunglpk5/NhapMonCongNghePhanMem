@@ -6,6 +6,7 @@
   <title>GtuSchool - Hồ sơ học sinh</title>
   <link rel="stylesheet" href="../CSS/student-profile.css" />
   <link rel="stylesheet" href="../fonts/fontawesome-free-7.2.0/css/all.min.css" />
+  <link rel="stylesheet" href="../fonts/fontawesome-free-7.2.0/css/all.min.css" />
 </head>
 <body>
   <div class="app">
@@ -54,6 +55,7 @@
       <div class="sidebar-footer">
         <p>Quản lý hồ sơ và thông tin học sinh.</p>
         <button type="button" id="openAddStudentBtnSide">+ Thêm học sinh</button>
+        <button type="button" id="openAddStudentBtnSide">+ Thêm học sinh</button>
       </div>
     </aside>
 
@@ -65,6 +67,7 @@
         <div class="topbar__right">
           <div class="search">
             <i class="fa-regular fa-magnifying-glass"></i>
+            <input type="text" placeholder="Tìm kiếm" />
             <input type="text" placeholder="Tìm kiếm" />
           </div>
           <div class="user-card">
@@ -83,20 +86,20 @@
         <div class="hero-side">
           <div>
             <small>Tổng học sinh</small>
-            <strong>1,248</strong>
+            <strong id="statTotalStudents">0</strong>
           </div>
           <div class="meta">
             <div>
               <small>Khối 10</small>
-              <strong class="meta-number">420</strong>
+              <strong class="meta-number" id="statGrade10">0</strong>
             </div>
             <div>
               <small>Khối 11</small>
-              <strong class="meta-number">408</strong>
+              <strong class="meta-number" id="statGrade11">0</strong>
             </div>
             <div>
               <small>Khối 12</small>
-              <strong class="meta-number">420</strong>
+              <strong class="meta-number" id="statGrade12">0</strong>
             </div>
           </div>
         </div>
@@ -105,19 +108,19 @@
       <section class="stats stats--three">
         <article class="stat-card">
           <div class="stat-card__label">Đang học</div>
-          <div class="stat-card__value">1,220</div>
+          <div class="stat-card__value" id="statActive">0</div>
           <div class="stat-card__change">Active</div>
         </article>
 
         <article class="stat-card">
           <div class="stat-card__label">Mới thêm</div>
-          <div class="stat-card__value">18</div>
+          <div class="stat-card__value" id="statNew">0</div>
           <div class="stat-card__change">This month</div>
         </article>
 
         <article class="stat-card">
           <div class="stat-card__label">Cần cập nhật</div>
-          <div class="stat-card__value">10</div>
+          <div class="stat-card__value" id="statPending">0</div>
           <div class="stat-card__change">Pending</div>
         </article>
       </section>
@@ -129,6 +132,7 @@
           <div class="filter-box">Trạng thái: Tất cả</div>
         </div>
         <div class="toolbar-right">
+          <button type="button" class="btn btn--primary" id="openAddStudentBtn">Thêm mới</button>
           <button type="button" class="btn btn--primary" id="openAddStudentBtn">Thêm mới</button>
         </div>
       </section>
@@ -152,6 +156,10 @@
                 <th>Thao tác</th>
               </tr>
             </thead>
+<<<<<<< HEAD
+            <tbody id="studentTableBody">
+              <!-- Dữ liệu sẽ được load từ API -->
+=======
             <tbody>
               <tr>
                 <td>HS001</td>
@@ -163,6 +171,7 @@
                 <td><span class="status status--success">Đang học</span></td>
                 <td>
                   <div class="action-group">
+                    <button class="table-btn edit-student-btn" type="button" data-student-id="HS001" data-student-name="Nguyễn Văn An" data-student-class="10A1" data-parent-phone="0912345678">Sửa</button>
                     <button class="table-btn edit-student-btn" type="button" data-student-id="HS001" data-student-name="Nguyễn Văn An" data-student-class="10A1" data-parent-phone="0912345678">Sửa</button>
                   </div>
                 </td>
@@ -178,6 +187,7 @@
                 <td>
                   <div class="action-group">
                     <button class="table-btn edit-student-btn" type="button" data-student-id="HS002" data-student-name="Trần Thị Bình" data-student-class="10A2" data-parent-phone="0987654321">Sửa</button>
+                    <button class="table-btn edit-student-btn" type="button" data-student-id="HS002" data-student-name="Trần Thị Bình" data-student-class="10A2" data-parent-phone="0987654321">Sửa</button>
                   </div>
                 </td>
               </tr>
@@ -192,6 +202,7 @@
                 <td>
                   <div class="action-group">
                     <button class="table-btn edit-student-btn" type="button" data-student-id="HS003" data-student-name="Lê Hoàng Minh" data-student-class="11A1" data-parent-phone="0909000111">Sửa</button>
+                    <button class="table-btn edit-student-btn" type="button" data-student-id="HS003" data-student-name="Lê Hoàng Minh" data-student-class="11A1" data-parent-phone="0909000111">Sửa</button>
                   </div>
                 </td>
               </tr>
@@ -203,8 +214,10 @@
                 <td>30/08/2007</td>
                 <td>0933222111</td>
                 <td><span class="status status--success">Đang học</span></td>
+                <td><span class="status status--success">Đang học</span></td>
                 <td>
                   <div class="action-group">
+                    <button class="table-btn edit-student-btn" type="button" data-student-id="HS004" data-student-name="Phạm Gia Hân" data-student-class="12A3" data-parent-phone="0933222111">Sửa</button>
                     <button class="table-btn edit-student-btn" type="button" data-student-id="HS004" data-student-name="Phạm Gia Hân" data-student-class="12A3" data-parent-phone="0933222111">Sửa</button>
                   </div>
                 </td>
@@ -220,9 +233,11 @@
                 <td>
                   <div class="action-group">
                     <button class="table-btn edit-student-btn" type="button" data-student-id="HS005" data-student-name="Đỗ Quốc Duy" data-student-class="12A1" data-parent-phone="0977333555">Sửa</button>
+                    <button class="table-btn edit-student-btn" type="button" data-student-id="HS005" data-student-name="Đỗ Quốc Duy" data-student-class="12A1" data-parent-phone="0977333555">Sửa</button>
                   </div>
                 </td>
               </tr>
+>>>>>>> ca958ba8b5bc24f5003295ca101c1dae82412e4c
             </tbody>
           </table>
 
@@ -238,6 +253,7 @@
         <aside class="side-stack">
           <article class="panel form-panel">
             <div class="panel__header panel__header--column">
+              <h4>Bộ lọc học sinh</h4>
               <h4>Bộ lọc học sinh</h4>
             </div>
 
