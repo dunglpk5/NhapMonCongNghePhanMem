@@ -1524,6 +1524,7 @@ Logging Module — Ghi log thao tác thêm hồ sơ (FR-55). Expose ILoggingServ
 
 Sequence Diagram
 
+![Sequence Thêm hồ sơ HS](./images/sequence_ThemHoSoHS.png)
 
  Danh sách Unit
 STT
@@ -1667,7 +1668,7 @@ Logging Module — Ghi log thao tác tìm kiếm (FR-55). Expose ILoggingService
 
 
 Sequence Diagram
-
+![Sequence Tim kiem hs](./images/timkiemhocsinh.png)
 Danh sách Unit
 STT
 Class
@@ -1793,7 +1794,7 @@ Logging Module — Ghi log thao tác tạo lớp (FR-55). Expose ILoggingService
 
 
 Sequence Diagram
-
+![Sequence tao lop hoc](./images/Taolophoc.png)
  Danh sách Unit 
 STT
 Class
@@ -1931,7 +1932,7 @@ Logging Module — Ghi log thao tác nhập điểm (FR-55). Expose ILoggingServ
 
 
 Sequence Diagram
-
+![Sequence nhập điểm hs](./images/NhapDiemHS.png)
 Danh sách Unit
 
 STT
@@ -2085,7 +2086,7 @@ Logging Module — Ghi log thao tác (FR-55). Expose ILoggingService.
 
 
 Sequence Diagram
-
+[Sequence Tạo TKB](./images/TaoTKB.png)
 Danh sách Unit 
 
 STT
@@ -2254,7 +2255,7 @@ Validation Module — Kiểm tra dữ liệu đầu vào, điều kiện giáo v
 Logging Module — Ghi log thao tác phân công (FR-55). Expose ILoggingService.
 Sequence Diagram
 
-
+[Sequence phân công giảng dạy](./images/PhanCongGangDay.png)
 
 Danh sách Unit
 STT
@@ -2401,6 +2402,7 @@ Logging Module — Ghi log thao tác (FR-55). Expose ILoggingService.
 
 
 Sequence Diagram
+[Sequence yc đặt lại mk](./images/YCresetMK.png)
 
 Danh sách Unit
 
@@ -2536,8 +2538,485 @@ MS_04
 MS_05
 "Gửi email thất bại, vui lòng thử lại!"
 
+LÀM  CHỨC NĂNG PHÂN CÔNG GVCN
+7. 🔧 Thiết kế từng Unit
+________________________________________
+🔹 btnLuu_click
+Mục đích: Thu thập dữ liệu form, gọi Controller.
+Module: HomeRoom Module
+Input: cboLop, cboGiaoVien, txtNamHoc
+Output: Gọi HomeRoomController.phanCongChuNhiemRQ(homeRoomDTO)
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
 
+(*) --> "Doc cboLop\ncboGiaoVien, txtNamHoc"
+--> "Tao HomeRoomDTO"
+--> "phanCongChuNhiemRQ(homeRoomDTO)"
+--> (*)
+@enduml
+________________________________________
+🔹 phanCongChuNhiemRQ
+Mục đích: Nhận request, gọi lần lượt validation rồi lưu, trả JSON về View.
+Module: HomeRoom Module
+Input: HomeRoomDTO
+Output: JSON success hoặc error
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
 
+(*) --> "HomeRoomDTO"
+--> "validateRequired()"
+if "" then
+  -->[False] "return MS_01"
+  --> (*)
+else
+  -->[True] "validateTeacher\nQualification()"
+  if "" then
+    -->[False] "return MS_02"
+    --> (*)
+  else
+    -->[True] "validateDuplicate\nHomeRoom()"
+    if "" then
+      -->[True] "return MS_03"
+      --> (*)
+    else
+      -->[False] "saveHomeRoom()"
+      if "" then
+        -->[True] "return MS_04"
+        --> (*)
+      else
+        -->[False] "return MS_05"
+        --> (*)
+      endif
+    endif
+  endif
+endif
+@enduml
+________________________________________
+🔹 validateRequired
+Mục đích: Kiểm tra lớp, giáo viên, năm học không được bỏ trống.
+Module: Validation Module
+Input: HomeRoomDTO
+Output: ValidationResult
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "HomeRoomDTO"
+--> "check lop\ngiaoVien, namHoc"
+if "" then
+  -->[Du het] "return valid = true"
+  --> (*)
+else
+  -->[Thieu field] "return MS_01"
+  --> (*)
+endif
+@enduml
+________________________________________
+🔹 validateTeacherQualification
+Mục đích: Kiểm tra giáo viên có đủ điều kiện làm chủ nhiệm không (không phải giáo viên thỉnh giảng).
+Module: Validation Module
+Input: teacherId
+Output: boolean
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "teacherId"
+--> "SELECT teacher\nWHERE teacherId"
+if "" then
+  -->[Hop le] "return true"
+  --> (*)
+else
+  -->[Khong hop le] "return MS_02"
+  --> (*)
+endif
+@enduml
+________________________________________
+🔹 validateDuplicateHomeRoom
+Mục đích: Kiểm tra lớp đã có giáo viên chủ nhiệm trong năm học đó chưa, và giáo viên đã chủ nhiệm lớp khác chưa.
+Module: Validation Module
+Input: lopId, teacherId, namHoc
+Output: boolean
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "lopId, teacherId\nnamHoc"
+--> "SELECT chu_nhiem\nWHERE lopId, namHoc"
+if "" then
+  -->[Lop da co CN] "return MS_03"
+  --> (*)
+else
+  -->[Chua co] "SELECT chu_nhiem\nWHERE teacherId, namHoc"
+  if "" then
+    -->[GV da chu nhiem] "return MS_03"
+    --> (*)
+  else
+    -->[Chua co] "return false"
+    --> (*)
+  endif
+endif
+@enduml
+________________________________________
+🔹 saveHomeRoom
+Mục đích: Lưu phân công giáo viên chủ nhiệm vào DB.
+Module: HomeRoom Module
+Input: HomeRoomDTO
+Output: boolean
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "HomeRoomDTO"
+--> "INSERT INTO chu_nhiem\n(lopId, teacherId, namHoc)"
+if "" then
+  -->[True] "return true"
+  --> (*)
+else
+  -->[False] "return MS_05"
+  --> (*)
+endif
+@enduml
+________________________________________
+🔹 logAction
+Mục đích: Ghi log thao tác phân công chủ nhiệm (FR-55).
+Module: Logging Module
+Input: userId, action, homeRoomId
+Output: void
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "userId, action\nhomeRoomId"
+--> "INSERT action_log"
+if "" then
+  -->[True] "return void"
+  --> (*)
+else
+  -->[False] "return 0"
+  --> (*)
+endif
+@enduml
+
+![Sequence Phan Cong GVCN](./images/PhanCongGVCN.png)
+
+Mã	Nội dung
+MS_01	"Vui lòng nhập đầy đủ thông tin bắt buộc!"
+MS_02	"Giáo viên không đủ điều kiện làm chủ nhiệm!"
+MS_03	"Phân công này đã tồn tại trong hệ thống!"
+MS_04	"Phân công giáo viên chủ nhiệm thành công!"
+MS_05	"Phân công thất bại, vui lòng thử lại!"
+
+LỌC DANH SÁCH HỌC SINH – FR 15
+7. 🔧 Thiết kế từng Unit
+________________________________________
+🔹 btnLoc_click
+Mục đích: Thu thập tiêu chí lọc từ form, gọi Controller.
+Module: Student Module
+Input: txtHoTen, dtpNgaySinh, cboGioiTinh, txtDiaChi, txtDanToc, txtTonGiao, txtHoTenCha, txtHoTenMe, txtSDT, cboLop
+Output: Gọi StudentController.locDanhSachRQ(filterDTO)
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "Doc tat ca\nfield tieu chi loc"
+--> "Tao FilterDTO"
+--> "locDanhSachRQ(filterDTO)"
+--> (*)
+@enduml
+________________________________________
+🔹 locDanhSachRQ
+Mục đích: Nhận request, gọi validation rồi điều phối sang Service, trả JSON về View.
+Module: Student Module
+Input: FilterDTO
+Output: JSON danh sách học sinh hoặc error
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "FilterDTO"
+--> "validateAtLeastOne()"
+if "" then
+  -->[False] "return MS_01"
+  --> (*)
+else
+  -->[True] "validateFilterFormat()"
+  if "" then
+    -->[False] "return MS_02"
+    --> (*)
+  else
+    -->[True] "filterHocSinh()"
+    if "" then
+      -->[Co KQ] "return\nList<StudentDTO>"
+      --> (*)
+    else
+      -->[Rong] "return MS_03"
+      --> (*)
+    endif
+  endif
+endif
+@enduml
+________________________________________
+🔹 validateAtLeastOne
+Mục đích: Kiểm tra ít nhất một tiêu chí lọc được nhập.
+Module: Validation Module
+Input: FilterDTO
+Output: ValidationResult
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "FilterDTO"
+--> "check tat ca\nfield co gia tri"
+if "" then
+  -->[Co it nhat 1] "return valid = true"
+  --> (*)
+else
+  -->[Tat ca rong] "return MS_01"
+  --> (*)
+endif
+@enduml
+________________________________________
+🔹 validateFilterFormat
+Mục đích: Kiểm tra định dạng từng tiêu chí đã nhập.
+Module: Validation Module
+Input: FilterDTO
+Output: ValidationResult
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "FilterDTO"
+--> "check format\nhoTen (chi chu cai?)"
+if "" then
+  -->[False] "return MS_02"
+  --> (*)
+else
+  -->[True] "check format\nngaySinh (dd/MM/yyyy?)"
+  if "" then
+    -->[False] "return MS_02"
+    --> (*)
+  else
+    -->[True] "check format\nsoDienThoai (10 so?)"
+    if "" then
+      -->[False] "return MS_02"
+      --> (*)
+    else
+      -->[True] "return valid = true"
+      --> (*)
+    endif
+  endif
+endif
+@enduml
+________________________________________
+🔹 filterHocSinh
+Mục đích: Truy vấn DB theo tổ hợp tiêu chí lọc, trả danh sách kết quả.
+Module: Student Module
+Input: FilterDTO
+Output: List<StudentDTO>
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "FilterDTO\n(nhieu tieu chi)"
+--> "BUILD query\nWHERE (dieu kien\nco gia tri)"
+--> "SELECT * FROM students\nJOIN lop WHERE..."
+if "" then
+  -->[Co KQ] "return List<StudentDTO>"
+  --> (*)
+else
+  -->[Rong] "return empty list"
+  --> (*)
+endif
+@enduml
+________________________________________
+🔹 logAction
+Mục đích: Ghi log thao tác lọc danh sách học sinh (FR-55).
+Module: Logging Module
+Input: userId, action, filterCriteria
+Output: void
+plantuml
+@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "userId, action\nfilterCriteria"
+--> "INSERT action_log"
+if "" then
+  -->[True] "return void"
+  --> (*)
+else
+  -->[False] "return 0"
+  --> (*)
+endif
+@enduml
+
+![Sequence loc ds hs](./images/LocHS.png)
+
+Bảng MS — FR-15:
+MãNội dungMS_01"Vui lòng nhập ít nhất một tiêu chí lọc!"MS_02"Dữ liệu đầu vào sai định dạng!"MS_03"Không tìm thấy học sinh phù hợp với tiêu chí đã chọn!"
+
+LỌC LỚP HỌC – FR 21 
+7. 🔧 Thiết kế từng Unit
+
+🔹 btnLoc_click
+Mục đích: Thu thập tiêu chí lọc từ form, gọi Controller.
+Module: Class Module
+Input: txtTenLop, cboKhoi, txtNamHoc, cboGiaoVienChuNhiem, txtSiSo
+Output: Gọi ClassController.locLopHocRQ(filterDTO)
+plantuml@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "Doc txtTenLop, cboKhoi\ntxtNamHoc, cboGVCN\ntxtSiSo"
+--> "Tao ClassFilterDTO"
+--> "locLopHocRQ(filterDTO)"
+--> (*)
+@enduml
+
+🔹 locLopHocRQ
+Mục đích: Nhận request, gọi validation rồi điều phối sang Service, trả JSON về View.
+Module: Class Module
+Input: ClassFilterDTO
+Output: JSON danh sách lớp hoặc error
+plantuml@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "ClassFilterDTO"
+--> "validateAtLeastOne()"
+if "" then
+  -->[False] "return MS_01"
+  --> (*)
+else
+  -->[True] "validateFilterFormat()"
+  if "" then
+    -->[False] "return MS_02"
+    --> (*)
+  else
+    -->[True] "filterLopHoc()"
+    if "" then
+      -->[Co KQ] "return\nList<ClassDTO>"
+      --> (*)
+    else
+      -->[Rong] "return MS_03"
+      --> (*)
+    endif
+  endif
+endif
+@enduml
+
+🔹 validateAtLeastOne
+Mục đích: Kiểm tra ít nhất một tiêu chí lọc được nhập.
+Module: Validation Module
+Input: ClassFilterDTO
+Output: ValidationResult
+plantuml@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "ClassFilterDTO"
+--> "check tat ca\nfield co gia tri"
+if "" then
+  -->[Co it nhat 1] "return valid = true"
+  --> (*)
+else
+  -->[Tat ca rong] "return MS_01"
+  --> (*)
+endif
+@enduml
+
+🔹 validateFilterFormat
+Mục đích: Kiểm tra định dạng năm học, sĩ số, giáo viên chủ nhiệm.
+Module: Validation Module
+Input: ClassFilterDTO
+Output: ValidationResult
+plantuml@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "ClassFilterDTO"
+--> "check namHoc\n(YYYY-YYYY?)"
+if "" then
+  -->[False] "return MS_02"
+  --> (*)
+else
+  -->[True] "check siSo\n(so nguyen >= 0?)"
+  if "" then
+    -->[False] "return MS_02"
+    --> (*)
+  else
+    -->[True] "check GVCN\n(trong danh sach GV?)"
+    if "" then
+      -->[False] "return MS_02"
+      --> (*)
+    else
+      -->[True] "return valid = true"
+      --> (*)
+    endif
+  endif
+endif
+@enduml
+
+🔹 filterLopHoc
+Mục đích: Truy vấn DB theo tổ hợp tiêu chí lọc, trả danh sách lớp học.
+Module: Class Module
+Input: ClassFilterDTO
+Output: List<ClassDTO>
+plantuml@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "ClassFilterDTO\n(nhieu tieu chi)"
+--> "BUILD query\nWHERE (dieu kien\nco gia tri)"
+--> "SELECT * FROM lop\nJOIN gv WHERE..."
+if "" then
+  -->[Co KQ] "return List<ClassDTO>"
+  --> (*)
+else
+  -->[Rong] "return empty list"
+  --> (*)
+endif
+@enduml
+
+🔹 logAction
+Mục đích: Ghi log thao tác lọc danh sách lớp học (FR-55).
+Module: Logging Module
+Input: userId, action, filterCriteria
+Output: void
+plantuml@startuml
+skinparam defaultFontSize 12
+left to right direction
+
+(*) --> "userId, action\nfilterCriteria"
+--> "INSERT action_log"
+if "" then
+  -->[True] "return void"
+  --> (*)
+else
+  -->[False] "return 0"
+  --> (*)
+endif
+@enduml
+
+![Sequence loc lop hoc](./images/LocLop.png)
+
+Bảng MS — FR-21:
+MãNội dungMS_01"Vui lòng nhập ít nhất một tiêu chí lọc!"MS_02"Dữ liệu đầu vào không hợp lệ!"MS_03"Không tìm thấy lớp học phù hợp với tiêu chí đã chọn!"
 
 CHƯƠNG 5. XÂY DỰNG VÀ KIỂM THỬ HỆ THỐNG
 Lựa chọn xây dựng và kiểm thử các chức năng đáp ứng cho ít nhất 20% yêu cầu quan trọng nhất của hệ thống và phải chỉ rõ Ai-làm gì tương ứng với chương này trong bảng phân công (mục 1.7)

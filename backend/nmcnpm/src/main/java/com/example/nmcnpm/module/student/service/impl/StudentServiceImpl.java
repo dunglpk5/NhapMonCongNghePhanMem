@@ -1,7 +1,8 @@
 package com.example.nmcnpm.module.student.service.impl;
 
+import com.example.nmcnpm.module.logging.service.ILoggingService;
 import com.example.nmcnpm.module.student.dto.StudentDTO;
-import com.example.nmcnpm.module.student.dto.StudentResponseDTO;
+import com.example.nmcnpm.module.student.dto.StudentresponseDTO;
 import com.example.nmcnpm.module.student.entity.Student;
 import com.example.nmcnpm.module.student.repository.StudentRepository;
 import com.example.nmcnpm.module.student.service.IStudentService;
@@ -10,13 +11,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import java.util.List;
+import java.time.LocalDate;
 
 /**
  * Triển khai Student Module — chứa toàn bộ business logic.
  *
  * Modules tham gia (theo thiết kế):
  *  - Student Module (chính)
- *  - Logging Module — ghi audit log (FR-57) → TODO: inject ILoggingService
+ *  - Logging Module — ghi audit log (FR-55)
  *
  * Các module KHÁC không được inject class này trực tiếp.
  */
@@ -25,11 +30,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class StudentServiceImpl implements IStudentService {
 
     private final StudentRepository studentRepository;
-    // TODO: inject ILoggingService khi Logging Module hoàn thiện
-    // private final ILoggingService loggingService;
+    private final ILoggingService loggingService;
 
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public StudentServiceImpl(StudentRepository studentRepository,
+                              ILoggingService loggingService) {
         this.studentRepository = studentRepository;
+        this.loggingService = loggingService;
     }
 
     // ── FR-10, FR-11: Thêm hồ sơ học sinh ───────────────────────────────
@@ -38,17 +47,16 @@ public class StudentServiceImpl implements IStudentService {
     public String themHoSo(StudentDTO dto, Integer userId) {
 
         // Bước 5: Sinh mã học sinh tự động (FR-11)
-        // Format: HS + 6 chữ số → HS000001
-        int seq        = studentRepository.getNextSequence();
-        String maHocSinh = String.format("HS%06d", seq);
+        String maHocSinh = generateMaHocSinh();
 
         // Bước 6: Map DTO → Entity rồi lưu DB
-        Student student = mapToEntity(dto);
-        student.setStudentId(maHocSinh);
-        studentRepository.save(student);
+        Student student = saveHoSo(dto, maHocSinh);
 
-        // Bước 7: Ghi audit log (FR-57)
-        // loggingService.logAction(userId, "ADD_STUDENT", maHocSinh);
+        // Phân bổ lớp (tùy chọn)
+        assignToClassIfPresent(student, dto.getClassId());
+
+        // Bước 7: Ghi audit log (FR-55)
+        loggingService.logAction(userId, "ADD_STUDENT", maHocSinh);
 
         return maHocSinh;
     }
@@ -74,15 +82,17 @@ public class StudentServiceImpl implements IStudentService {
 
         studentRepository.save(student);
 
+        assignToClassIfPresent(student, dto.getClassId());
+
         // Ghi audit log
-        // loggingService.logAction(userId, "UPDATE_STUDENT", studentId);
+        loggingService.logAction(userId, "UPDATE_STUDENT", studentId);
     }
 
     // ── FR-13, FR-14: Tìm kiếm ───────────────────────────────────────────
 
     @Override
     @Transactional(readOnly = true)
-    public Page<StudentResponseDTO> timKiem(
+    public Page<StudentresponseDTO> timKiem(
             String maHocSinh, String hoTen, Integer classId, Pageable pageable) {
 
         // Chuẩn hóa: chuỗi rỗng → null (để query JPQL bỏ qua điều kiện)
@@ -91,14 +101,14 @@ public class StudentServiceImpl implements IStudentService {
 
         return studentRepository
                 .search(maNorm, tenNorm, classId, pageable)
-                .map(StudentResponseDTO::from);
+                .map(StudentresponseDTO::from);
     }
 
     // ── FR-15: Lọc danh sách ─────────────────────────────────────────────
 
     @Override
     @Transactional(readOnly = true)
-    public Page<StudentResponseDTO> locDanhSach(
+    public Page<StudentresponseDTO> locDanhSach(
             String hoTen, String danToc, String tonGiao,
             String hoTenCha, String hoTenMe, String sdt,
             Boolean gender, Pageable pageable) {
@@ -107,16 +117,16 @@ public class StudentServiceImpl implements IStudentService {
                 .filter(normalize(hoTen), normalize(danToc), normalize(tonGiao),
                         normalize(hoTenCha), normalize(hoTenMe), normalize(sdt),
                         gender, pageable)
-                .map(StudentResponseDTO::from);
+                .map(StudentresponseDTO::from);
     }
 
     // ── FR-36: Xem chi tiết ───────────────────────────────────────────────
 
     @Override
     @Transactional(readOnly = true)
-    public StudentResponseDTO xemChiTiet(String studentId) {
+    public StudentresponseDTO xemChiTiet(String studentId) {
         return studentRepository.findById(studentId)
-                .map(StudentResponseDTO::from)
+                .map(StudentresponseDTO::from)
                 .orElse(null);
     }
 
@@ -134,6 +144,18 @@ public class StudentServiceImpl implements IStudentService {
      * Map StudentDTO → Student entity.
      * studentId sẽ được set riêng sau khi sinh mã.
      */
+    private String generateMaHocSinh() {
+        int year = LocalDate.now().getYear();
+        int seq = studentRepository.getNextSequenceByYear(year);
+        return String.format("HS%d%03d", year, seq);
+    }
+
+    private Student saveHoSo(StudentDTO dto, String maHocSinh) {
+        Student student = mapToEntity(dto);
+        student.setStudentId(maHocSinh);
+        return studentRepository.save(student);
+    }
+
     private Student mapToEntity(StudentDTO dto) {
         Student s = new Student();
         s.setFullName(dto.getHoTen());
@@ -146,6 +168,30 @@ public class StudentServiceImpl implements IStudentService {
         s.setMotherName(dto.getHoTenMe());
         s.setPhone(dto.getSoDienThoai());
         return s;
+    }
+
+    private void assignToClassIfPresent(Student student, Integer classId) {
+        if (classId == null) return;
+        List<com.example.nmcnpm.module.classes.entity.AcademicYear> years = 
+            entityManager.createQuery("SELECT a FROM AcademicYear a WHERE a.isCurrent = true", com.example.nmcnpm.module.classes.entity.AcademicYear.class).getResultList();
+        if (years.isEmpty()) return; 
+        com.example.nmcnpm.module.classes.entity.AcademicYear currentYear = years.get(0);
+        com.example.nmcnpm.module.classes.entity.ClassEntity classEntity = 
+            entityManager.find(com.example.nmcnpm.module.classes.entity.ClassEntity.class, classId);
+        if (classEntity == null) return;
+        
+        com.example.nmcnpm.module.student.entity.StudentClassId id = 
+            new com.example.nmcnpm.module.student.entity.StudentClassId(student.getStudentId(), classId, currentYear.getYearId());
+        com.example.nmcnpm.module.student.entity.StudentClass sc = 
+            entityManager.find(com.example.nmcnpm.module.student.entity.StudentClass.class, id);
+        if (sc == null) {
+            sc = new com.example.nmcnpm.module.student.entity.StudentClass();
+            sc.setId(id);
+            sc.setStudent(student);
+            sc.setClassEntity(classEntity);
+            sc.setAcademicYear(currentYear);
+            entityManager.persist(sc);
+        }
     }
 
     /**
