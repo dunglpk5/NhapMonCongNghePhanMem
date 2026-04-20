@@ -1,5 +1,7 @@
 package com.example.nmcnpm.shared.response;
 
+
+
 /**
  * Wrapper chuẩn cho mọi API response trong hệ thống.
  * Frontend luôn nhận cùng một cấu trúc JSON:
