@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
@@ -6,7 +6,6 @@
   <title>GtuSchool - Quản lý tài khoản</title>
   <link rel="stylesheet" href="../CSS/account-management.css" />
   <link rel="stylesheet" href="../fonts/fontawesome-free-7.2.0/css/all.min.css">
-
 </head>
 <body>
   <div class="app">
@@ -25,7 +24,7 @@
         <div class="menu-group__title">Tổng quan</div>
         <ul class="menu">
           <li><a href="Home.html"><span>Trang chủ</span></a></li>
-          <li><a href="#"><span>Báo cáo & thống kê</span></a></li>
+          <li><a href="#"><span>Báo cáo &amp; thống kê</span></a></li>
           <li><a href="#"><span>Nhật ký hệ thống</span></a></li>
         </ul>
       </div>
@@ -45,7 +44,7 @@
       <div class="menu-group">
         <div class="menu-group__title">Hệ thống</div>
         <ul class="menu">
-          <li><a href="AccountManagement.html"><span>Tài khoản & phân quyền</span></a></li>
+          <li><a href="AccountManagement.html"><span>Tài khoản &amp; phân quyền</span></a></li>
           <li><a href="#"><span>Sao lưu dữ liệu</span></a></li>
           <li><a href="#"><span>Phục hồi dữ liệu</span></a></li>
           <li><a href="#"><span>Cài đặt</span></a></li>
@@ -66,12 +65,12 @@
         <div class="topbar__right">
           <div class="search">
             <i class="fa-regular fa-magnifying-glass"></i>
-            <input type="text" placeholder="Tìm kiếm">
+            <input type="text" placeholder="Tìm kiếm" id="searchAccountInput">
           </div>
           <div class="user-card">
-            <div class="avatar">AD</div>
+            <div class="avatar" id="userAvatar">AD</div>
             <div>
-              <strong>Admin</strong>
+              <strong id="userDisplayName">Admin</strong>
             </div>
           </div>
         </div>
@@ -80,23 +79,20 @@
       <section class="hero hero--account">
         <div>
           <h3>Accounts</h3>
-          <div class="hero-actions">
-          </div>
         </div>
-
         <div class="hero-side">
           <div>
             <small>Tổng</small>
-            <strong>128</strong>
+            <strong id="statTotal">0</strong>
           </div>
           <div class="meta">
             <div>
               <small>Active</small>
-              <strong class="meta-number">119</strong>
+              <strong class="meta-number" id="statActive">0</strong>
             </div>
             <div>
               <small>Locked</small>
-              <strong class="meta-number">09</strong>
+              <strong class="meta-number" id="statLocked">0</strong>
             </div>
           </div>
         </div>
@@ -105,19 +101,17 @@
       <section class="stats stats--three">
         <article class="stat-card">
           <div class="stat-card__label">Tài khoản quản trị</div>
-          <div class="stat-card__value">08</div>
+          <div class="stat-card__value" id="statAdminCount">0</div>
           <div class="stat-card__change">Toàn quyền hệ thống</div>
         </article>
-
         <article class="stat-card">
-          <div class="stat-card__label">Giáo viên & giáo vụ</div>
-          <div class="stat-card__value">74</div>
+          <div class="stat-card__label">Giáo viên &amp; giáo vụ</div>
+          <div class="stat-card__value" id="statTeacherCount">0</div>
           <div class="stat-card__change">Đang được phân quyền</div>
         </article>
-
         <article class="stat-card">
           <div class="stat-card__label">Yêu cầu đặt lại mật khẩu</div>
-          <div class="stat-card__value">11</div>
+          <div class="stat-card__value">0</div>
           <div class="stat-card__change">Cần xử lý trong ngày</div>
         </article>
       </section>
@@ -150,112 +144,14 @@
                 <th>Thao tác</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>TK001</td>
-                <td>Từ Đức Anh</td>
-                <td>ducanh@gtschool.vn</td>
-                <td><span class="role-badge role-admin">Admin</span></td>
-                <td><span class="status status--success">Hoạt động</span></td>
-                <td>
-                  <div class="action-group">
-                    <button
-                      class="table-btn edit-account-btn"
-                      type="button"
-                      data-account-id="TK001"
-                      data-account-name="Từ Đức Anh"
-                      data-account-email="ducanh@gtschool.vn"
-                    >
-                      Sửa
-                    </button>
-                    <button class="table-btn">Khóa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>TK014</td>
-                <td>Nguyễn Thành Đạt</td>
-                <td>dat.nt@gtschool.vn</td>
-                <td><span class="role-badge role-office">Giáo vụ</span></td>
-                <td><span class="status status--success">Hoạt động</span></td>
-                <td>
-                  <div class="action-group">
-                    <button
-                      class="table-btn edit-account-btn"
-                      type="button"
-                      data-account-id="TK014"
-                      data-account-name="Nguyễn Thành Đạt"
-                      data-account-email="dat.nt@gtschool.vn"
-                    >
-                      Sửa
-                    </button>
-                    <button class="table-btn">Khóa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>TK026</td>
-                <td>Nguyễn Hoàng Quốc Duy</td>
-                <td>duy.nhq@gtschool.vn</td>
-                <td><span class="role-badge role-teacher">Giáo viên</span></td>
-                <td><span class="status status--success">Hoạt động</span></td>
-                <td>
-                  <div class="action-group">
-                    <button
-                      class="table-btn edit-account-btn"
-                      type="button"
-                      data-account-id="TK026"
-                      data-account-name="Nguyễn Hoàng Quốc Duy"
-                      data-account-email="duy.nhq@gtschool.vn"
-                    >
-                      Sửa
-                    </button>
-                    <button class="table-btn">Khóa</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>TK041</td>
-                <td>Trần Văn Dũng</td>
-                <td>dung.tv@gtschool.vn</td>
-                <td><span class="role-badge role-teacher">Giáo viên</span></td>
-                <td><span class="status status--danger">Bị khóa</span></td>
-                <td>
-                  <div class="action-group">
-                    <button class="table-btn">Mở khóa</button>
-                    <button class="table-btn">Chi tiết</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>TK052</td>
-                <td>Đặng Quang Minh</td>
-                <td>minh.dq@gtschool.vn</td>
-                <td><span class="role-badge role-bgh">BGH</span></td>
-                <td><span class="status status--success">Hoạt Động</span></td>
-                <td>
-                  <div class="action-group">
-                    <button
-                      class="table-btn edit-account-btn"
-                      type="button"
-                      data-account-id="TK052"
-                      data-account-name="Đặng Quang Minh"
-                      data-account-email="minh.dq@gtschool.vn"
-                    >
-                      Sửa
-                    </button>
-                    <button class="table-btn">Khóa</button>
-                  </div>
-                </td>
-              </tr>
+            <tbody id="accountTableBody">
+              <!-- Dữ liệu sẽ được load từ API -->
             </tbody>
           </table>
 
           <div class="pagination">
             <button class="page-btn">&lt;</button>
             <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
             <button class="page-btn">&gt;</button>
           </div>
         </article>
@@ -278,19 +174,18 @@
               <div class="form-group">
                 <label>Vai trò</label>
                 <select>
-                  <option>Chọn vai trò</option>
-                  <option>Admin</option>
-                  <option>Giáo viên</option>
-                  <option>Nhân viên văn phòng</option>
-                  <option>Ban giám hiệu</option>
-                  <option>Học sinh</option>
+                  <option value="">Chọn vai trò</option>
+                  <option value="ADMIN">Admin</option>
+                  <option value="TEACHER">Giáo viên</option>
+                  <option value="OFFICE_STAFF">Nhân viên văn phòng</option>
+                  <option value="PRINCIPAL">Ban giám hiệu</option>
+                  <option value="STUDENT">Học sinh</option>
                 </select>
               </div>
               <div class="form-group">
                 <label>Trạng thái</label>
                 <select>
                   <option>Hoạt động</option>
-                  <option>Chờ kích hoạt</option>
                   <option>Bị khóa</option>
                 </select>
               </div>
@@ -305,23 +200,10 @@
             <div class="panel__header panel__header--column">
               <h4>Activity</h4>
             </div>
-
-            <div class="activity-list">
+            <div class="activity-list" id="activityList">
               <div class="activity-item">
-                <strong>Admin vừa mở khóa tài khoản gv.minh</strong>
-                <span>08:42 - 10/04/2026</span>
-              </div>
-              <div class="activity-item">
-                <strong>Yêu cầu đặt lại mật khẩu cho tk026</strong>
-                <span>08:15 - 10/04/2026</span>
-              </div>
-              <div class="activity-item">
-                <strong>Phân quyền BGH cho tài khoản tk052</strong>
-                <span>07:58 - 10/04/2026</span>
-              </div>
-              <div class="activity-item">
-                <strong>Tạo mới tài khoản giáo vụ</strong>
-                <span>07:20 - 10/04/2026</span>
+                <strong>Chưa có hoạt động</strong>
+                <span>--</span>
               </div>
             </div>
           </article>
@@ -330,18 +212,21 @@
     </main>
   </div>
 
+  <!-- MODAL: Sửa tài khoản (FR-03) -->
   <div class="modal-overlay" id="editAccountModal" hidden>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="editAccountTitle">
       <div class="modal-card__header">
         <div>
           <span class="modal-card__eyebrow">Chỉnh sửa tài khoản</span>
-          <h3 id="editAccountTitle">Cập nhật thông tin đăng nhập</h3>
+          <h3 id="editAccountTitle">Cập nhật thông tin</h3>
           <p class="modal-card__meta" id="editAccountMeta">Tài khoản được chọn</p>
         </div>
-        <button class="modal-close-btn" type="button" aria-label="Đóng form chỉnh sửa">
+        <button class="modal-close-btn" type="button" aria-label="Đóng">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
+
+      <div id="editAccountMsg" style="display:none; padding:10px 14px; border-radius:8px; margin:0 24px 12px; font-size:14px;"></div>
 
       <form class="modal-form">
         <div class="form-group">
@@ -349,8 +234,22 @@
           <input id="editAccountName" type="text" placeholder="Nhập tên cần chỉnh sửa" />
         </div>
         <div class="form-group">
-          <label for="editAccountPassword">Mật khẩu mới</label>
-          <input id="editAccountPassword" type="password" placeholder="Nhập mật khẩu mới" />
+          <label for="editAccountEmail">Email</label>
+          <input id="editAccountEmail" type="email" placeholder="Nhập email" />
+        </div>
+        <div class="form-group">
+          <label for="editAccountRole">Vai trò</label>
+          <select id="editAccountRole">
+            <option value="ADMIN">Admin</option>
+            <option value="TEACHER">Giáo viên</option>
+            <option value="OFFICE_STAFF">Giáo vụ</option>
+            <option value="PRINCIPAL">BGH</option>
+            <option value="STUDENT">Học sinh</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editAccountPassword">Mật khẩu mới (tùy chọn)</label>
+          <input id="editAccountPassword" type="password" placeholder="Để trống nếu không đổi" />
         </div>
         <div class="form-actions form-actions--end">
           <button class="btn btn--outline modal-cancel-btn" type="button">Hủy</button>
@@ -360,6 +259,7 @@
     </div>
   </div>
 
+  <!-- MODAL: Thêm tài khoản mới (FR-02) -->
   <div class="modal-overlay" id="addAccountModal" hidden>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="addAccountTitle">
       <div class="modal-card__header">
@@ -368,33 +268,39 @@
           <h3 id="addAccountTitle">Thêm tài khoản vào hệ thống</h3>
           <p class="modal-card__meta">Nhập thông tin cơ bản để khởi tạo tài khoản mới</p>
         </div>
-        <button class="modal-close-btn add-modal-close-btn" type="button" aria-label="Đóng form thêm tài khoản">
+        <button class="modal-close-btn add-modal-close-btn" type="button" aria-label="Đóng">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
+      <div id="addAccountMsg" style="display:none; padding:10px 14px; border-radius:8px; margin:0 24px 12px; font-size:14px;"></div>
+
       <form class="modal-form" id="addAccountForm">
         <div class="form-group">
-          <label for="addAccountName">Họ và tên</label>
-          <input id="addAccountName" type="text" placeholder="Nhập họ và tên" />
+          <label for="addAccountFullName">Họ và tên *</label>
+          <input id="addAccountFullName" type="text" placeholder="Nhập họ và tên" required />
         </div>
         <div class="form-group">
-          <label for="addAccountEmail">Email</label>
-          <input id="addAccountEmail" type="email" placeholder="Nhập email đăng nhập" />
+          <label for="addAccountUsername">Tên đăng nhập *</label>
+          <input id="addAccountUsername" type="text" placeholder="Nhập username (3-50 ký tự)" required />
+        </div>
+        <div class="form-group">
+          <label for="addAccountEmail">Email *</label>
+          <input id="addAccountEmail" type="email" placeholder="Nhập email đăng nhập" required />
         </div>
         <div class="form-group">
           <label for="addAccountPassword">Mật khẩu</label>
-          <input id="addAccountPassword" type="password" placeholder="Nhập mật khẩu khởi tạo" />
+          <input id="addAccountPassword" type="password" placeholder="Để trống → mật khẩu mặc định: GtuSchool@2024" />
         </div>
         <div class="form-group">
-          <label for="addAccountRole">Vai trò</label>
-          <select id="addAccountRole">
-            <option>Chọn vai trò</option>
-            <option>Admin</option>
-            <option>Giáo viên</option>
-            <option>Giáo vụ</option>
-            <option>BGH</option>
-            <option>Học sinh</option>
+          <label for="addAccountRole">Vai trò *</label>
+          <select id="addAccountRole" required>
+            <option value="">Chọn vai trò</option>
+            <option value="ADMIN">Admin</option>
+            <option value="TEACHER">Giáo viên</option>
+            <option value="OFFICE_STAFF">Giáo vụ</option>
+            <option value="PRINCIPAL">BGH</option>
+            <option value="STUDENT">Học sinh</option>
           </select>
         </div>
         <div class="form-actions form-actions--end">
