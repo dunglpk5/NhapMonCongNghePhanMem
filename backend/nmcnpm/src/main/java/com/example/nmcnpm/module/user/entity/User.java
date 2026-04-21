@@ -1,6 +1,7 @@
 package com.example.nmcnpm.module.user.entity;
 
 import com.example.nmcnpm.module.core.enums.UserRole;
+import com.example.nmcnpm.module.core.config.UserRoleConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,9 +13,13 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Entity User – ánh xạ trực tiếp từ class diagram (entity users).
+ * Entity User – ánh xạ trực tiếp từ bảng [users] trong DB.
  * Implements UserDetails để tích hợp với Spring Security.
- * Implements IAuthenticable (interface từ class diagram).
+ *
+ * Lưu ý:
+ *  - role lưu lowercase trong DB ('admin', 'teacher'...)
+ *    nhưng Java enum dùng UPPERCASE → cần UserRoleConverter.
+ *  - lockedUntil, revoked: Hibernate ddl-auto=update sẽ tự tạo cột.
  */
 @Entity
 @Table(name = "users")
@@ -43,7 +48,11 @@ public class User implements UserDetails {
     @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
 
-    @Enumerated(EnumType.STRING)
+    /**
+     * Role dùng custom converter để map:
+     *   DB lowercase ('admin') ↔ Java UPPERCASE (ADMIN)
+     */
+    @Convert(converter = UserRoleConverter.class)
     @Column(nullable = false, length = 20)
     private UserRole role;
 
@@ -55,7 +64,7 @@ public class User implements UserDetails {
     @Builder.Default
     private String status = "active";
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Builder.Default
     private Boolean revoked = false;
 
@@ -68,8 +77,12 @@ public class User implements UserDetails {
      * Thời điểm hết khóa tạm thời (NFR-13).
      * null = không bị khóa tạm.
      */
-    @Column(name = "locked_until")
+    @Column(name = "locked_until", nullable = true)
     private LocalDateTime lockedUntil;
+
+    /** Thời điểm đăng nhập gần nhất. */
+    @Column(name = "last_login_at")
+    private LocalDateTime lastLoginAt;
 
     @Column(name = "created_at", updatable = false)
     @Builder.Default

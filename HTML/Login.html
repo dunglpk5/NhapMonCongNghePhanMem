@@ -25,18 +25,24 @@
     <div class="login-card">
       <h3>Đăng nhập</h3>
 
-      <form>
+      <!-- Thông báo lỗi -->
+      <div id="loginError" style="display:none; color:#e74c3c; background:#fdf0ef; padding:10px 14px; border-radius:8px; margin-bottom:16px; font-size:14px;"></div>
+
+      <!-- Thông báo thành công -->
+      <div id="loginSuccess" style="display:none; color:#27ae60; background:#eafaf1; padding:10px 14px; border-radius:8px; margin-bottom:16px; font-size:14px;"></div>
+
+      <form id="loginForm">
         <div class="form-group">
-          <label>Email</label>
-          <input type="email" placeholder="Nhập email">
+          <label for="txtEmailOrUsername">Email hoặc tên đăng nhập</label>
+          <input type="text" id="txtEmailOrUsername" placeholder="Nhập email hoặc username" required>
         </div>
 
         <div class="form-group">
-          <label>Mật khẩu</label>
-          <input type="password" placeholder="Nhập mật khẩu">
+          <label for="txtPassword">Mật khẩu</label>
+          <input type="password" id="txtPassword" placeholder="Nhập mật khẩu" required>
         </div>
 
-        <button class="btn-login">Đăng nhập</button>
+        <button type="submit" class="btn-login" id="btnLogin">Đăng nhập</button>
 
         <div class="extra">
           <a href="#">Quên mật khẩu?</a>
@@ -46,6 +52,116 @@
   </div>
 
 </div>
+
+<script>
+/**
+ * Login.html – Kết nối frontend với backend API (FR-01).
+ *
+ * Luồng:
+ *  1. User nhập email/username + password
+ *  2. POST /auth/login → backend
+ *  3. Nhận JWT token + redirectUrl
+ *  4. Lưu token vào localStorage
+ *  5. Redirect theo role
+ */
+
+// Địa chỉ backend API
+const API_BASE = 'http://localhost:8080';
+
+const loginForm = document.getElementById('loginForm');
+const errorDiv = document.getElementById('loginError');
+const successDiv = document.getElementById('loginSuccess');
+const btnLogin = document.getElementById('btnLogin');
+
+loginForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Reset thông báo
+    errorDiv.style.display = 'none';
+    successDiv.style.display = 'none';
+    btnLogin.disabled = true;
+    btnLogin.textContent = 'Đang đăng nhập...';
+
+    const emailOrUsername = document.getElementById('txtEmailOrUsername').value.trim();
+    const password = document.getElementById('txtPassword').value;
+
+    if (!emailOrUsername || !password) {
+        showError('Vui lòng nhập đầy đủ thông tin!');
+        resetButton();
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE}/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                emailOrUsername: emailOrUsername,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            // Đăng nhập thành công
+            const loginData = data.data;
+
+            // Lưu thông tin vào localStorage
+            localStorage.setItem('jwt_token', loginData.token);
+            localStorage.setItem('user_id', loginData.userId);
+            localStorage.setItem('username', loginData.username);
+            localStorage.setItem('full_name', loginData.fullName);
+            localStorage.setItem('user_role', loginData.role);
+
+            showSuccess(`Đăng nhập thành công! Xin chào ${loginData.fullName} (${loginData.role})`);
+
+            // Redirect sau 1 giây
+            setTimeout(() => {
+                // Map role → trang HTML tương ứng
+                const rolePageMap = {
+                    'ADMIN':        'Home.html',
+                    'TEACHER':      'Home.html',
+                    'OFFICE_STAFF': 'Home.html',
+                    'PRINCIPAL':    'Home.html',
+                    'STUDENT':      'Home.html'
+                };
+                const targetPage = rolePageMap[loginData.role] || 'Home.html';
+                window.location.href = targetPage;
+            }, 1000);
+
+        } else {
+            // Đăng nhập thất bại
+            showError(data.message || 'Sai tài khoản hoặc mật khẩu!');
+        }
+
+    } catch (err) {
+        console.error('Login error:', err);
+        showError('Không thể kết nối đến server! Vui lòng kiểm tra backend đang chạy tại ' + API_BASE);
+    }
+
+    resetButton();
+});
+
+function showError(msg) {
+    errorDiv.textContent = msg;
+    errorDiv.style.display = 'block';
+    successDiv.style.display = 'none';
+}
+
+function showSuccess(msg) {
+    successDiv.textContent = msg;
+    successDiv.style.display = 'block';
+    errorDiv.style.display = 'none';
+}
+
+function resetButton() {
+    btnLogin.disabled = false;
+    btnLogin.textContent = 'Đăng nhập';
+}
+</script>
 
 </body>
 </html>

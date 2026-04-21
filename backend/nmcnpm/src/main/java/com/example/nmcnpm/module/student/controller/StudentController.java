@@ -5,7 +5,8 @@ import com.example.nmcnpm.module.student.dto.StudentresponseDTO;
 import com.example.nmcnpm.module.student.service.IStudentService;
 import com.example.nmcnpm.module.validation.dto.ValidationResult;
 import com.example.nmcnpm.module.validation.service.IValidationService;
-import com.example.nmcnpm.shared.response.ApiResponse;
+import com.example.nmcnpm.module.core.response.ApiResponse;
+import com.example.nmcnpm.module.user.entity.User;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,19 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*")
+/**
+ * StudentController – REST controller cho Student Module.
+ *
+ * Tương ứng với:
+ *   FR-10: Thêm hồ sơ học sinh
+ *   FR-12: Cập nhật hồ sơ học sinh
+ *   FR-13: Tìm kiếm học sinh
+ *   FR-14: Hiển thị phân trang
+ *   FR-15: Lọc danh sách học sinh
+ *   FR-36: Xem hồ sơ cá nhân
+ *
+ * Base path: /api/v1/students
+ */
 @RestController
 @RequestMapping("/api/v1/students")
 public class StudentController {
@@ -36,7 +49,7 @@ public class StudentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('admin', 'office_staff')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OFFICE_STAFF')")
     public ResponseEntity<ApiResponse<String>> themHoSoRQ(
             @RequestBody StudentDTO dto,
             @AuthenticationPrincipal UserDetails userDetails) {
@@ -64,7 +77,7 @@ public class StudentController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('admin', 'office_staff', 'principal')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OFFICE_STAFF', 'PRINCIPAL')")
     public ResponseEntity<ApiResponse<Page<StudentresponseDTO>>> danhSach(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
@@ -75,7 +88,7 @@ public class StudentController {
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('admin', 'office_staff', 'principal', 'teacher')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OFFICE_STAFF', 'PRINCIPAL', 'TEACHER')")
     public ResponseEntity<ApiResponse<Page<StudentresponseDTO>>> timKiem(
             @RequestParam(required = false) String maHocSinh,
             @RequestParam(required = false) String hoTen,
@@ -98,7 +111,7 @@ public class StudentController {
     }
 
     @GetMapping("/filter")
-    @PreAuthorize("hasAnyRole('admin', 'office_staff', 'principal')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OFFICE_STAFF', 'PRINCIPAL')")
     public ResponseEntity<ApiResponse<Page<StudentresponseDTO>>> locDanhSach(
             @RequestParam(required = false) String hoTen,
             @RequestParam(required = false) String danToc,
@@ -118,7 +131,7 @@ public class StudentController {
     }
 
     @GetMapping("/{studentId}")
-    @PreAuthorize("hasAnyRole('admin', 'office_staff', 'principal', 'teacher', 'student')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OFFICE_STAFF', 'PRINCIPAL', 'TEACHER', 'STUDENT')")
     public ResponseEntity<ApiResponse<StudentresponseDTO>> xemChiTiet(
             @PathVariable String studentId) {
 
@@ -130,7 +143,7 @@ public class StudentController {
     }
 
     @PutMapping("/{studentId}")
-    @PreAuthorize("hasAnyRole('admin', 'office_staff')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OFFICE_STAFF')")
     public ResponseEntity<ApiResponse<Void>> capNhatHoSo(
             @PathVariable String studentId,
             @RequestBody StudentDTO dto,
@@ -158,7 +171,14 @@ public class StudentController {
         }
     }
 
+    /**
+     * Trích xuất userId từ Spring Security principal.
+     * Principal là User entity (implements UserDetails).
+     */
     private Integer extractUserId(UserDetails userDetails) {
+        if (userDetails instanceof User) {
+            return ((User) userDetails).getUserId();
+        }
         return null;
     }
 }

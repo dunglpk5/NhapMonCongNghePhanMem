@@ -34,11 +34,11 @@ import java.util.List;
  * SecurityConfig – cấu hình Spring Security cho toàn hệ thống.
  *
  * Phân quyền theo vai trò (NFR-09 – RBAC):
- *   ADMIN        → /dashboard/admin/**
- *   TEACHER      → /dashboard/teacher/**
- *   OFFICE_STAFF → /dashboard/office/**
- *   PRINCIPAL    → /dashboard/principal/**
- *   STUDENT      → /dashboard/student/**
+ *   ADMIN        → quản lý tài khoản, toàn quyền
+ *   TEACHER      → nhập điểm, xem lớp
+ *   OFFICE_STAFF → quản lý HS, lớp, môn
+ *   PRINCIPAL    → xem báo cáo
+ *   STUDENT      → xem hồ sơ cá nhân
  *
  * Stateless: dùng JWT, không dùng HttpSession.
  */
@@ -51,6 +51,7 @@ public class SecurityConfig {
     private final JwtAuthFilter    jwtAuthFilter;
     private final UserServiceImpl  userDetailsService;
     private final ObjectMapper     objectMapper;
+    private final PasswordEncoder  passwordEncoder;
 
     @Value("${app.cors.allowed-origins}")
     private String allowedOrigins;
@@ -91,15 +92,30 @@ public class SecurityConfig {
                         .hasRole("STUDENT")
 
                 // API nghiệp vụ theo role
-                .requestMatchers("/students/**", "/classes/**", "/subjects/**",
-                                  "/timetable/**", "/assignments/**")
-                        .hasAnyRole("ADMIN", "OFFICE_STAFF", "PRINCIPAL")
-                .requestMatchers("/scores/**", "/conduct/**")
-                        .hasAnyRole("ADMIN", "TEACHER", "OFFICE_STAFF")
-                .requestMatchers("/reports/**")
-                        .hasAnyRole("ADMIN", "PRINCIPAL", "OFFICE_STAFF")
-                .requestMatchers("/users/**")
+                // Account management — chỉ Admin
+                .requestMatchers("/api/v1/users/**")
                         .hasRole("ADMIN")
+
+                // Student management
+                .requestMatchers(HttpMethod.POST, "/api/v1/students/**")
+                        .hasAnyRole("ADMIN", "OFFICE_STAFF")
+                .requestMatchers(HttpMethod.PUT, "/api/v1/students/**")
+                        .hasAnyRole("ADMIN", "OFFICE_STAFF")
+                .requestMatchers(HttpMethod.GET, "/api/v1/students/**")
+                        .hasAnyRole("ADMIN", "OFFICE_STAFF", "PRINCIPAL", "TEACHER", "STUDENT")
+
+                // Class, Subject, Timetable, Assignments
+                .requestMatchers("/api/v1/classes/**", "/api/v1/subjects/**",
+                                  "/api/v1/timetable/**", "/api/v1/assignments/**")
+                        .hasAnyRole("ADMIN", "OFFICE_STAFF", "PRINCIPAL")
+
+                // Scores, Conduct
+                .requestMatchers("/api/v1/scores/**", "/api/v1/conduct/**")
+                        .hasAnyRole("ADMIN", "TEACHER", "OFFICE_STAFF")
+
+                // Reports
+                .requestMatchers("/api/v1/reports/**")
+                        .hasAnyRole("ADMIN", "PRINCIPAL", "OFFICE_STAFF")
 
                 // Tất cả còn lại cần xác thực
                 .anyRequest().authenticated()
@@ -138,7 +154,7 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
+        provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
 
@@ -148,19 +164,13 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    /**
-     * BCryptPasswordEncoder – strength 12 (NFR-10).
-     * Khai báo tại đây để tránh circular dependency với SecurityServiceImpl.
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
-    }
+    // Đã chuyển PasswordEncoder sang PasswordEncoderConfig để tránh lỗi Circular Dependency
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
+        // Cho phép tất cả origin trong development
+        config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
