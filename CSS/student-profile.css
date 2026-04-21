@@ -427,6 +427,12 @@ select {
   overflow: hidden;
 }
 
+.table-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
 .table-panel__top {
   padding: 22px 22px 0;
   display: flex;
@@ -445,6 +451,10 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 18px;
+}
+
+.table-scroll table {
+  min-width: 1100px;
 }
 
 th,
