@@ -56,6 +56,9 @@ public class Student {
     @Column(name = "phone", length = 15)
     private String phone;
 
+    @Column(name = "status", length = 50, columnDefinition = "NVARCHAR(50)")
+    private String status;
+
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<StudentClass> studentClasses = new HashSet<>();
 
@@ -117,6 +120,9 @@ public class Student {
 
     public String getPhone()                            { return phone; }
     public void   setPhone(String phone)                { this.phone = phone; }
+
+    public String getStatus()                           { return status; }
+    public void   setStatus(String status)              { this.status = status; }
 
     public Integer getUserId()                          { return userId; }
     public void    setUserId(Integer userId)            { this.userId = userId; }

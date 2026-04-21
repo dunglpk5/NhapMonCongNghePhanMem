@@ -22,6 +22,7 @@ public class StudentresponseDTO {
     private String soDienThoai;
     private Integer classId;
     private String className;
+    private String trangThai;
     private LocalDateTime createdAt;
 
     public static StudentresponseDTO from(Student s) {
@@ -50,6 +51,7 @@ public class StudentresponseDTO {
             }
         }
         dto.createdAt = s.getCreatedAt();
+        dto.trangThai = s.getStatus() != null ? s.getStatus() : "Đang học";
         return dto;
     }
 
@@ -79,4 +81,6 @@ public class StudentresponseDTO {
     public void setClassName(String className) { this.className = className; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public String getTrangThai() { return trangThai; }
+    public void setTrangThai(String trangThai) { this.trangThai = trangThai; }
 }
