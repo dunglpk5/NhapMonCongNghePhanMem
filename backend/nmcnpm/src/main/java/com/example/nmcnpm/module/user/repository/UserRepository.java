@@ -53,12 +53,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /** Tăng failed attempts (NFR-13). */
     @Modifying(clearAutomatically = true, flushAutomatically = true)
-    @Query("UPDATE User u SET u.failedLoginAttempts = u.failedLoginAttempts + 1 WHERE u.userId = :userId")
+    @Query("UPDATE User u SET u.failedLoginAttempts = COALESCE(u.failedLoginAttempts, 0) + 1 WHERE u.userId = :userId")
     void incrementFailedAttempts(@Param("userId") Integer userId);
 
     /** Khóa tài khoản tạm thời. */
     @Modifying
     @Query("UPDATE User u SET u.lockedUntil = :lockedUntil WHERE u.userId = :userId")
     void lockAccountUntil(@Param("userId") Integer userId,
-                          @Param("lockedUntil") LocalDateTime lockedUntil);
+            @Param("lockedUntil") LocalDateTime lockedUntil);
 }

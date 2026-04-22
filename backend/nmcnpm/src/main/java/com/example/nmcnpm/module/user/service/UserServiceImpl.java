@@ -26,10 +26,10 @@ import java.util.Optional;
  * Cũng implement UserDetailsService để Spring Security có thể load user.
  *
  * Bao gồm:
- *  - CRUD tài khoản (FR-02 → FR-06)
- *  - Reset mật khẩu (FR-09)
- *  - Phân quyền (FR-06)
- *  - Tìm kiếm, phân trang
+ * - CRUD tài khoản (FR-02 → FR-06)
+ * - Reset mật khẩu (FR-09)
+ * - Phân quyền (FR-06)
+ * - Tìm kiếm, phân trang
  */
 @Service
 @Slf4j
@@ -146,6 +146,10 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         if (request.getStatus() != null) {
             user.setStatus(request.getStatus());
         }
+        if (request.getPassword() != null && !request.getPassword().isBlank()) {
+            user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
+            log.info("Updated password for userId={}", userId);
+        }
 
         User saved = userRepository.save(user);
         log.info("Updated user: id={}", userId);
@@ -244,8 +248,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     public UserDetails loadUserByUsername(String identifier)
             throws UsernameNotFoundException {
         return userRepository.findByIdentifier(identifier)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException("Không tìm thấy user: " + identifier));
+                .orElseThrow(() -> new UsernameNotFoundException("Không tìm thấy user: " + identifier));
     }
 
     // ─── Helpers ──────────────────────────────────────────────────────────

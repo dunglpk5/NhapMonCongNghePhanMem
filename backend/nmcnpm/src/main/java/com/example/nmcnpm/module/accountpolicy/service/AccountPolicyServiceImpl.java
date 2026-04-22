@@ -65,7 +65,8 @@ public class AccountPolicyServiceImpl implements IAccountPolicyService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
 
-        int currentAttempts = user.getFailedLoginAttempts();
+        Integer attempts = user.getFailedLoginAttempts();
+        int currentAttempts = (attempts != null) ? attempts : 0;
         log.warn("User {} failed login attempt #{}", userId, currentAttempts);
 
         if (currentAttempts >= maxFailedAttempts) {

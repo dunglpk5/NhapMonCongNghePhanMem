@@ -20,4 +20,7 @@ public class UpdateUserRequest {
     private String role;
 
     private String status;
+
+    /** Mật khẩu mới (tùy chọn). Nếu null hoặc blank thì không cập nhật. */
+    private String password;
 }

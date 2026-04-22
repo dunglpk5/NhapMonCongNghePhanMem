@@ -68,7 +68,6 @@ public class AuthServiceImpl implements IAuthService {
                     lockStatus.remainingSeconds());
         }
 
-        System.out.println("Attempts = " + updated);
 
         // ── Bước 3: Kiểm tra khóa vĩnh viễn ─────────────────────────────────
         if ("locked".equals(user.getStatus())) {
