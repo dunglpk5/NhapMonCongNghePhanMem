@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -837,6 +837,11 @@
           const maHS = document.getElementById('filterMaHS').value.trim();
           const hoTen = document.getElementById('filterHoTen').value.trim();
           const classId = document.getElementById('filterClass').value;
+          
+          if (!maHS && !hoTen && !classId) {
+            loadStudents();
+            return;
+          }
 
           const params = new URLSearchParams();
           if (maHS) params.append('maHocSinh', maHS);
@@ -871,15 +876,15 @@
             students.forEach(student => {
               const tr = document.createElement('tr');
               tr.innerHTML = `
-              <td>${student.studentId || ''}</td>
-              <td>${student.fullName || ''}</td>
-              <td>${student.className || 'Chưa xếp lớp'}</td>
-              <td>${student.gender ? 'Nữ' : 'Nam'}</td>
-              <td>${student.dateOfBirth || ''}</td>
-              <td>${student.sdt || ''}</td>
-              <td><span class="status status--success">${student.trangThai || 'Đang học'}</span></td>
-              <td><div class="action-group"><button class="table-btn">Cập nhật</button></div></td>
-            `;
+                <td>${student.studentId || student.maHocSinh || ''}</td>
+                <td>${student.fullName || student.hoTen || ''}</td>
+                <td>${student.className || student.lop || student.class?.name || 'Chưa xếp lớp'}</td>
+                <td>${student.gender === true ? 'Nam' : 'Nữ'}</td>
+                <td>${student.dateOfBirth || student.ngaySinh || ''}</td>
+                <td>${student.sdt || student.soDienThoai || ''}</td>
+                <td><span class="status status--success">${student.trangThai || 'Đang học'}</span></td>
+                <td><div class="action-group"><button class="table-btn">Cập nhật</button></div></td>
+              `;
               tbody.appendChild(tr);
             });
           } catch (error) {

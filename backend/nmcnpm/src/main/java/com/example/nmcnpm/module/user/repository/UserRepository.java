@@ -1,6 +1,9 @@
 package com.example.nmcnpm.module.user.repository;
 
 import com.example.nmcnpm.module.user.entity.User;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -44,11 +47,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /** Reset failed attempts sau đăng nhập thành công. */
     @Modifying
+    @Transactional
     @Query("UPDATE User u SET u.failedLoginAttempts = 0, u.lockedUntil = null WHERE u.userId = :userId")
     void resetFailedAttempts(@Param("userId") Integer userId);
 
     /** Tăng failed attempts (NFR-13). */
-    @Modifying
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("UPDATE User u SET u.failedLoginAttempts = u.failedLoginAttempts + 1 WHERE u.userId = :userId")
     void incrementFailedAttempts(@Param("userId") Integer userId);
 
