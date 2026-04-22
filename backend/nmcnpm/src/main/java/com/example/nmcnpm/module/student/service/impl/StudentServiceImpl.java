@@ -69,16 +69,37 @@ public class StudentServiceImpl implements IStudentService {
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Học sinh không tồn tại: " + studentId));
 
-        // Chỉ cập nhật các trường được phép thay đổi
-        student.setFullName(dto.getHoTen());
-        student.setDateOfBirth(dto.getNgaySinh());
-        student.setGender(mapGender(dto.getGioiTinh()));
-        student.setAddress(dto.getDiaChi());
-        student.setEthnicity(dto.getDanToc());
-        student.setReligion(dto.getTonGiao());
-        student.setFatherName(dto.getHoTenCha());
-        student.setMotherName(dto.getHoTenMe());
-        student.setPhone(dto.getSoDienThoai());
+        // Chỉ cập nhật các trường có gửi lên (not null)
+        if (dto.getHoTen() != null && !dto.getHoTen().isEmpty()) {
+            student.setFullName(dto.getHoTen());
+        }
+        if (dto.getNgaySinh() != null) {
+            student.setDateOfBirth(dto.getNgaySinh());
+        }
+        if (dto.getGioiTinh() != null && !dto.getGioiTinh().isEmpty()) {
+            student.setGender(mapGender(dto.getGioiTinh()));
+        }
+        if (dto.getDiaChi() != null && !dto.getDiaChi().isEmpty()) {
+            student.setAddress(dto.getDiaChi());
+        }
+        if (dto.getDanToc() != null && !dto.getDanToc().isEmpty()) {
+            student.setEthnicity(dto.getDanToc());
+        }
+        if (dto.getTonGiao() != null && !dto.getTonGiao().isEmpty()) {
+            student.setReligion(dto.getTonGiao());
+        }
+        if (dto.getHoTenCha() != null && !dto.getHoTenCha().isEmpty()) {
+            student.setFatherName(dto.getHoTenCha());
+        }
+        if (dto.getHoTenMe() != null && !dto.getHoTenMe().isEmpty()) {
+            student.setMotherName(dto.getHoTenMe());
+        }
+        if (dto.getSoDienThoai() != null && !dto.getSoDienThoai().isEmpty()) {
+            student.setPhone(dto.getSoDienThoai());
+        }
+        if (dto.getTrangThai() != null && !dto.getTrangThai().isEmpty()) {
+            student.setStatus(dto.getTrangThai());
+        }
 
         studentRepository.save(student);
 
