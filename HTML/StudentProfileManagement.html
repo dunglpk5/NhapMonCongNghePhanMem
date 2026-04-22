@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -359,7 +359,8 @@
       </div>
 
       <!-- Thông báo -->
-      <div id="updateStudentMsg" style="display:none; padding:10px 14px; border-radius:8px; margin-bottom:12px; font-size:14px;"></div>
+      <div id="updateStudentMsg"
+        style="display:none; padding:10px 14px; border-radius:8px; margin-bottom:12px; font-size:14px;"></div>
 
       <!-- Thông tin chỉ đọc -->
       <div class="student-detail" style="margin-bottom:20px;">
@@ -546,7 +547,7 @@
       async function viewStudentDetail(studentId) {
         currentViewStudentId = studentId;
         // Reset read-only fields
-        ['viewHoTen','viewNgaySinh','viewGioiTinh','viewDanToc','viewHoTenCha','viewHoTenMe'].forEach(id => {
+        ['viewHoTen', 'viewNgaySinh', 'viewGioiTinh', 'viewDanToc', 'viewHoTenCha', 'viewHoTenMe'].forEach(id => {
           document.getElementById(id).textContent = 'Đang tải...';
         });
         // Reset editable fields
@@ -837,7 +838,7 @@
           const maHS = document.getElementById('filterMaHS').value.trim();
           const hoTen = document.getElementById('filterHoTen').value.trim();
           const classId = document.getElementById('filterClass').value;
-          
+
           if (!maHS && !hoTen && !classId) {
             loadStudents();
             return;
@@ -899,6 +900,7 @@
     })();
   </script>
 
+  <script src="../JS/session-manager.js"></script>
   <script src="../JS/student-profile.js"></script>
 </body>
 
