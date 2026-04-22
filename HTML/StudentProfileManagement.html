@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="../CSS/student-profile.css" />
   <link rel="stylesheet" href="../fonts/fontawesome-free-7.2.0/css/all.min.css" />
 </head>
+
 <body>
   <div class="app">
     <aside class="sidebar">
@@ -137,23 +139,25 @@
             <h4>Danh sách học sinh</h4>
           </div>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Mã HS</th>
-                <th>Họ tên</th>
-                <th>Lớp</th>
-                <th>Giới tính</th>
-                <th>Ngày sinh</th>
-                <th>SĐT PH</th>
-                <th>Trạng thái</th>
-                <th>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody id="studentTableBody">
-              <!-- Dữ liệu sẽ được load từ API -->
-            </tbody>
-          </table>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mã HS</th>
+                  <th>Họ tên</th>
+                  <th>Lớp</th>
+                  <th>Giới tính</th>
+                  <th>Ngày sinh</th>
+                  <th>SĐT PH</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="studentTableBody">
+                <!-- Dữ liệu sẽ được load từ API -->
+              </tbody>
+            </table>
+          </div>
 
           <div class="pagination" id="paginationContainer">
             <!-- Pagination động -->
@@ -230,7 +234,8 @@
 
       <form class="student-form" id="addStudentForm">
         <!-- Thông báo -->
-        <div id="addStudentMsg" style="display:none; padding:10px 14px; border-radius:8px; margin-bottom:12px; font-size:14px;"></div>
+        <div id="addStudentMsg"
+          style="display:none; padding:10px 14px; border-radius:8px; margin-bottom:12px; font-size:14px;"></div>
 
         <div class="form-group">
           <label>Họ và tên *</label>
@@ -287,10 +292,7 @@
             <label>Lớp</label>
             <select id="classId">
               <option value="">Chưa phân lớp</option>
-              <option value="1">10A1</option>
-              <option value="2">10A2</option>
-              <option value="3">11A1</option>
-              <option value="4">12A1</option>
+              <!-- Load từ API -->
             </select>
           </div>
           <div class="form-group">
@@ -347,151 +349,395 @@
     </div>
   </div>
 
+  <!-- MODAL: Cập nhật thông tin học sinh -->
+  <div class="modal" id="viewStudentModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__content" role="dialog" aria-modal="true" aria-labelledby="viewStudentModalTitle">
+      <div class="modal__header">
+        <h4 id="viewStudentModalTitle">Cập nhật thông tin học sinh</h4>
+        <button type="button" class="table-btn" data-close-modal>Đóng</button>
+      </div>
+
+      <!-- Thông báo -->
+      <div id="updateStudentMsg" style="display:none; padding:10px 14px; border-radius:8px; margin-bottom:12px; font-size:14px;"></div>
+
+      <!-- Thông tin chỉ đọc -->
+      <div class="student-detail" style="margin-bottom:20px;">
+        <div class="detail-row">
+          <span class="detail-label">Họ và tên</span>
+          <span class="detail-value" id="viewHoTen">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Ngày sinh</span>
+          <span class="detail-value" id="viewNgaySinh">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Giới tính</span>
+          <span class="detail-value" id="viewGioiTinh">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Dân tộc</span>
+          <span class="detail-value" id="viewDanToc">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Họ tên cha</span>
+          <span class="detail-value" id="viewHoTenCha">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Họ tên mẹ</span>
+          <span class="detail-value" id="viewHoTenMe">—</span>
+        </div>
+      </div>
+
+      <!-- Các trường có thể chỉnh sửa -->
+      <form class="student-form" id="updateStudentForm">
+        <div class="form-group">
+          <label>Địa chỉ</label>
+          <input type="text" id="editDiaChi" placeholder="Nhập địa chỉ" />
+        </div>
+        <div class="form-group">
+          <label>Tôn giáo</label>
+          <input type="text" id="editTonGiao" placeholder="Nhập tôn giáo" />
+        </div>
+        <div class="form-group">
+          <label>Số điện thoại liên hệ</label>
+          <input type="text" id="editSoDienThoai" placeholder="Nhập số điện thoại" />
+        </div>
+        <div class="form-group">
+          <label>Lớp</label>
+          <select id="editClassId">
+            <option value="">Chưa phân lớp</option>
+            <!-- Load từ API -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Trạng thái</label>
+          <select id="editTrangThai">
+            <option value="Đang học">Đang học</option>
+            <option value="Nghỉ học">Nghỉ học</option>
+            <option value="Chuyển trường">Chuyển trường</option>
+            <option value="Bảo lưu">Bảo lưu</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn--outline" data-close-modal>Hủy</button>
+          <button type="submit" class="btn btn--primary" id="btnSaveUpdate">Cập nhật</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
-  /**
-   * Student Profile Management — Frontend Logic
-   * Kết nối với backend API /api/v1/students
-   *
-   * Chức năng:
-   *  - Load danh sách học sinh từ DB (FR-14)
-   *  - Thêm hồ sơ học sinh mới (FR-10)
-   *  - Tìm kiếm / lọc (FR-13, FR-15)
-   *  - Thống kê theo khối, trạng thái
-   */
-  (() => {
-    const API_BASE = 'http://localhost:8080';
+    /**
+     * Student Profile Management — Frontend Logic
+     * Kết nối với backend API /api/v1/students
+     *
+     * Chức năng:
+     *  - Load danh sách học sinh từ DB (FR-14)
+     *  - Thêm hồ sơ học sinh mới (FR-10)
+     *  - Tìm kiếm / lọc (FR-13, FR-15)
+     *  - Thống kê theo khối, trạng thái
+     */
+    (() => {
+      const API_BASE = 'http://localhost:8080';
 
-    // Lấy JWT token đã lưu khi login
-    function getToken() {
-      return localStorage.getItem('jwt_token') || '';
-    }
-
-    function getAuthHeaders() {
-      const headers = { 'Content-Type': 'application/json' };
-      const token = getToken();
-      if (token) {
-        headers['Authorization'] = 'Bearer ' + token;
+      // Lấy JWT token đã lưu khi login
+      function getToken() {
+        return localStorage.getItem('jwt_token') || '';
       }
-      return headers;
-    }
 
-    // Hiển thị tên user từ localStorage
-    const userDisplayName = document.getElementById('userDisplayName');
-    const userAvatar = document.getElementById('userAvatar');
-    const fullName = localStorage.getItem('full_name');
-    if (fullName && userDisplayName) {
-      userDisplayName.textContent = fullName;
-      userAvatar.textContent = fullName.substring(0, 2).toUpperCase();
-    }
+      function getAuthHeaders() {
+        const headers = { 'Content-Type': 'application/json' };
+        const token = getToken();
+        if (token) {
+          headers['Authorization'] = 'Bearer ' + token;
+        }
+        return headers;
+      }
 
-    // ─── MODAL ────────────────────────────────────────────────
-    const addModal = document.getElementById('addStudentModal');
-    const editModal = document.getElementById('editStudentModal');
-    const openButtons = [
-      document.getElementById('openAddStudentBtn'),
-      document.getElementById('openAddStudentBtnSide'),
-    ].filter(Boolean);
+      // Hiển thị tên user từ localStorage
+      const userDisplayName = document.getElementById('userDisplayName');
+      const userAvatar = document.getElementById('userAvatar');
+      const fullName = localStorage.getItem('full_name');
+      if (fullName && userDisplayName) {
+        userDisplayName.textContent = fullName;
+        userAvatar.textContent = fullName.substring(0, 2).toUpperCase();
+      }
 
-    const openModal = (modal) => {
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('modal-open');
-    };
-    const closeModal = (modal) => {
-      modal.classList.remove('is-open');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('modal-open');
-    };
+      // ─── LOAD DANH SÁCH LỚP TỪ API ──────────────────────────
+      async function loadClasses() {
+        try {
+          const response = await fetch(`${API_BASE}/api/v1/classes`, {
+            method: 'GET',
+            headers: getAuthHeaders()
+          });
+          if (!response.ok) return;
+          const result = await response.json();
+          const classes = result.data || [];
 
-    openButtons.forEach(btn => btn.addEventListener('click', () => openModal(addModal)));
+          // Populate tất cả các select có class
+          const selects = [
+            document.getElementById('classId'),      // Form thêm HS
+            document.getElementById('editClassId'),   // Form cập nhật
+            document.getElementById('filterClass')    // Bộ lọc
+          ].filter(Boolean);
 
-    [addModal, editModal].filter(Boolean).forEach(modal => {
-      modal.querySelectorAll('[data-close-modal]').forEach(btn => {
-        btn.addEventListener('click', () => closeModal(modal));
+          selects.forEach(select => {
+            // Giữ option đầu tiên ("Chưa phân lớp" / "Tất cả")
+            const firstOption = select.options[0];
+            select.innerHTML = '';
+            select.appendChild(firstOption);
+
+            classes.forEach(c => {
+              const opt = document.createElement('option');
+              opt.value = c.classId;
+              opt.textContent = c.className;
+              select.appendChild(opt);
+            });
+          });
+        } catch (err) {
+          console.error('Lỗi khi tải danh sách lớp:', err);
+        }
+      }
+
+      // Load danh sách lớp ngay khi trang mở
+      loadClasses();
+
+      // ─── MODAL ────────────────────────────────────────────────
+      const addModal = document.getElementById('addStudentModal');
+      const editModal = document.getElementById('editStudentModal');
+      const viewModal = document.getElementById('viewStudentModal');
+      const openButtons = [
+        document.getElementById('openAddStudentBtn'),
+        document.getElementById('openAddStudentBtnSide'),
+      ].filter(Boolean);
+
+      const openModal = (modal) => {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      };
+      const closeModal = (modal) => {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      };
+
+      openButtons.forEach(btn => btn.addEventListener('click', () => openModal(addModal)));
+
+      [addModal, editModal, viewModal].filter(Boolean).forEach(modal => {
+        modal.querySelectorAll('[data-close-modal]').forEach(btn => {
+          btn.addEventListener('click', () => closeModal(modal));
+        });
       });
-    });
 
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        [addModal, editModal].filter(Boolean).forEach(m => {
-          if (m.classList.contains('is-open')) closeModal(m);
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          [addModal, editModal, viewModal].filter(Boolean).forEach(m => {
+            if (m.classList.contains('is-open')) closeModal(m);
+          });
+        }
+      });
+
+      // ─── CẬP NHẬT HỌC SINH ──────────────────────────────────
+      let currentViewStudentId = null;
+      const updateStudentMsg = document.getElementById('updateStudentMsg');
+
+      async function viewStudentDetail(studentId) {
+        currentViewStudentId = studentId;
+        // Reset read-only fields
+        ['viewHoTen','viewNgaySinh','viewGioiTinh','viewDanToc','viewHoTenCha','viewHoTenMe'].forEach(id => {
+          document.getElementById(id).textContent = 'Đang tải...';
+        });
+        // Reset editable fields
+        document.getElementById('editDiaChi').value = '';
+        document.getElementById('editTonGiao').value = '';
+        document.getElementById('editSoDienThoai').value = '';
+        document.getElementById('editClassId').value = '';
+        document.getElementById('editTrangThai').value = 'Đang học';
+        updateStudentMsg.style.display = 'none';
+
+        openModal(viewModal);
+
+        try {
+          const response = await fetch(`${API_BASE}/api/v1/students/${studentId}`, {
+            method: 'GET',
+            headers: getAuthHeaders()
+          });
+
+          if (!response.ok) {
+            document.getElementById('viewHoTen').textContent = 'Không thể tải dữ liệu';
+            return;
+          }
+
+          const result = await response.json();
+          const s = result.data || result;
+
+          // Read-only fields
+          document.getElementById('viewHoTen').textContent = s.fullName || s.hoTen || '—';
+          document.getElementById('viewNgaySinh').textContent = s.dateOfBirth || s.ngaySinh || '—';
+          document.getElementById('viewGioiTinh').textContent = s.gender === true || s.gioiTinh === 'Nữ' ? 'Nữ' : 'Nam';
+          document.getElementById('viewDanToc').textContent = s.ethnicity || s.danToc || '—';
+          document.getElementById('viewHoTenCha').textContent = s.fatherName || s.hoTenCha || '—';
+          document.getElementById('viewHoTenMe').textContent = s.motherName || s.hoTenMe || '—';
+
+          // Editable fields – điền dữ liệu hiện tại vào input
+          document.getElementById('editDiaChi').value = s.address || s.diaChi || '';
+          document.getElementById('editTonGiao').value = s.religion || s.tonGiao || '';
+          document.getElementById('editSoDienThoai').value = s.phone || s.soDienThoai || s.sdt || '';
+          document.getElementById('editClassId').value = s.classId || '';
+          document.getElementById('editTrangThai').value = s.trangThai || s.status || 'Đang học';
+        } catch (err) {
+          console.error('Lỗi khi tải chi tiết học sinh:', err);
+          document.getElementById('viewHoTen').textContent = 'Lỗi kết nối máy chủ';
+        }
+      }
+
+      // Submit form cập nhật
+      const updateStudentForm = document.getElementById('updateStudentForm');
+      if (updateStudentForm) {
+        updateStudentForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          updateStudentMsg.style.display = 'none';
+
+          const btnSave = document.getElementById('btnSaveUpdate');
+          btnSave.disabled = true;
+          btnSave.textContent = 'Đang lưu...';
+
+          const classValue = document.getElementById('editClassId').value;
+          const payload = {
+            diaChi: document.getElementById('editDiaChi').value.trim(),
+            tonGiao: document.getElementById('editTonGiao').value.trim(),
+            soDienThoai: document.getElementById('editSoDienThoai').value.trim(),
+            classId: classValue ? Number(classValue) : null,
+            trangThai: document.getElementById('editTrangThai').value
+          };
+
+          try {
+            const response = await fetch(`${API_BASE}/api/v1/students/${currentViewStudentId}`, {
+              method: 'PUT',
+              headers: getAuthHeaders(),
+              body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success !== false) {
+              updateStudentMsg.style.display = 'block';
+              updateStudentMsg.style.color = '#27ae60';
+              updateStudentMsg.style.background = '#eafaf1';
+              updateStudentMsg.textContent = result.message || 'Cập nhật thành công!';
+
+              setTimeout(() => {
+                closeModal(viewModal);
+                updateStudentMsg.style.display = 'none';
+                loadStudents();
+              }, 1000);
+            } else {
+              updateStudentMsg.style.display = 'block';
+              updateStudentMsg.style.color = '#e74c3c';
+              updateStudentMsg.style.background = '#fdf0ef';
+              updateStudentMsg.textContent = result.message || 'Cập nhật thất bại!';
+            }
+          } catch (error) {
+            updateStudentMsg.style.display = 'block';
+            updateStudentMsg.style.color = '#e74c3c';
+            updateStudentMsg.style.background = '#fdf0ef';
+            updateStudentMsg.textContent = 'Không thể kết nối máy chủ!';
+          }
+
+          btnSave.disabled = false;
+          btnSave.textContent = 'Cập nhật';
         });
       }
-    });
 
-    // ─── LOAD STUDENTS ────────────────────────────────────────
-    const loadStudents = async (page = 0) => {
-      const tbody = document.getElementById('studentTableBody');
-      if (!tbody) return;
+      // Event delegation cho nút Cập nhật trong bảng
+      document.getElementById('studentTableBody').addEventListener('click', (e) => {
+        const btn = e.target.closest('.table-btn');
+        if (!btn) return;
+        const row = btn.closest('tr');
+        if (!row) return;
+        const studentId = row.querySelector('td:first-child').textContent.trim();
+        const btnText = btn.textContent.trim();
 
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Đang tải...</td></tr>';
-
-      try {
-        const response = await fetch(
-          `${API_BASE}/api/v1/students?page=${page}&size=20`,
-          { method: 'GET', headers: getAuthHeaders() }
-        );
-
-        if (response.status === 401) {
-          tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#e74c3c">Phiên đăng nhập hết hạn. Vui lòng <a href="Login.html">đăng nhập lại</a>.</td></tr>';
-          return;
+        if (btnText === 'Cập nhật') {
+          viewStudentDetail(studentId);
         }
+      });
 
-        if (!response.ok) {
-          tbody.innerHTML = `<tr><td colspan="8" style="text-align:center">Không thể tải dữ liệu: ${response.status}</td></tr>`;
-          return;
-        }
+      // ─── LOAD STUDENTS ────────────────────────────────────────
+      const loadStudents = async (page = 0) => {
+        const tbody = document.getElementById('studentTableBody');
+        if (!tbody) return;
 
-        const result = await response.json();
-        let students = [];
-        let totalElements = 0;
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Đang tải...</td></tr>';
 
-        if (result && result.data && Array.isArray(result.data.content)) {
-          students = result.data.content;
-          totalElements = result.data.totalElements || students.length;
-        } else if (result && Array.isArray(result.data)) {
-          students = result.data;
-          totalElements = students.length;
-        }
+        try {
+          const response = await fetch(
+            `${API_BASE}/api/v1/students?page=${page}&size=20`,
+            { method: 'GET', headers: getAuthHeaders() }
+          );
 
-        // Cập nhật thống kê
-        let k10 = 0, k11 = 0, k12 = 0;
-        let active = 0, newlyAdded = 0, pending = 0;
+          if (response.status === 401) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#e74c3c">Phiên đăng nhập hết hạn. Vui lòng <a href="Login.html">đăng nhập lại</a>.</td></tr>';
+            return;
+          }
 
-        students.forEach(st => {
-          const cn = (st.className || st.classId || '').toString().toLowerCase();
-          if (cn.includes('10')) k10++;
-          else if (cn.includes('11')) k11++;
-          else if (cn.includes('12')) k12++;
+          if (!response.ok) {
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align:center">Không thể tải dữ liệu: ${response.status}</td></tr>`;
+            return;
+          }
 
-          const status = (st.trangThai || 'đang học').toLowerCase();
-          if (status.includes('mới')) newlyAdded++;
-          else if (status.includes('cập nhật') || status.includes('pending')) pending++;
-          else active++;
-        });
+          const result = await response.json();
+          let students = [];
+          let totalElements = 0;
 
-        document.getElementById('statTotalStudents').innerText = totalElements;
-        document.getElementById('statGrade10').innerText = k10;
-        document.getElementById('statGrade11').innerText = k11;
-        document.getElementById('statGrade12').innerText = k12;
-        document.getElementById('statActive').innerText = active;
-        document.getElementById('statNew').innerText = newlyAdded;
-        document.getElementById('statPending').innerText = pending;
+          if (result && result.data && Array.isArray(result.data.content)) {
+            students = result.data.content;
+            totalElements = result.data.totalElements || students.length;
+          } else if (result && Array.isArray(result.data)) {
+            students = result.data;
+            totalElements = students.length;
+          }
 
-        if (students.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Không có dữ liệu học sinh nào</td></tr>';
-          return;
-        }
+          // Cập nhật thống kê
+          let k10 = 0, k11 = 0, k12 = 0;
+          let active = 0, newlyAdded = 0, pending = 0;
 
-        tbody.innerHTML = '';
-        students.forEach(student => {
-          const tr = document.createElement('tr');
-          let statusText = student.trangThai || 'Đang học';
-          let statusClass = 'status--success';
-          if (statusText.toLowerCase().includes('mới')) statusClass = 'status--info';
-          else if (statusText.toLowerCase().includes('cập nhật')) statusClass = 'status--warning';
+          students.forEach(st => {
+            const cn = (st.className || st.classId || '').toString().toLowerCase();
+            if (cn.includes('10')) k10++;
+            else if (cn.includes('11')) k11++;
+            else if (cn.includes('12')) k12++;
 
-          tr.innerHTML = `
+            const status = (st.trangThai || 'đang học').toLowerCase();
+            if (status.includes('mới')) newlyAdded++;
+            else if (status.includes('cập nhật') || status.includes('pending')) pending++;
+            else active++;
+          });
+
+          document.getElementById('statTotalStudents').innerText = totalElements;
+          document.getElementById('statGrade10').innerText = k10;
+          document.getElementById('statGrade11').innerText = k11;
+          document.getElementById('statGrade12').innerText = k12;
+          document.getElementById('statActive').innerText = active;
+          document.getElementById('statNew').innerText = newlyAdded;
+          document.getElementById('statPending').innerText = pending;
+
+          if (students.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Không có dữ liệu học sinh nào</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = '';
+          students.forEach(student => {
+            const tr = document.createElement('tr');
+            let statusText = student.trangThai || 'Đang học';
+            let statusClass = 'status--success';
+            if (statusText.toLowerCase().includes('mới')) statusClass = 'status--info';
+            else if (statusText.toLowerCase().includes('cập nhật')) statusClass = 'status--warning';
+
+            tr.innerHTML = `
             <td>${student.studentId || student.maHocSinh || ''}</td>
             <td>${student.fullName || student.hoTen || ''}</td>
             <td>${student.className || student.classId || 'Chưa xếp lớp'}</td>
@@ -501,131 +747,130 @@
             <td><span class="status ${statusClass}">${statusText}</span></td>
             <td>
               <div class="action-group">
-                <button class="table-btn">Xem</button>
-                <button class="table-btn">Sửa</button>
+                <button class="table-btn">Cập nhật</button>
               </div>
             </td>
           `;
-          tbody.appendChild(tr);
-        });
-
-      } catch (error) {
-        console.error('Lỗi khi tải danh sách học sinh:', error);
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Lỗi kết nối đến máy chủ</td></tr>';
-      }
-    };
-
-    // Load khi trang được mở
-    loadStudents();
-
-    // ─── THÊM HỌC SINH (FR-10) ────────────────────────────────
-    const addStudentForm = document.getElementById('addStudentForm');
-    const addStudentMsg = document.getElementById('addStudentMsg');
-
-    if (addStudentForm) {
-      addStudentForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        addStudentMsg.style.display = 'none';
-
-        const btnSave = document.getElementById('btnSaveStudent');
-        btnSave.disabled = true;
-        btnSave.textContent = 'Đang lưu...';
-
-        const classValue = document.getElementById('classId').value;
-        const payload = {
-          hoTen: document.getElementById('hoTen').value.trim(),
-          ngaySinh: document.getElementById('ngaySinh').value,
-          gioiTinh: document.getElementById('gioiTinh').value,
-          diaChi: document.getElementById('diaChi').value.trim(),
-          danToc: document.getElementById('danToc').value.trim(),
-          tonGiao: document.getElementById('tonGiao').value.trim(),
-          hoTenCha: document.getElementById('hoTenCha').value.trim(),
-          hoTenMe: document.getElementById('hoTenMe').value.trim(),
-          soDienThoai: document.getElementById('soDienThoai').value.trim(),
-          classId: classValue ? Number(classValue) : null
-        };
-
-        try {
-          const response = await fetch(`${API_BASE}/api/v1/students`, {
-            method: 'POST',
-            headers: getAuthHeaders(),
-            body: JSON.stringify(payload)
+            tbody.appendChild(tr);
           });
 
-          const result = await response.json();
+        } catch (error) {
+          console.error('Lỗi khi tải danh sách học sinh:', error);
+          tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Lỗi kết nối đến máy chủ</td></tr>';
+        }
+      };
 
-          if (response.ok && result.success !== false) {
-            addStudentMsg.style.display = 'block';
-            addStudentMsg.style.color = '#27ae60';
-            addStudentMsg.style.background = '#eafaf1';
-            addStudentMsg.textContent = result.message || 'Thêm học sinh thành công!';
+      // Load khi trang được mở
+      loadStudents();
 
-            setTimeout(() => {
-              addStudentForm.reset();
-              addStudentMsg.style.display = 'none';
-              closeModal(addModal);
-              loadStudents();
-            }, 1000);
-          } else {
+      // ─── THÊM HỌC SINH (FR-10) ────────────────────────────────
+      const addStudentForm = document.getElementById('addStudentForm');
+      const addStudentMsg = document.getElementById('addStudentMsg');
+
+      if (addStudentForm) {
+        addStudentForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          addStudentMsg.style.display = 'none';
+
+          const btnSave = document.getElementById('btnSaveStudent');
+          btnSave.disabled = true;
+          btnSave.textContent = 'Đang lưu...';
+
+          const classValue = document.getElementById('classId').value;
+          const payload = {
+            hoTen: document.getElementById('hoTen').value.trim(),
+            ngaySinh: document.getElementById('ngaySinh').value,
+            gioiTinh: document.getElementById('gioiTinh').value,
+            diaChi: document.getElementById('diaChi').value.trim(),
+            danToc: document.getElementById('danToc').value.trim(),
+            tonGiao: document.getElementById('tonGiao').value.trim(),
+            hoTenCha: document.getElementById('hoTenCha').value.trim(),
+            hoTenMe: document.getElementById('hoTenMe').value.trim(),
+            soDienThoai: document.getElementById('soDienThoai').value.trim(),
+            classId: classValue ? Number(classValue) : null
+          };
+
+          try {
+            const response = await fetch(`${API_BASE}/api/v1/students`, {
+              method: 'POST',
+              headers: getAuthHeaders(),
+              body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success !== false) {
+              addStudentMsg.style.display = 'block';
+              addStudentMsg.style.color = '#27ae60';
+              addStudentMsg.style.background = '#eafaf1';
+              addStudentMsg.textContent = result.message || 'Thêm học sinh thành công!';
+
+              setTimeout(() => {
+                addStudentForm.reset();
+                addStudentMsg.style.display = 'none';
+                closeModal(addModal);
+                loadStudents();
+              }, 1000);
+            } else {
+              addStudentMsg.style.display = 'block';
+              addStudentMsg.style.color = '#e74c3c';
+              addStudentMsg.style.background = '#fdf0ef';
+              addStudentMsg.textContent = result.message || 'Thêm học sinh thất bại!';
+            }
+          } catch (error) {
             addStudentMsg.style.display = 'block';
             addStudentMsg.style.color = '#e74c3c';
             addStudentMsg.style.background = '#fdf0ef';
-            addStudentMsg.textContent = result.message || 'Thêm học sinh thất bại!';
-          }
-        } catch (error) {
-          addStudentMsg.style.display = 'block';
-          addStudentMsg.style.color = '#e74c3c';
-          addStudentMsg.style.background = '#fdf0ef';
-          addStudentMsg.textContent = 'Không thể kết nối máy chủ!';
-        }
-
-        btnSave.disabled = false;
-        btnSave.textContent = 'Lưu';
-      });
-    }
-
-    // ─── TÌM KIẾM / LỌC (FR-13, FR-15) ─────────────────────────
-    const filterForm = document.getElementById('studentFilterForm');
-    if (filterForm) {
-      filterForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const maHS = document.getElementById('filterMaHS').value.trim();
-        const hoTen = document.getElementById('filterHoTen').value.trim();
-        const classId = document.getElementById('filterClass').value;
-
-        const params = new URLSearchParams();
-        if (maHS) params.append('maHocSinh', maHS);
-        if (hoTen) params.append('hoTen', hoTen);
-        if (classId) params.append('classId', classId);
-        params.append('page', '0');
-        params.append('size', '20');
-
-        const tbody = document.getElementById('studentTableBody');
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Đang tìm kiếm...</td></tr>';
-
-        try {
-          const response = await fetch(
-            `${API_BASE}/api/v1/students/search?${params.toString()}`,
-            { method: 'GET', headers: getAuthHeaders() }
-          );
-          const result = await response.json();
-
-          let students = [];
-          if (result && result.data && Array.isArray(result.data.content)) {
-            students = result.data.content;
-          } else if (result && Array.isArray(result.data)) {
-            students = result.data;
+            addStudentMsg.textContent = 'Không thể kết nối máy chủ!';
           }
 
-          if (students.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Không tìm thấy học sinh phù hợp</td></tr>';
-            return;
-          }
+          btnSave.disabled = false;
+          btnSave.textContent = 'Lưu';
+        });
+      }
 
-          tbody.innerHTML = '';
-          students.forEach(student => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
+      // ─── TÌM KIẾM / LỌC (FR-13, FR-15) ─────────────────────────
+      const filterForm = document.getElementById('studentFilterForm');
+      if (filterForm) {
+        filterForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const maHS = document.getElementById('filterMaHS').value.trim();
+          const hoTen = document.getElementById('filterHoTen').value.trim();
+          const classId = document.getElementById('filterClass').value;
+
+          const params = new URLSearchParams();
+          if (maHS) params.append('maHocSinh', maHS);
+          if (hoTen) params.append('hoTen', hoTen);
+          if (classId) params.append('classId', classId);
+          params.append('page', '0');
+          params.append('size', '20');
+
+          const tbody = document.getElementById('studentTableBody');
+          tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Đang tìm kiếm...</td></tr>';
+
+          try {
+            const response = await fetch(
+              `${API_BASE}/api/v1/students/search?${params.toString()}`,
+              { method: 'GET', headers: getAuthHeaders() }
+            );
+            const result = await response.json();
+
+            let students = [];
+            if (result && result.data && Array.isArray(result.data.content)) {
+              students = result.data.content;
+            } else if (result && Array.isArray(result.data)) {
+              students = result.data;
+            }
+
+            if (students.length === 0) {
+              tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Không tìm thấy học sinh phù hợp</td></tr>';
+              return;
+            }
+
+            tbody.innerHTML = '';
+            students.forEach(student => {
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
               <td>${student.studentId || ''}</td>
               <td>${student.fullName || ''}</td>
               <td>${student.className || 'Chưa xếp lớp'}</td>
@@ -633,22 +878,23 @@
               <td>${student.dateOfBirth || ''}</td>
               <td>${student.sdt || ''}</td>
               <td><span class="status status--success">${student.trangThai || 'Đang học'}</span></td>
-              <td><div class="action-group"><button class="table-btn">Xem</button><button class="table-btn">Sửa</button></div></td>
+              <td><div class="action-group"><button class="table-btn">Cập nhật</button></div></td>
             `;
-            tbody.appendChild(tr);
-          });
-        } catch (error) {
-          tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Lỗi kết nối</td></tr>';
-        }
-      });
+              tbody.appendChild(tr);
+            });
+          } catch (error) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">Lỗi kết nối</td></tr>';
+          }
+        });
 
-      filterForm.addEventListener('reset', () => {
-        setTimeout(() => loadStudents(), 100);
-      });
-    }
-  })();
+        filterForm.addEventListener('reset', () => {
+          setTimeout(() => loadStudents(), 100);
+        });
+      }
+    })();
   </script>
 
   <script src="../JS/student-profile.js"></script>
 </body>
+
 </html>

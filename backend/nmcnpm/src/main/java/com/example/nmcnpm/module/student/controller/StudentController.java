@@ -149,16 +149,6 @@ public class StudentController {
             @RequestBody StudentDTO dto,
             @AuthenticationPrincipal UserDetails userDetails) {
 
-        ValidationResult requiredCheck = validationService.validateRequired(dto);
-        if (!requiredCheck.isValid()) {
-            return ResponseEntity.badRequest().body(ApiResponse.fail(requiredCheck.getMessage()));
-        }
-
-        ValidationResult formatCheck = validationService.validateFormat(dto);
-        if (!formatCheck.isValid()) {
-            return ResponseEntity.badRequest().body(ApiResponse.fail(formatCheck.getMessage()));
-        }
-
         try {
             Integer userId = extractUserId(userDetails);
             studentService.capNhatHoSo(studentId, dto, userId);

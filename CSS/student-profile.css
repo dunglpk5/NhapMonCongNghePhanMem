@@ -427,6 +427,12 @@ select {
   overflow: hidden;
 }
 
+.table-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
 .table-panel__top {
   padding: 22px 22px 0;
   display: flex;
@@ -445,6 +451,10 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 18px;
+}
+
+.table-scroll table {
+  min-width: 1100px;
 }
 
 th,
@@ -639,6 +649,43 @@ th {
 
 .modal__header h4 {
   font-size: 22px;
+}
+
+/* ── Student Detail View ──────────────────────────────── */
+.student-detail {
+  display: grid;
+  gap: 0;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row:hover {
+  background: var(--surface-soft);
+}
+
+.detail-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  min-width: 180px;
+}
+
+.detail-value {
+  font-size: 14px;
+  color: var(--text);
+  text-align: right;
+  flex: 1;
 }
 
 @media (max-width: 1200px) {

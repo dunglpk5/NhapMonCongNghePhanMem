@@ -27,6 +27,9 @@ public class StudentDTO {
     // ── Phân lớp (không bắt buộc khi tạo mới) ────────────────────────────
     private Integer classId;         // FK → classes.class_id
 
+    // ── Trạng thái ─────────────────────────────────────────────────────
+    private String trangThai;        // "Đang học" | "Nghỉ học" | "Chuyển trường" | "Bảo lưu"
+
     // ── Getters / Setters ─────────────────────────────────────────────────
 
     public String    getHoTen()                          { return hoTen; }
@@ -58,4 +61,7 @@ public class StudentDTO {
 
     public Integer   getClassId()                        { return classId; }
     public void      setClassId(Integer classId)         { this.classId = classId; }
+
+    public String    getTrangThai()                      { return trangThai; }
+    public void      setTrangThai(String trangThai)      { this.trangThai = trangThai; }
 }

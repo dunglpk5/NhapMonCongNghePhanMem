@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * Luồng xử lý (theo Process trong hồ sơ):
  *  1. Kiểm tra trạng thái khóa tạm thời
- *  2. Tìm user theo identifier (email/username)
+ *  2. Tìm user theo email
  *  3. Kiểm tra tài khoản bị khóa vĩnh viễn
  *  4. So sánh mật khẩu với bcrypt hash
  *  5. Nếu sai → tăng failed_attempts, khóa nếu đủ 5 lần
@@ -45,16 +45,16 @@ public class AuthServiceImpl implements IAuthService {
     @Transactional
     public LoginResponse authenticate(LoginRequest request, String ipAddress) {
 
-        String identifier = request.getEmailOrUsername().trim();
+        String email = request.getEmail().trim();
         String rawPassword = request.getPassword();
 
-        // ── Bước 1: Tìm user theo email hoặc username ────────────────────────
+        // ── Bước 1: Tìm user theo email ──────────────────────────────────────
         // Trả cùng một thông báo lỗi cho cả "không tìm thấy" và "sai mật khẩu"
         // để tránh user enumeration attack.
-        User user = userService.findByIdentifier(identifier)
+        User user = userService.findByEmail(email)
                 .orElseThrow(() -> {
                     loggingService.logLoginEvent(null, false, ipAddress,
-                            "identifier_not_found:" + identifier);
+                            "email_not_found:" + email);
                     return new AuthException.InvalidCredentialsException();
                 });
 
