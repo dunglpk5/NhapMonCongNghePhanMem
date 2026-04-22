@@ -1,6 +1,7 @@
 package com.example.nmcnpm.module.core.exception;
 
 import com.example.nmcnpm.module.core.response.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
  * Global exception handler – bắt toàn bộ exception từ mọi module,
  * trả về ApiResponse chuẩn hóa.
  */
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -71,6 +73,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleGeneral(Exception ex) {
+        log.error("[GlobalExceptionHandler] Unhandled exception: ", ex);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiResponse.fail("Đã có lỗi xảy ra. Vui lòng thử lại!"));

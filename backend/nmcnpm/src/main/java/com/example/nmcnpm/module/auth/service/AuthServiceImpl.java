@@ -47,6 +47,7 @@ public class AuthServiceImpl implements IAuthService {
 
         String email = request.getEmail().trim();
         String rawPassword = request.getPassword();
+        
 
         // ── Bước 1: Tìm user theo email ──────────────────────────────────────
         // Trả cùng một thông báo lỗi cho cả "không tìm thấy" và "sai mật khẩu"
@@ -67,6 +68,7 @@ public class AuthServiceImpl implements IAuthService {
                     lockStatus.remainingSeconds());
         }
 
+
         // ── Bước 3: Kiểm tra khóa vĩnh viễn ─────────────────────────────────
         if ("locked".equals(user.getStatus())) {
             loggingService.logLoginEvent(user.getUserId(), false, ipAddress,
@@ -83,10 +85,13 @@ public class AuthServiceImpl implements IAuthService {
                     "wrong_password:attempt=" + attempts);
             throw new AuthException.InvalidCredentialsException();
         }
+        
 
         // ── Bước 5: Đăng nhập thành công ─────────────────────────────────────
         return handleLoginSuccess(user, ipAddress);
     }
+
+    
 
     // ─── handleLoginSuccess ───────────────────────────────────────────────────
 

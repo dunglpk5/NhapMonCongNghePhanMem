@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -56,14 +57,16 @@ public class AccountPolicyServiceImpl implements IAccountPolicyService {
      * Nếu đủ maxFailedAttempts (5) → gọi lockAccount.
      */
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    
     public int incrementFailedAttempts(Integer userId) {
         userRepository.incrementFailedAttempts(userId);
-
+        userRepository.flush(); // Đảm bảo cập nhật ngay để check số
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
 
-        int currentAttempts = user.getFailedLoginAttempts();
+        Integer attempts = user.getFailedLoginAttempts();
+        int currentAttempts = (attempts != null) ? attempts : 0;
         log.warn("User {} failed login attempt #{}", userId, currentAttempts);
 
         if (currentAttempts >= maxFailedAttempts) {
@@ -74,7 +77,7 @@ public class AccountPolicyServiceImpl implements IAccountPolicyService {
 
     /** lockAccount – đặt lockedUntil = now + durationMinutes (NFR-13). */
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void lockAccount(Integer userId, int durationMinutes) {
         LocalDateTime lockedUntil = LocalDateTime.now().plusMinutes(durationMinutes);
         userRepository.lockAccountUntil(userId, lockedUntil);

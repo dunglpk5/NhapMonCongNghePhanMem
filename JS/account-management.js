@@ -295,7 +295,8 @@
     const payload = {
       fullName: document.getElementById('editAccountName').value.trim() || null,
       email: document.getElementById('editAccountEmail').value.trim() || null,
-      role: document.getElementById('editAccountRole').value || null
+      role: document.getElementById('editAccountRole').value || null,
+      password: document.getElementById('editAccountPassword').value || null
     };
 
     try {
