@@ -106,6 +106,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- ── H2 IN-MEMORY DB (cho JUnit test) ──────────────────── -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
